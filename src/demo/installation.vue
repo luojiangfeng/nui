@@ -13,6 +13,12 @@
     <div class="demo-block">
       nui create my-project
     </div>
+
+    <h3>3、运行项目：</h3>
+    <h5>在项目根目录下，通过npm run serve命令运行开发项目：</h5>
+    <div class="demo-block">
+      npm run serve
+    </div>
   </div>
 </template>
 
