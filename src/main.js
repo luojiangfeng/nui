@@ -2,10 +2,9 @@ import Vue from "vue"
 import App from "./App.vue"
 import router from "./router"
 import store from "./store"
-import "./components/nuiRegister.js"
-// import './assets/css/index.scss'
-import * as filters from "./utils/filters" // global filters
-import request from "./utils/request"
+import "./nui/nuiRegister.js" //全局注册nui组件
+import * as filters from "./utils/filters" // 全局 filters
+import request from "./utils/request" //封装的axios请求
 
 import ElementUI from "element-ui"
 import "element-ui/lib/theme-chalk/index.css"

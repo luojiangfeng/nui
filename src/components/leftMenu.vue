@@ -217,11 +217,11 @@
                     >PageHeader 页头</a
                   >
                 </li> -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <router-link active-class="active" to="/dropdown"
                     >Dropdown 下拉菜单</router-link
                   >
-                </li>
+                </li> -->
                 <!-- <li class="nav-item">
                   <a href="#/zh-CN/component/steps" class="">Steps 步骤条</a>
                 </li> -->
