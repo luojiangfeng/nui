@@ -2,7 +2,10 @@
 <template>
   <div class="page-main">
     <h2>Select 选择器</h2>
-    <button></button>
+    <h3></h3>
+    <h5>
+      比elementUI多的属性：width(宽度字符串);options(选项数组);change-width(是否根据选项文字长度自动改变宽度)
+    </h5>
     <div class="demo-block">
       <el-form ref="form" label-width="80px">
         <el-form-item label="主食">

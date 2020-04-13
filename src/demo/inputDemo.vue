@@ -1,9 +1,11 @@
 <template>
   <div class="page-main">
     <h2>Input 输入框</h2>
+    <h3></h3>
+    <h5>比elementUI多的属性：width(宽度字符串)。clearable默认改为true 。</h5>
     <div class="demo-block">
       <!-- 比elementUI多的属性：width，clearable默认改为true 。-->
-      <!-- 当type="number"时，修改默认为不显示箭头(新增hide-arrow属性可控制显示),修改默认不能输入包括e在内的任何非数字 -->
+      <!-- 当type="number"时，修改默认为不显示箭头(新增hide-arrow属性可控制显示)。修改默认可以输入字母e，改为不能输入任何非数字. -->
       <nui-input
         width="200px"
         v-model="input"
@@ -12,7 +14,7 @@
     </div>
     <h3>数字输入框</h3>
     <h5>
-      当type="number"时，修改默认为不显示箭头(新增hide-arrow属性可控制显示),修改默认不能输入包括e在内的任何非数字.
+      当type="number"时，修改默认为不显示箭头(新增hide-arrow属性可控制显示)。修改默认可以输入字母e，改为不能输入任何非数字.
     </h5>
     <div class="demo-block">
       <nui-form label-width="80px">
@@ -47,14 +49,14 @@ export default {
       input: "",
       input2: "",
       input3: "",
-      icCardNo: "",
+      icCardNo: ""
     }
   },
   created() {},
   mounted() {},
   methods: {
-    testInput(val) {},
-  },
+    testInput(val) {}
+  }
 }
 </script>
 

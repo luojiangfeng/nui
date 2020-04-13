@@ -3,6 +3,7 @@
     <h2>Form 表单</h2>
 
     <h3>普通表单</h3>
+    <h5>比elementUI多的属性：width(宽度字符串)，center(表单是否整体居中)</h5>
     <article class="demo-block">
       <!-- 比elementUI多的属性：width，center(表单整体居中) -->
       <nui-form
@@ -200,19 +201,19 @@ export default {
         regionOptions: [
           {
             value: 0,
-            label: "上海静安区",
+            label: "上海静安区"
           },
           {
             value: 1,
-            label: "广州天河区",
-          },
+            label: "广州天河区"
+          }
         ],
         date1: "",
         date2: "",
         delivery: false,
         type: [],
         resource: "",
-        desc: "",
+        desc: ""
       },
       form2: {
         active: true,
@@ -226,17 +227,17 @@ export default {
         regionOptions: [
           {
             value: 0,
-            label: "上海",
+            label: "上海"
           },
           {
             value: 1,
-            label: "广州",
-          },
+            label: "广州"
+          }
         ],
         date1: "",
         date2: "",
         address: "",
-        desc: "",
+        desc: ""
       },
       formInline: {
         region: "",
@@ -244,28 +245,28 @@ export default {
         regionOptions: [
           {
             value: 0,
-            label: "南京",
+            label: "南京"
           },
           {
             value: 1,
-            label: "广州",
-          },
-        ],
+            label: "广州"
+          }
+        ]
       },
       rules2: {
         superiorCompany: [
-          { required: true, message: "上级公司不能为空", trigger: "change" },
+          { required: true, message: "上级公司不能为空", trigger: "change" }
         ],
         name: [{ required: true, message: "请输入公司名称", trigger: "blur" }],
         shortName: [
           { required: true, message: "请输入公司简称", trigger: "blur" },
-          { max: 5, message: "长度在5字符以内", trigger: "blur" },
+          { max: 5, message: "长度在5字符以内", trigger: "blur" }
         ],
         levelCode: [
           { required: true, message: "请输入层级编码", trigger: "blur" },
-          { type: "number", message: "请输入数字", trigger: "blur" },
-        ],
-      },
+          { type: "number", message: "请输入数字", trigger: "blur" }
+        ]
+      }
     }
   },
   methods: {
@@ -273,7 +274,7 @@ export default {
       console.log("submit!")
     },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           alert("submit!")
         } else {
@@ -285,8 +286,8 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    testNumberInput(val) {},
-  },
+    testNumberInput(val) {}
+  }
 }
 </script>
 

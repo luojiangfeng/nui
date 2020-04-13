@@ -23,16 +23,14 @@
             ><!----><!---->
             <ul class="pure-menu-list sub-nav" style="height: auto;">
               <li class="nav-item">
-                <a href="#/zh-CN/component/installation" class="">安装</a>
+                <router-link to="/installation" active-class="active"
+                  >安装</router-link
+                >
               </li>
               <li class="nav-item">
-                <a href="#/zh-CN/component/quickstart" class="">快速上手</a>
-              </li>
-              <li class="nav-item">
-                <a href="#/zh-CN/component/custom-theme" class="">自定义主题</a>
-              </li>
-              <li class="nav-item">
-                <a href="#/zh-CN/component/transition" class="">内置过渡动画</a>
+                <router-link to="/quickstart" active-class="active"
+                  >快速上手</router-link
+                >
               </li>
             </ul>
             <!---->
@@ -209,7 +207,7 @@
                     >Tabs 标签页</router-link
                   >
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a href="#/zh-CN/component/breadcrumb" class=""
                     >Breadcrumb 面包屑</a
                   >
@@ -218,15 +216,15 @@
                   <a href="#/zh-CN/component/page-header" class=""
                     >PageHeader 页头</a
                   >
-                </li>
+                </li> -->
                 <li class="nav-item">
                   <router-link active-class="active" to="/dropdown"
                     >Dropdown 下拉菜单</router-link
                   >
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a href="#/zh-CN/component/steps" class="">Steps 步骤条</a>
-                </li>
+                </li> -->
               </ul>
             </div>
             <div class="nav-group">
@@ -237,7 +235,7 @@
                     >Dialog 对话框</router-link
                   >
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a href="#/zh-CN/component/tooltip" class=""
                     >Tooltip 文字提示</a
                   >
@@ -292,7 +290,7 @@
                   <a href="#/zh-CN/component/infiniteScroll" class=""
                     >InfiniteScroll 无限滚动</a
                   >
-                </li>
+                </li> -->
                 <li class="nav-item">
                   <router-link active-class="active" to="/drawer"
                     >Drawer 抽屉</router-link
@@ -315,8 +313,8 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath)
-    },
-  },
+    }
+  }
 }
 </script>
 
