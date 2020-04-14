@@ -27,8 +27,8 @@ export default {
             dateRange: "",
             userName: "",
             company: "",
-            sex: "",
-          },
+            sex: ""
+          }
         },
         /*========titleBar:表格顶部（表格外）的标题行：包括表格标题，表单，按钮等。=========*/
         titleBar: [
@@ -39,7 +39,7 @@ export default {
                 ref: "dateRange", //与api里面的params对应
                 type: "date", //日期选择器
                 label: "入职日期:",
-                dateType: "daterange",
+                dateType: "daterange"
               },
               {
                 ref: "userName",
@@ -50,8 +50,8 @@ export default {
                 clearable: true, //默认true
                 //其他elementUI的属性
                 $attrs: {
-                  maxlength: 6,
-                },
+                  maxlength: 6
+                }
               },
               {
                 ref: "company",
@@ -60,23 +60,23 @@ export default {
                 options: [
                   {
                     value: "0",
-                    label: "华为技术有限公司",
+                    label: "华为技术有限公司"
                   },
                   {
                     value: "1",
-                    label: "中山TCL制冷制热设备有限公司",
+                    label: "中山TCL制冷制热设备有限公司"
                   },
                   {
                     value: "2",
-                    label: "惠州市普安电子有限公司",
-                  },
+                    label: "惠州市普安电子有限公司"
+                  }
                 ],
                 width: "120px",
                 placeholder: "请选择企业",
                 changeWidth: true, //是否根据选择内容改变宽度。。默认为true
                 $attrs: {
-                  clearable: true,
-                },
+                  clearable: true
+                }
               },
               {
                 ref: "sex",
@@ -85,25 +85,25 @@ export default {
                 options: [
                   {
                     value: "0",
-                    label: "男",
+                    label: "男"
                   },
                   {
                     value: "1",
-                    label: "女",
-                  },
-                ],
+                    label: "女"
+                  }
+                ]
               },
               {
                 type: "submit", //表单提交submit
                 text: "查询",
                 icon: "el-icon-search",
-                fun: this.tableSearch,
-              },
-            ],
+                fun: this.tableSearch
+              }
+            ]
           },
           {
             title: {
-              text: "企业职工信息",
+              text: "企业职工信息"
               // class: ""
               // style: { color: "#666", fontWeight: "normal" }
             },
@@ -114,21 +114,21 @@ export default {
                 circle: true,
                 icon: "el-icon-plus",
                 buttonType: "success",
-                fun: this.cancelSelect, //测试调用el-table的methods
+                fun: this.cancelSelect //测试调用el-table的methods
               },
               {
                 type: "button",
                 text: "修改",
                 icon: "el-icon-edit",
                 buttonType: "warning",
-                fun: this.cancelSelect, //测试调用el-table的methods
+                fun: this.cancelSelect //测试调用el-table的methods
               },
               {
                 type: "button",
                 text: "删除",
                 icon: "el-icon-delete",
                 buttonType: "danger",
-                fun: this.cancelSelect, //测试调用el-table的methods
+                fun: this.cancelSelect //测试调用el-table的methods
               },
               {
                 type: "button",
@@ -137,10 +137,10 @@ export default {
                 loading: true,
                 plain: true,
                 round: true,
-                fun: this.tableExport,
-              },
-            ],
-          },
+                fun: this.tableExport
+              }
+            ]
+          }
         ],
         /*================================= 表格内容 ===============================*/
         data: [], // 表格数据
@@ -151,7 +151,7 @@ export default {
         firstColumn: {
           type: "selection",
           reserveSelection: true,
-          hidden: true,
+          hidden: true
         },
         // 表格列设置
         column: [
@@ -162,7 +162,7 @@ export default {
             minWidth: "120",
             hidden: false,
             sort: true,
-            align: "left",
+            align: "left"
           },
           {
             prop: "loginName",
@@ -170,8 +170,8 @@ export default {
             minWidth: "200",
             $attr: {
               //其他elementUI的属性
-              "class-name": "test-col",
-            },
+              "class-name": "test-col"
+            }
           },
           {
             prop: "pay",
@@ -179,15 +179,15 @@ export default {
             minWidth: "100",
             sort: true,
             //过滤器：内置了几种常用的（人民币格式：“￥”，小数转百分比：“%”），也可以传自定义的filter,例如每3位加逗号num3。
-            filters: { method: "num3" },
+            filters: { method: "num3" }
           },
           {
             prop: "dataStatus",
             label: "状态",
             minWidth: "160",
-            filters: { param: "ROLE_STATUS" },
+            filters: { param: "ROLE_STATUS" }
           },
-          { prop: "entName", label: "所属企业", minWidth: "200" },
+          { prop: "entName", label: "所属企业", minWidth: "200" }
         ],
         // 行文字变色：entId值为17时，文字变色
         changeRowColor: { key: "entId", val: "17", txtStyle: "#ccc" },
@@ -200,16 +200,16 @@ export default {
             {
               text: "详情",
               type: "default",
-              fun: this.tableRowDetail,
+              fun: this.tableRowDetail
             },
             {
               icon: "el-icon-delete",
               hidden: false,
               circle: true,
               type: "danger",
-              fun: this.cancelSelect, //测试调用el-table的methods
-            },
-          ],
+              fun: this.cancelSelect //测试调用el-table的methods
+            }
+          ]
         },
         /*================================= 翻页 ===============================*/
         pagination: {
@@ -218,11 +218,11 @@ export default {
           background: true, //是否显示背景色
           $attrs: {
             //其他elementUI的属性
-            small: false, //尺寸
-          },
-        },
+            small: false //尺寸
+          }
+        }
       },
-      chosenIds: [],
+      chosenIds: []
     }
   },
   created() {},
@@ -234,14 +234,14 @@ export default {
     tableRowDetail(row) {
       this.$alert("这是一段内容", row.userName, {
         confirmButtonText: "确定",
-        callback: (action) => {},
+        callback: action => {}
       })
     },
     tableExport() {
       this.$notify({
         title: "示例",
         message: "导出成功",
-        type: "success",
+        type: "success"
       })
     },
     // 获取列表数据的唯一标识
@@ -256,16 +256,16 @@ export default {
     },
     // 选中的数据
     handlesSelectionChange(val) {
-      this.chosenIds = val.map((item) => item.id)
+      this.chosenIds = val.map(item => item.id)
       console.log(this.chosenIds)
     },
     goAuthorize(row) {
       this.$message({
         message: row.userName + ",授权成功",
-        type: "success",
+        type: "success"
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

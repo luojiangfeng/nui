@@ -1,6 +1,27 @@
 const port = 8090
 
 module.exports = {
+  chainWebpack: config => {
+    const oneOfsMap = config.module.rule("scss").oneOfs.store
+    oneOfsMap.forEach(item => {
+      item
+        .use("sass-resources-loader")
+        .loader("sass-resources-loader")
+        .options({
+          // Provide path to the file with resources
+          // resources: "./src/assets/styles/common.scss"
+
+          // Or array of paths
+          resources: [
+            "./src/assets/styles/_var.scss",
+            "./src/assets/styles/_mixin.scss",
+            "./src/assets/styles/_animation.scss"
+          ]
+        })
+        .end()
+    })
+  },
+
   // configureWebpack: (config) => {
   //   config.entry.app = ['babel-polyfill', './src/main.js']
   // },

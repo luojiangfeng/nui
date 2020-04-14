@@ -1,0 +1,130 @@
+
+/*==========================MIXIN============================*/
+//360°旋转 type>=0顺时针  type<0逆时针
+@mixin a_rotate360($type: 0, $duration:5s, $bezier:linear, $count: infinite, $fill: both) {
+    @if($type==0) {
+        animation: rotate360 $duration $bezier $count $fill;
+    }
+    @else {
+        animation: rotateReverse360 $duration $bezier $count $fill;
+    }
+    @keyframes rotate360 {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+              transform: rotate(360deg);
+        }
+    }
+    @keyframes rotateReverse360 {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+              transform: rotate(-360deg);
+        }
+    }
+}
+
+/*======================================================*/
+//动画
+@keyframes slideUp {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes btnLoading {
+    0% {
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+    100% {
+        transform: rotate3d(0, 0, 1, 360deg);
+    }
+}
+
+
+//抖动出现
+@keyframes bounceIn {
+    100%,
+    20%,
+    40%,
+    60%,
+    80%,
+    from {
+        animation-timing-function: cubic-bezier(0.215, .61, .355, 1)
+    }
+    0% {
+        opacity: 0;
+        transform: scale3d(.3, .3, .3)
+    }
+    20% {
+        transform: scale3d(1.1, 1.1, 1.1)
+    }
+    40% {
+        transform: scale3d(.9, .9, .9)
+    }
+    60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03)
+    }
+    80% {
+        transform: scale3d(.97, .97, .97)
+    }
+    100% {
+        opacity: 1;
+        transform: scale3d(1, 1, 1)
+    }
+}
+
+
+//闪烁
+@keyframes flash {
+    0% {
+        filter:brightness(.95);
+        opacity:.95;
+    }
+    50% {
+       filter:brightness(1.1);
+        opacity:1;
+    }
+    100% {
+       filter:brightness(.95);
+        opacity:.95;
+    }
+}
+
+@keyframes flashMid {
+    0% {
+        filter:brightness(.92);
+        opacity:.95;
+    }
+    50% {
+       filter:brightness(1.18);
+        opacity:1;
+    }
+    100% {
+       filter:brightness(.92);
+        opacity:.95;
+    }
+}
+
+@keyframes flashMore {
+    0% {
+        filter:brightness(.8);
+        opacity:.9;
+    }
+    50% {
+       filter:brightness(1.2);
+        opacity:1;
+    }
+    100% {
+       filter:brightness(.8);
+        opacity:.9;
+    }
+}

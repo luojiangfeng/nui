@@ -1,0 +1,21 @@
+/*   颜色 */
+$c-m: #1e88e5; // 主色
+$c-red: #e64a42; // 主红
+$c-green: #39b76b; // 主绿
+$c-orange: #ee8c0f; // 主橙
+$c-grey: #999; // 主灰
+
+$c-font: #333333; // 字体黑
+$c-font-grey: #808080; // 字体灰
+$c-border: #ccc; // 边框色
+$c-page-bg: #f5f5f5; // 页面背景
+
+/* 距离 */
+$m-page-side: 30px; //页面两侧空隙
+
+/* 层级 */
+$z-top-max: 999999; //绝对顶层
+$z-top-front: 100; //顶层
+$z-top-mid: 10; //顶层
+$z-top-back: 100; //顶层
+$z-bttm: -1; //底部层

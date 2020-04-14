@@ -9,6 +9,8 @@ import request from "./utils/request" //封装的axios请求
 import ElementUI from "element-ui"
 import "element-ui/lib/theme-chalk/index.css"
 
+import "./assets/styles/common.scss" // 全局样式
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)

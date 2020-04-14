@@ -1,0 +1,11 @@
+/* 按钮 */
+//去边框
+button::after {
+  border: none;
+}
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+}

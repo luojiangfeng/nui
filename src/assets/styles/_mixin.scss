@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+$image-base-path: "~@/assets/images/";
+
+//背景图片 example：@include bg("icons/arrow-left.png");
+@mixin bg($URI, $x: 0, $y: 0) {
+  background: url("#{$image-base-path}#{$URI}") no-repeat $x $y;
+  background-size: 100%;
+}
+
+@mixin bgCenter($URI, $w: null, $h: null) {
+  @if $w and $h {
+    width: $w;
+    height: $h;
+  }
+  background: url("#{$image-base-path}#{$URI}") no-repeat;
+  background-position: center top;
+}
+
+//绝对居中-水平垂直
+@mixin center($width: null, $height: null, $pos: absolute) {
+  position: $pos;
+  top: 50%;
+  left: 50%;
+  @if not $width and not $height {
+    transform: translate(-50%, -50%);
+  } @else if $width and $height {
+    width: $width;
+    height: $height;
+    margin: (#{- ($height / 2)} #{0 0} -#{$width / 2});
+  } @else if not $height {
+    width: $width;
+    margin-left: -($width / 2);
+    transform: translateY(-50%);
+  } @else {
+    height: $height;
+    margin-top: -($height / 2);
+    transform: translateX(-50%);
+  }
+}
+
+//绝对居中-水平
+@mixin centerX($width) {
+  position: absolute;
+  left: 50%;
+  margin-left: -$width / 2;
+}
+
+//文本溢出省略
+@mixin ellipsis($num: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @if ($num != 1) {
+    display: -webkit-box;
+    -webkit-line-clamp: $num;
+    -webkit-box-orient: vertical;
+  } @else {
+    white-space: nowrap;
+  }
+}
