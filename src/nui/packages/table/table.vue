@@ -172,7 +172,7 @@
           :label="config.firstColumn.label"
           :reserve-selection="config.firstColumn.reserveSelection || false"
           align="center"
-          v-bind="config.firstColumn.$attr"
+          v-bind="config.firstColumn.$attrs"
           v-if="config.firstColumn.type === 'selection'"
         ></el-table-column>
 
@@ -181,7 +181,7 @@
           width="50"
           :label="config.firstColumn.label"
           align="center"
-          v-bind="config.firstColumn.$attr"
+          v-bind="config.firstColumn.$attrs"
           v-if="config.firstColumn.type === 'expand'"
         ></el-table-column>
         <el-table-column
@@ -190,7 +190,7 @@
           :reserve-selection="config.firstColumn.isPaging || false"
           :label="config.firstColumn.label"
           align="center"
-          v-bind="config.firstColumn.$attr"
+          v-bind="config.firstColumn.$attrs"
           v-if="config.firstColumn.type === 'index'"
         >
           <template slot-scope="scope">
@@ -202,46 +202,13 @@
           </template>
         </el-table-column>
       </div>
-      <slot name="begin"></slot>
-      <template v-for="(item, index) in config.column">
-        <el-table-column
-          v-if="!item.hidden"
-          :key="index"
-          :type="item.type"
-          :label="item.label"
-          :prop="item.prop"
-          :min-width="item['min-width'] || item.minWidth || item.width"
-          :sortable="item.sort"
-          :align="item.align || 'center'"
-          show-overflow-tooltip
-          v-bind="item.$attr"
-          v-on="$listeners"
-        >
-          <template slot-scope="scope">
-            <div v-if="!item.filters" :style="{ color: txtChangeColor(scope) }">
-              {{ scope.row[item.prop] }}
-            </div>
-            <div v-if="item.filters" :style="{ color: txtChangeColor(scope) }">
-              <span v-if="item.filters.param">{{
-                scope.row[item.prop] | constantKey2Value(item.filters.param)
-              }}</span>
-              <span
-                v-else-if="!item.filters.param && item.filters.method === '￥'"
-                >{{ scope.row[item.prop] | num3(2, "￥") }}</span
-              >
-              <span
-                v-else-if="!item.filters.param && item.filters.method === '%'"
-                >{{ scope.row[item.prop] | percentFilter }}</span
-              >
-              <span v-else-if="!item.filters.param && item.filters.method">{{
-                computedColFilter(scope.row[item.prop], item.filters.method)
-              }}</span>
-            </div>
-          </template>
-        </el-table-column>
-      </template>
 
-      <slot></slot>
+      <slot name="tbody">
+        <template v-for="(item, index) in config.column">
+          <!-- <el-table-column :key="index" :config="item"> -->
+          <nui-table-column :key="index" :config="item"> </nui-table-column>
+        </template>
+      </slot>
 
       <el-table-column
         v-show="!config.operatorColumn.hidden"
@@ -320,6 +287,18 @@ export default {
     }
   },
   computed: {
+    computedColTpl() {
+      return function(data, tpl) {
+        let res
+        if (typeof tpl === "function") {
+          res = tpl(data).replace(/{{data}}/g, data)
+        } else {
+          res = tpl.replace(/{{data}}/g, data)
+        }
+
+        return res
+      }
+    },
     computedColFilter() {
       return function(value, filterMethod) {
         return this.$options.filters[filterMethod](value)
@@ -429,18 +408,6 @@ export default {
     submitTable() {
       this.getTableData()
     },
-    // 控制表格字体颜色
-    txtChangeColor(scope) {
-      if (
-        this.config.changeRowColor &&
-        scope.row[this.config.changeRowColor.key] ===
-          this.config.changeRowColor.val
-      ) {
-        return this.config.changeRowColor.txtStyle
-      } else {
-        return ""
-      }
-    },
     // 当前页码
     handlesCurrentChange(val) {
       this.config.currentPage = val
@@ -487,6 +454,7 @@ export default {
       color: #333;
       line-height: 32px;
       padding-left: 12px;
+      font-weight: bold;
     }
 
     .handleBar {
