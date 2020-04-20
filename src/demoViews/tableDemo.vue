@@ -369,6 +369,10 @@ export default {
   color: #aaa;
 }
 
+/deep/.test-col {
+  color: green;
+}
+
 /deep/ .test-tpl {
   background: rgb(243, 244, 247);
   border-radius: 5px;
