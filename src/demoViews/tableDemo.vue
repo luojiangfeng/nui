@@ -15,7 +15,12 @@
     <div class="page-main">
       <h3>完全自定义column</h3>
       <h5>
-        如果需要用到elementUI的某列el-table-column全面完整的模板功能（可插入组件，绑定自定义数据、事件等），可以通过tbody插槽,自定义列传入原生的el-table-colunm组件，其他列传入封装好的nui-table-colunm组件。
+        <p>
+          一般情况下，针对某列的自定义普通html模板。只需要用到封装好的的template属性和templateHead属性就可以了（如第一个表格）。但是，这种方式不能解析组件，绑定事件等。
+        </p>
+        <p>
+          如果需要用到elementUI的某列el-table-column全面完整的模板功能（可插入组件，绑定自定义数据、事件等），可以通过tbody插槽,自定义列传入原生的el-table-colunm组件，其他列传入封装好的nui-table-colunm组件。
+        </p>
       </h5>
       <div class="demo-block">
         <nui-table
