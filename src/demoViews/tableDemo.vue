@@ -335,7 +335,6 @@ export default {
     },
     setRowClass(row, index) {
       if (row.row.dataStatus == "0") {
-        console.log(row.row.userName)
         return "row-disable"
       }
     },

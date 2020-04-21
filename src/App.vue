@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <left-menu></left-menu>
-    <main>
+    <div class="page-wrap">
       <el-scrollbar class="" style="height:100%">
         <router-view />
       </el-scrollbar>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import leftMenu from "./components/leftMenu"
 export default {
   name: "app",
-  components: { leftMenu }
+  components: { leftMenu },
 }
 </script>
 
@@ -32,7 +32,7 @@ export default {
   padding: 0;
 }
 
-#app > main {
+#app > .page-wrap {
   background: #fff;
   min-height: 100vh;
   height: 100vh;
@@ -49,7 +49,7 @@ export default {
   transition: 0.2s;
 }
 
-main > .el-scrollbar > .el-scrollbar__wrap {
+.page-wrap > .el-scrollbar > .el-scrollbar__wrap {
   overflow-x: hidden !important;
 }
 
