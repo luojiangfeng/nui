@@ -23,5 +23,10 @@
     "sass-loader": "^8.0.2",
     "sass-resources-loader": "^2.0.2",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "ie 9"
+  ]
 }

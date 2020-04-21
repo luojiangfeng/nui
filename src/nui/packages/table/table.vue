@@ -459,7 +459,7 @@ export default {
 
     .handleBar {
       display: flex;
-      flex: 1;
+      flex-grow: 1;
       justify-content: flex-end;
     }
     .el-button--small {
@@ -477,7 +477,7 @@ export default {
 
   .el-form {
     padding-left: 12px;
-    flex: 1;
+    flex-grow: 1;
     display: flex;
     // justify-content: flex-end;
   }
@@ -487,7 +487,7 @@ export default {
     margin-right: 20px;
 
     /deep/.el-form-item__content {
-      flex: 1;
+      flex-grow: 1;
     }
 
     /deep/.el-input__inner {
@@ -505,7 +505,7 @@ export default {
     }
 
     /deep/ .el-form-item__label {
-      // flex: 1;
+      // flex-grow: 1;
       padding-right: 6px;
       color: #666;
       white-space: nowrap;
