@@ -70,6 +70,8 @@
         </nui-table>
       </div>
     </div>
+
+    <div class="attr"></div>
   </div>
 </template>
 
@@ -111,6 +113,12 @@ export default {
                 //其他elementUI的属性
                 $attrs: {
                   maxlength: 6,
+                },
+                //其他elementUI的事件
+                $listeners: {
+                  blur: function(e) {
+                    console.log(e.target.value)
+                  },
                 },
               },
               {

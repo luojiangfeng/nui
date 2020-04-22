@@ -9,7 +9,7 @@
     :align="config.align || 'center'"
     show-overflow-tooltip
     v-bind="config.$attrs"
-    v-on="$listeners"
+    v-on="config.$listeners"
   >
     <template slot="header" slot-scope="scope">
       <template v-if="config.templateHead">
@@ -19,7 +19,6 @@
         {{ config.label }}
       </template>
     </template>
-
     <!-- <template v-if="custom">
       <slot :data="rowData"></slot>
     </template>

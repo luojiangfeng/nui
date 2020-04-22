@@ -1,6 +1,12 @@
 <!-- 比elementUI多的属性：width;options(选项数组);change-width(是否根据选项文字长度自动改变宽度) -->
 <template>
   <div class="page-main">
+    <el-tabs class="page-tab" v-model="activeTab" @tab-click="">
+      <el-tab-pane label="文档" name="doc"></el-tab-pane>
+      <el-tab-pane label="查看代码" name="code">
+        <code> </code>
+      </el-tab-pane>
+    </el-tabs>
     <h2>Select 选择器</h2>
     <h3></h3>
     <h5>
@@ -34,6 +40,47 @@
         </el-form-item>
       </el-form>
     </div>
+
+    <article class="intro-list">
+      <h3>Select Attributes</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>参数</th>
+            <th>说明</th>
+            <th>类型</th>
+            <th>可选值</th>
+            <th>默认值</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>width</td>
+            <td>宽度</td>
+            <td>string</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>选项列表</td>
+            <td>array</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>change-width</td>
+            <td>是否根据选项文字长度自动改变宽度</td>
+            <td>boolean</td>
+            <td>—</td>
+            <td>false</td>
+          </tr>
+        </tbody>
+      </table>
+      <h6>
+        注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
+      </h6>
+    </article>
   </div>
 </template>
 
@@ -42,52 +89,53 @@ export default {
   name: "DemoRadio",
   data() {
     return {
+      activeTab: "doc",
       options: [
         {
           value: 1,
-          label: "黄金糕"
+          label: "黄金糕",
         },
         {
           value: 2,
-          label: "双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶"
+          label: "双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶",
         },
         {
           value: 3,
-          label: "蚵仔煎蚵仔煎蚵仔煎"
+          label: "蚵仔煎蚵仔煎蚵仔煎",
         },
         {
           value: 4,
-          label: "龙须面龙须面"
+          label: "龙须面龙须面",
         },
         {
           value: 5,
-          label: "北京烤鸭"
-        }
+          label: "北京烤鸭",
+        },
       ],
       options2: [
         {
           value: 10,
-          label: "2黄金糕"
+          label: "2黄金糕",
         },
         {
           value: 20,
-          label: "2双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶"
+          label: "2双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶",
         },
         {
           value: 30,
-          label: "2蚵仔煎蚵仔煎蚵仔煎"
+          label: "2蚵仔煎蚵仔煎蚵仔煎",
         },
         {
           value: 40,
-          label: "2龙须面龙须面"
+          label: "2龙须面龙须面",
         },
         {
           value: 50,
-          label: "2北京烤鸭"
-        }
+          label: "2北京烤鸭",
+        },
       ],
       value: "",
-      value2: ""
+      value2: "",
     }
   },
   created() {},
@@ -95,9 +143,19 @@ export default {
   methods: {
     testChange(val) {
       console.log(val)
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.page-tab {
+  padding-left: 10px;
+  position: absolute;
+  right: 25px;
+  top: 5px;
+  /deep/ .el-tabs__item {
+    padding: 0 8px;
+  }
+}
+</style>

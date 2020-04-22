@@ -255,7 +255,7 @@
       :layout="computedPaginationlauout"
       :total="config.total"
       v-bind="config.pagination.$attrs"
-      v-on="$listeners"
+      v-on="config.pagination.$listeners"
       :background="
         config.pagination.background != undefined
           ? config.pagination.background
