@@ -13,15 +13,19 @@ import "./assets/styles/common.scss" // 全局样式
 
 Vue.config.productionTip = false
 
+//全局注册查看代码组件
+import showCode from "./components/showCode" //封装的axios请求
+Vue.component("show-code", showCode)
+
 Vue.use(ElementUI)
 Vue.prototype.$http = request
 // 过滤器
-Object.keys(filters).forEach(key => {
+Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key])
 })
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app")

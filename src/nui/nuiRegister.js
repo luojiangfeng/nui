@@ -6,7 +6,7 @@ Vue.use(Element)
 const requireComponent = require.context("./packages", true, /\.vue$/)
 
 // 找到组件文件夹下以.vue命名的文件，如果文件名为index，那么取组件中的name作为注册的组件名
-requireComponent.keys().forEach(filePath => {
+requireComponent.keys().forEach((filePath) => {
   const componentConfig = requireComponent(filePath)
   const componentName = componentConfig.default.name
 

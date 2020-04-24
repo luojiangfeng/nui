@@ -71,55 +71,6 @@
               </template>
             </nui-table>
           </div>
-
-          <article class="intro-list">
-            <h3>Table Attributes</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>参数</th>
-                  <th>说明</th>
-                  <th>类型</th>
-                  <th>可选值</th>
-                  <th>默认值</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>config</td>
-                  <td>表格配置（详细属性见下表）</td>
-                  <td>object</td>
-                  <td>—</td>
-                  <td>—</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h3>Table Config Attributes</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>参数</th>
-                  <th>说明</th>
-                  <th>类型</th>
-                  <th>可选值</th>
-                  <th>默认值</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>config</td>
-                  <td>表格配置（详细属性见下表）</td>
-                  <td>object</td>
-                  <td>—</td>
-                  <td>—</td>
-                </tr>
-              </tbody>
-            </table>
-            <h6>
-              注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
-            </h6>
-          </article>
         </div>
       </el-tab-pane>
       <el-tab-pane label="查看代码" name="code">

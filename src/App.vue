@@ -53,9 +53,26 @@ export default {
   overflow-x: hidden !important;
 }
 
+.page-tab {
+  .el-tab-pane {
+    padding-top: 40px;
+  }
+  .el-tabs__item {
+    padding: 0 10px;
+  }
+
+  .el-tabs__header {
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    background: #fff;
+  }
+}
+
 .page-main {
   padding-left: 12px;
-  padding-bottom: 160px;
+  // padding-bottom: 160px;
+
   h2,
   h3 {
     font-weight: 400;
@@ -100,13 +117,16 @@ export default {
     margin-top: -10px;
   }
 
-  .intro-list h6 {
-    position: relative;
-    top: -20px;
-    font-size: 12px;
-    color: #aaa;
-    // text-align: right;
-    padding-left: 12px;
+  .intro-list {
+    padding-bottom: 120px;
+    h6 {
+      position: relative;
+      top: -20px;
+      font-size: 12px;
+      color: #aaa;
+      // text-align: right;
+      padding-left: 12px;
+    }
   }
 
   .intro-list > table {
