@@ -8,8 +8,8 @@
         <h3>单选下拉树</h3>
         <div class="demo-block">
           <nui-dropdown-tree
-            leaf
             default-expand-all
+            leaf-only
             :data="treeData"
             placeholder="选择内容"
             @change="hindleChanged"
@@ -22,6 +22,7 @@
         <div class="demo-block">
           <nui-dropdown-tree
             show-checkbox
+            leaf-only
             filterable
             :default-expanded-keys="[4]"
             :data="treeData"
@@ -80,7 +81,7 @@
               </tr>
 
               <tr>
-                <td>leaf</td>
+                <td>leaf-only</td>
                 <td>是否只能选择子叶</td>
                 <td>boolean</td>
                 <td>—</td>

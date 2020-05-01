@@ -156,7 +156,7 @@ export default {
       default: false,
     },
     // 是否只可选叶子节点
-    leaf: {
+    leafOnly: {
       type: Boolean,
       default: false,
     },
@@ -283,8 +283,8 @@ export default {
     // 树节点-showCheckbox选中
     handleCheckChange(val, { checkedNodes, checkedKeys }) {
       /* let nodes = [];
-      if (this.leaf) {
-        nodes = this.$refs["tree"].getCheckedNodes(this.leaf);
+      if (this.leafOnly) {
+        nodes = this.$refs["tree"].getCheckedNodes(this.leafOnly);
       } else {
         checkedNodes.forEach(i => {
           let parent_node =
@@ -294,7 +294,7 @@ export default {
         });
       }
       */
-      let nodes = this.$refs["tree"].getCheckedNodes(this.leaf)
+      let nodes = this.$refs["tree"].getCheckedNodes(this.leafOnly)
       this.selecteds = nodes
       this.$emit("change", nodes)
       if (checkedKeys.length === 0 && this.noCheckedClose) {
@@ -308,7 +308,7 @@ export default {
     },
     // 树节点-点击选中
     treeItemClick(item, node) {
-      if (this.showCheckbox || (this.leaf && !node.isLeaf)) {
+      if (this.showCheckbox || (this.leafOnly && !node.isLeaf)) {
         return
       }
       this.selecteds = [item]
@@ -357,7 +357,7 @@ export default {
         this.checked_keys =
           typeof val[0] === "object" ? val.map((i) => i[this.nodeKey]) : val
         this.$nextTick(() => {
-          this.selecteds = this.$refs["tree"].getCheckedNodes(this.leaf)
+          this.selecteds = this.$refs["tree"].getCheckedNodes(this.leafOnly)
         })
         return
       }

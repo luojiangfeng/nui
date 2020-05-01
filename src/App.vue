@@ -47,6 +47,11 @@ export default {
   border: 1px solid #ebebeb;
   border-radius: 3px;
   transition: 0.2s;
+
+  p {
+    font-size: 14px;
+    margin-top: 20px;
+  }
 }
 
 .page-wrap > .el-scrollbar > .el-scrollbar__wrap {
