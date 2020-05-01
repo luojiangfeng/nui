@@ -53,13 +53,10 @@
             </nui-form-item>
             <nui-form-item label="活动性质">
               <nui-checkbox-group v-model="form.type">
-                <nui-checkbox
-                  label="美食/餐厅线上活动"
-                  name="type"
-                ></nui-checkbox>
-                <nui-checkbox label="地推活动" name="type"></nui-checkbox>
-                <nui-checkbox label="线下主题活动" name="type"></nui-checkbox>
-                <nui-checkbox label="单纯品牌曝光" name="type"></nui-checkbox>
+                <nui-checkbox label="美食/餐厅线上活动"></nui-checkbox>
+                <nui-checkbox label="地推活动"></nui-checkbox>
+                <nui-checkbox label="线下主题活动"></nui-checkbox>
+                <nui-checkbox label="单纯品牌曝光"></nui-checkbox>
               </nui-checkbox-group>
             </nui-form-item>
 
@@ -230,13 +227,6 @@
               <tr>
                 <td>center</td>
                 <td>是否相对父元素居中</td>
-                <td>boolean</td>
-                <td>—</td>
-                <td>false</td>
-              </tr>
-              <tr>
-                <td>change-width</td>
-                <td>选择某项后，是否根据选项文字长度自动改变宽度</td>
                 <td>boolean</td>
                 <td>—</td>
                 <td>false</td>

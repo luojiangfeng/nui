@@ -1,0 +1,151 @@
+接口：
+http://localhost:6789/system/resource/10/1
+
+传入数据：
+{
+        "_eq_parentResourceId": "ROOT"
+}
+
+返回数据
+{
+    "code": "200",
+    "msg": "成功",
+    "data": {
+        "result": [
+            {
+                "id": "10001",
+                "resourceId": "SYSTEM",
+                "resourceName": "系统管理",
+                "parentResourceId": "ROOT",
+                "type": 1,
+                "seq": 1,
+                "url": null,
+                "appId": "1",
+                "children": null,
+                "updateTime": "2020-04-23 14:21:31",
+                "isSelected": null
+            },
+            {
+                "id": "20001",
+                "resourceId": "BUS",
+                "resourceName": "业务模块",
+                "parentResourceId": "ROOT",
+                "type": 1,
+                "seq": 2,
+                "url": null,
+                "appId": "1",
+                "children": null,
+                "updateTime": "2020-04-23 14:28:13",
+                "isSelected": null
+            },
+            {
+                "id": "5081c13890e549a3bef828059d47528c",
+                "resourceId": "qaz",
+                "resourceName": "qaz",
+                "parentResourceId": "ROOT",
+                "type": 1,
+                "seq": 1,
+                "url": null,
+                "appId": null,
+                "children": null,
+                "updateTime": "2020-04-26 10:34:33",
+                "isSelected": null
+            },
+            {
+                "id": "5a7696420e664b3fa5943bffd1f4c9ac",
+                "resourceId": "asd",
+                "resourceName": "asd",
+                "parentResourceId": "ROOT",
+                "type": 1,
+                "seq": 1,
+                "url": null,
+                "appId": null,
+                "children": null,
+                "updateTime": "2020-04-26 10:28:47",
+                "isSelected": null
+            },
+            {
+                "id": "7a8121483f554e428e76631086a1d98e",
+                "resourceId": "zxc456",
+                "resourceName": "zxc123",
+                "parentResourceId": "ROOT",
+                "type": 9,
+                "seq": 9,
+                "url": null,
+                "appId": null,
+                "children": null,
+                "updateTime": "2020-04-26 10:28:33",
+                "isSelected": null
+            },
+            {
+                "id": "95b943bb24e945a49a955469c24e70bb",
+                "resourceId": "nui123123",
+                "resourceName": "nui123123",
+                "parentResourceId": "ROOT",
+                "type": 1,
+                "seq": 1,
+                "url": null,
+                "appId": null,
+                "children": null,
+                "updateTime": "2020-04-26 11:27:19",
+                "isSelected": null
+            },
+            {
+                "id": "b7159d56d4ea44e2a9ea2f6cd60cffdc",
+                "resourceId": "jjj",
+                "resourceName": "ceshi123123",
+                "parentResourceId": "ROOT",
+                "type": 7,
+                "seq": 2,
+                "url": null,
+                "appId": null,
+                "children": null,
+                "updateTime": "2020-04-26 10:17:30",
+                "isSelected": null
+            },
+            {
+                "id": "bb39c94293d84e54a349922c91dc0db4",
+                "resourceId": "wsx",
+                "resourceName": "wsx",
+                "parentResourceId": "ROOT",
+                "type": 1,
+                "seq": 1,
+                "url": null,
+                "appId": null,
+                "children": null,
+                "updateTime": "2020-04-26 10:36:05",
+                "isSelected": null
+            },
+            {
+                "id": "ea1f33e1f6614d8f83a4934254346937",
+                "resourceId": "TEST123123",
+                "resourceName": "test",
+                "parentResourceId": "ROOT",
+                "type": 3,
+                "seq": 4,
+                "url": null,
+                "appId": "1",
+                "children": null,
+                "updateTime": "2020-04-26 09:24:15",
+                "isSelected": null
+            }
+        ],
+        "pageSize": 10,
+        "pageNumber": 1,
+        "totalCount": 9,
+        "firstPage": true,
+        "lastPage": true,
+        "hasNextPage": false,
+        "firstResult": 0,
+        "thisPageLastElementNumber": 9,
+        "thisPageNumber": 1,
+        "nextPageNumber": 2,
+        "previousPageNumber": 0,
+        "hasPreviousPage": false,
+        "lastPageNumber": 1,
+        "linkPageNumbers": [
+            1
+        ],
+        "thisPageFirstElementNumber": 1
+    }
+}

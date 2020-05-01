@@ -149,6 +149,13 @@ export default {
             company: "",
             sex: "",
           },
+          resPropsName: {
+            //返回的json主要字段名称&获取方式
+            code: "code", //解析接口状态
+            msg: "msg", //解析提示文本
+            rows: "data.rows", //解析数据列表数组
+            total: "data.total", //解析数据列表长度
+          },
         },
         /*========titleBar:表格顶部（表格外）的标题行：包括表格标题，表单，按钮等。=========*/
         titleBar: [

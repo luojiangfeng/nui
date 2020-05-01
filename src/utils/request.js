@@ -26,7 +26,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data
-    if (res.code && res.code !== 0) {
+    if (res.code && res.code !== 200) {
       // 四位数错误码，需要重新登录;
       if (res.code >= 1000 && res.code < 10000) {
         MessageBox.alert(res.message, "提示", {

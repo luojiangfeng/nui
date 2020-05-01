@@ -111,6 +111,9 @@ export default {
     color: #5e6d82;
     line-height: 1.5em;
     font-weight: normal;
+    strong {
+      font-weight: bold;
+    }
   }
 
   h3 + h5 {

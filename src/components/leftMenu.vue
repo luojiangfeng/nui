@@ -158,6 +158,12 @@
                     >Tree 树形控件</router-link
                   >
                 </li>
+
+                <li class="nav-item ">
+                  <router-link active-class="active" to="/dropdownTree"
+                    >DropdownTree 下拉树</router-link
+                  >
+                </li>
                 <li class="nav-item ">
                   <router-link active-class="active" to="/badge"
                     >Badge 标记</router-link
@@ -232,65 +238,25 @@
                     >Dialog 对话框</router-link
                   >
                 </li>
-                <!-- <li class="nav-item">
-                  <a href="#/zh-CN/component/tooltip" class=""
-                    >Tooltip 文字提示</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/popover" class=""
-                    >Popover 弹出框</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/popconfirm" class=""
-                    >Popconfirm 气泡确认框</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/card" class="">Card 卡片</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/carousel" class=""
-                    >Carousel 走马灯</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/collapse" class=""
-                    >Collapse 折叠面板</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/timeline" class=""
-                    >Timeline 时间线</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/divider" class=""
-                    >Divider 分割线</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/calendar" class=""
-                    >Calendar 日历</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/image" class="">Image 图片</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/backtop" class=""
-                    >Backtop 回到顶部</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="#/zh-CN/component/infiniteScroll" class=""
-                    >InfiniteScroll 无限滚动</a
-                  >
-                </li> -->
                 <li class="nav-item">
                   <router-link active-class="active" to="/drawer"
                     >Drawer 抽屉</router-link
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-group__title">Example</div>
+              <ul class="pure-menu-list" style="height: auto;">
+                <li class="nav-item">
+                  <router-link active-class="active" to="/examplePersonMsgForm"
+                    >人员信息表单</router-link
+                  >
+                </li>
+                <li class="nav-item">
+                  <router-link active-class="active" to="/examplePersonMsgTable"
+                    >人员信息表格</router-link
                   >
                 </li>
               </ul>

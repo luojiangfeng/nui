@@ -7,143 +7,148 @@ const routes = [
   {
     path: "/",
     name: "index",
-    component: () => import("@/demoViews/installation.vue")
+    component: () => import("@/demoViews/installation.vue"),
   },
   {
     path: "/installation",
     name: "nui-installation",
-    component: () => import("@/demoViews/installation.vue")
+    component: () => import("@/demoViews/installation.vue"),
   },
   {
     path: "/quickstart",
     name: "nui-quickstart",
-    component: () => import("@/demoViews/quickstart.vue")
+    component: () => import("@/demoViews/quickstart.vue"),
   },
   {
     path: "/layout",
     name: "nui-layout",
-    component: () => import("@/demoViews/layoutDemo.vue")
+    component: () => import("@/demoViews/layoutDemo.vue"),
   },
   {
     path: "/container",
     name: "nui-container",
-    component: () => import("@/demoViews/containerDemo.vue")
+    component: () => import("@/demoViews/containerDemo.vue"),
   },
   {
     path: "/button",
     name: "nui-button",
-    component: () => import("@/demoViews/buttonDemo.vue")
+    component: () => import("@/demoViews/buttonDemo.vue"),
   },
   {
     path: "/link",
     name: "nui-link",
-    component: () => import("@/demoViews/linkDemo.vue")
+    component: () => import("@/demoViews/linkDemo.vue"),
   },
 
   {
     path: "/form",
     name: "nui-form",
-    component: () => import("@/demoViews/formDemo.vue")
+    component: () => import("@/demoViews/formDemo.vue"),
   },
   {
     path: "/radio",
     name: "nui-radio",
-    component: () => import("@/demoViews/radioDemo.vue")
+    component: () => import("@/demoViews/radioDemo.vue"),
   },
   {
     path: "/checkbox",
     name: "nui-checkbox",
-    component: () => import("@/demoViews/checkboxDemo.vue")
+    component: () => import("@/demoViews/checkboxDemo.vue"),
   },
   {
     path: "/input",
     name: "nui-input",
-    component: () => import("@/demoViews/inputDemo.vue")
+    component: () => import("@/demoViews/inputDemo.vue"),
   },
   {
     path: "/inputNumber",
     name: "nui-input-number",
-    component: () => import("@/demoViews/inputNumberDemo.vue")
+    component: () => import("@/demoViews/inputNumberDemo.vue"),
   },
   {
     path: "/select",
     name: "nui-select",
-    component: () => import("@/demoViews/selectDemo.vue")
+    component: () => import("@/demoViews/selectDemo.vue"),
   },
   {
     path: "/cascader",
     name: "nui-cascader",
-    component: () => import("@/demoViews/cascaderDemo.vue")
+    component: () => import("@/demoViews/cascaderDemo.vue"),
   },
   {
     path: "/switch",
     name: "nui-switch",
-    component: () => import("@/demoViews/switchDemo.vue")
+    component: () => import("@/demoViews/switchDemo.vue"),
   },
   {
     path: "/slider",
     name: "nui-slider",
-    component: () => import("@/demoViews/sliderDemo.vue")
+    component: () => import("@/demoViews/sliderDemo.vue"),
   },
   {
     path: "/datePicker",
     name: "nui-datePicker",
-    component: () => import("@/demoViews/datePickerDemo.vue")
+    component: () => import("@/demoViews/datePickerDemo.vue"),
   },
   {
     path: "/timePicker",
     name: "nui-timePicker",
-    component: () => import("@/demoViews/timePickerDemo.vue")
+    component: () => import("@/demoViews/timePickerDemo.vue"),
   },
   {
     path: "/upload",
     name: "nui-upload",
-    component: () => import("@/demoViews/uploadDemo.vue")
+    component: () => import("@/demoViews/uploadDemo.vue"),
   },
   {
     path: "/rate",
     name: "nui-rate",
-    component: () => import("@/demoViews/rateDemo.vue")
+    component: () => import("@/demoViews/rateDemo.vue"),
   },
   {
     path: "/transfer",
     name: "nui-transfer",
-    component: () => import("@/demoViews/transferDemo.vue")
+    component: () => import("@/demoViews/transferDemo.vue"),
   },
   {
     path: "/table",
     name: "nui-table",
-    component: () => import("@/demoViews/tableDemo.vue")
+    component: () => import("@/demoViews/tableDemo.vue"),
   },
   {
     path: "/tag",
     name: "nui-tag",
-    component: () => import("@/demoViews/tagDemo.vue")
+    component: () => import("@/demoViews/tagDemo.vue"),
   },
   {
     path: "/progress",
     name: "nui-progress",
-    component: () => import("@/demoViews/progressDemo.vue")
+    component: () => import("@/demoViews/progressDemo.vue"),
   },
   {
     path: "/tree",
     name: "nui-tree",
-    component: () => import("@/demoViews/treeDemo.vue")
+    component: () => import("@/demoViews/treeDemo.vue"),
+  },
+  {
+    path: "/dropdownTree",
+    name: "nui-dropdownTree",
+    component: () => import("@/demoViews/dropdownTreeDemo.vue"),
   },
   {
     path: "/badge",
     name: "nui-badge",
-    component: () => import("@/demoViews/badgeDemo.vue")
+    component: () => import("@/demoViews/badgeDemo.vue"),
   },
   {
     path: "/menu",
     name: "nui-menu",
-    component: () => import("@/demoViews/menuDemo.vue")
+    component: () => import("@/demoViews/menuDemo.vue"),
   },
   {
     path: "/tabs",
     name: "nui-tabs",
-    component: () => import("@/demoViews/tabsDemo.vue")
+    component: () => import("@/demoViews/tabsDemo.vue"),
   },
   // {
   //   path: "/dropdown",
@@ -153,19 +158,29 @@ const routes = [
   {
     path: "/dialog",
     name: "nui-dialog",
-    component: () => import("@/demoViews/dialogDemo.vue")
+    component: () => import("@/demoViews/dialogDemo.vue"),
   },
   {
     path: "/drawer",
     name: "nui-drawer",
-    component: () => import("@/demoViews/drawerDemo.vue")
-  }
+    component: () => import("@/demoViews/drawerDemo.vue"),
+  },
+  {
+    path: "/examplePersonMsgForm",
+    name: "nui-examplePersonMsgForm",
+    component: () => import("@/demoViews/examplePersonMsgForm.vue"),
+  },
+  {
+    path: "/examplePersonMsgTable",
+    name: "nui-examplePersonMsgTable",
+    component: () => import("@/demoViews/examplePersonMsgTable.vue"),
+  },
 ]
 
 const router = new VueRouter({
   mode: "hash",
   scrollBehavior: () => ({ y: 0 }),
-  routes
+  routes,
 })
 
 export default router
