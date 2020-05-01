@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { randomChar } from "../../utils.js"
 export default {
   name: "nui-cascader",
   props: {
@@ -30,7 +31,7 @@ export default {
   },
   computed: {},
   created() {
-    this.id = "cascader" + this.randomChar(20)
+    this.id = "cascader" + randomChar(20)
   },
   mounted() {},
   methods: {
@@ -46,14 +47,6 @@ export default {
           that.autoInputWidth(dom, 50, label)
         }, 0)
       }
-    },
-    randomChar(l) {
-      let x = "123456789poiuytrewqasdfghjklmnbvcxzQWERTYUIPLKJHGFDSAZXCVBNM"
-      let tmp = ""
-      for (let i = 0; i < l; i++) {
-        tmp += x.charAt(Math.ceil(Math.random() * 10000000000) % x.length)
-      }
-      return tmp
     },
     autoInputWidth(dom, baseW, val) {
       let _val = val

@@ -17,10 +17,20 @@
 
     <h3>2、文档说明：</h3>
     <h5>
-      一般情况下，文档只列出基本的组件demo，以及和elementUI不同的属性说明。（现阶段文档未完善，文档未列出的属性，一般demo源代码中会有注释。）
+      ①一般情况下，文档只列出基本的组件demo，以及和elementUI不同的属性说明。（现阶段文档未完善，文档未列出的属性，一般demo源代码中会有注释。）
       <p>
-        其他未说明的elementUI属性、方法、事件等，默认都可以使用，具体使用方法请自行参考elementUI官方文档。
+        ②其他未说明的elementUI属性、事件等，默认都可以直接使用，具体使用方法请自行参考elementUI官方文档。
       </p>
+      <p>
+        ③<strong>注意调用"组件方法"与elmentUI的不同点：</strong>
+        如果是用ref的方式调用方法，因为nui是基于elementUI二次封装的，所以需要再加一层才行。例如想要调用一个ref="thisTree"的Tree控件的setChecked方法：
+      </p>
+      <div class="demo-block">
+        <p>elementUI 的调用方式为this.$refs.thisTree.setChecked</p>
+        <p>
+          nui的调用方式为this.$refs.thisTree.<strong>$refs.tree</strong>.setChecked
+        </p>
+      </div>
     </h5>
   </div>
 </template>
@@ -30,7 +40,7 @@ export default {
   name: "DemoRadio",
   data() {
     return {
-      input: ""
+      input: "",
     }
   },
   created() {},
@@ -38,8 +48,8 @@ export default {
   methods: {
     changeRadio(val) {
       console.log(val)
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { randomChar } from "../../utils.js"
+
 export default {
   name: "nui-select",
   props: {
@@ -42,7 +44,7 @@ export default {
   },
   computed: {},
   created() {
-    this.id = "select" + this.randomChar(20)
+    this.id = "select" + randomChar(20)
   },
   mounted() {},
   methods: {
@@ -64,14 +66,7 @@ export default {
         this.autoInputWidth(dom, 50, label)
       }
     },
-    randomChar(l) {
-      let x = "123456789poiuytrewqasdfghjklmnbvcxzQWERTYUIPLKJHGFDSAZXCVBNM"
-      let tmp = ""
-      for (let i = 0; i < l; i++) {
-        tmp += x.charAt(Math.ceil(Math.random() * 10000000000) % x.length)
-      }
-      return tmp
-    },
+
     autoInputWidth(dom, baseW, val) {
       let _val = val
       let _baseW = baseW || 6

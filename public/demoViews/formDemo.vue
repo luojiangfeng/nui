@@ -53,13 +53,10 @@
             </nui-form-item>
             <nui-form-item label="活动性质">
               <nui-checkbox-group v-model="form.type">
-                <nui-checkbox
-                  label="美食/餐厅线上活动"
-                  name="type"
-                ></nui-checkbox>
-                <nui-checkbox label="地推活动" name="type"></nui-checkbox>
-                <nui-checkbox label="线下主题活动" name="type"></nui-checkbox>
-                <nui-checkbox label="单纯品牌曝光" name="type"></nui-checkbox>
+                <nui-checkbox label="美食/餐厅线上活动"></nui-checkbox>
+                <nui-checkbox label="地推活动"></nui-checkbox>
+                <nui-checkbox label="线下主题活动"></nui-checkbox>
+                <nui-checkbox label="单纯品牌曝光"></nui-checkbox>
               </nui-checkbox-group>
             </nui-form-item>
 
@@ -205,6 +202,65 @@
               <nui-button type="primary" @click="onSubmit">查询</nui-button>
             </nui-form-item>
           </nui-form>
+        </article>
+
+        <article class="intro-list">
+          <h3>Form Attributes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>参数</th>
+                <th>说明</th>
+                <th>类型</th>
+                <th>可选值</th>
+                <th>默认值</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>width</td>
+                <td>宽度</td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>center</td>
+                <td>是否相对父元素居中</td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>false</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Nui-form-item Attributes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>参数</th>
+                <th>说明</th>
+                <th>类型</th>
+                <th>可选值</th>
+                <th>默认值</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>span</td>
+                <td>
+                  配合行组件nui-row使用。与el-col的用法一致，一行100%对应数值24。
+                </td>
+                <td>number</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h6>
+            注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
+          </h6>
         </article>
       </el-tab-pane>
       <el-tab-pane label="查看代码" name="code">

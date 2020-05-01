@@ -71,6 +71,55 @@
               </template>
             </nui-table>
           </div>
+
+          <article class="intro-list">
+            <h3>Table Attributes</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>参数</th>
+                  <th>说明</th>
+                  <th>类型</th>
+                  <th>可选值</th>
+                  <th>默认值</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>config</td>
+                  <td>表格配置（详细属性见下表）</td>
+                  <td>object</td>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>Table Config Attributes</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>参数</th>
+                  <th>说明</th>
+                  <th>类型</th>
+                  <th>可选值</th>
+                  <th>默认值</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>config</td>
+                  <td>表格配置（详细属性见下表）</td>
+                  <td>object</td>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+              </tbody>
+            </table>
+            <h6>
+              注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
+            </h6>
+          </article>
         </div>
       </el-tab-pane>
       <el-tab-pane label="查看代码" name="code">
@@ -99,6 +148,13 @@ export default {
             userName: "",
             company: "",
             sex: "",
+          },
+          resPropsName: {
+            //返回的json主要字段名称&获取方式
+            code: "code", //解析接口状态
+            msg: "msg", //解析提示文本
+            rows: "data.rows", //解析数据列表数组
+            total: "data.total", //解析数据列表长度
           },
         },
         /*========titleBar:表格顶部（表格外）的标题行：包括表格标题，表单，按钮等。=========*/

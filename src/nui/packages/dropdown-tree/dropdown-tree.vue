@@ -2,10 +2,12 @@
   <div ref="wrap" class="nui-tree-select" :style="{ width: width }">
     <!-- 选中框区 -->
     <el-popover
+      ref="popover"
       placement="bottom"
       :trigger="trigger"
       :disabled="disabled"
-      @show="popShow"
+      :popper-class="popoverWrapClass"
+      @show="popResize"
       v-model="options_show"
     >
       <el-scrollbar
@@ -15,22 +17,23 @@
         <el-input
           v-if="filterable"
           v-model="filterText"
+          class="filter-input"
           :size="size"
           placeholder="请输入关键词"
         ></el-input>
         <el-tree
-          ref="tree-select"
+          ref="tree"
           class="nui-options-tree"
           highlight-current
+          v-bind="$attrs"
+          v-on="$listeners"
           :data="selfData"
           :props="selfProps"
           :node-key="nodeKey"
           :show-checkbox="showCheckbox"
-          :expand-on-click-node="true"
+          :expand-on-click-node="expandOnClickNode"
           :filter-node-method="filterNode"
           :default-checked-keys="checked_keys"
-          v-bind="$attrs"
-          v-on="$listeners"
           @check="handleCheckChange"
           @node-click="treeItemClick"
         ></el-tree>
@@ -90,6 +93,7 @@
 </template>
 
 <script>
+import { randomChar } from "../../utils.js"
 /**
  * name:"树形select"
  * description:"基于element-ui的tab和tree的树形下拉选项框"
@@ -110,6 +114,7 @@ export default {
       options_show: false, // 是否显示下拉选项
       checked_keys: [], // 默认选中
       filterText: "",
+      popoverWrapClass: "",
     }
   },
   props: {
@@ -141,6 +146,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    expandOnClickNode: {
+      type: Boolean,
+      default: true,
+    },
     // 多选时是否将选中值按文字的形式展示
     collapseTags: {
       type: Boolean,
@@ -152,7 +161,10 @@ export default {
       default: false,
     },
     // 宽度
-    width: String,
+    width: {
+      type: String,
+      default: "100%",
+    },
     // 触发方式 click/focus/hover/manual
     trigger: {
       type: String,
@@ -179,7 +191,7 @@ export default {
     },
     size: {
       type: String,
-      default: "medium",
+      default: "default",
     },
     // 是否使用搜索
     filterable: {
@@ -187,7 +199,7 @@ export default {
       default: false,
     },
     // 自定义筛选函数
-    filterFnc: Function,
+    filterNodeMethod: Function,
   },
   model: {
     prop: "value", //这里使我们定义的v-model属性
@@ -195,6 +207,7 @@ export default {
   },
   created() {
     this.chaeckDefaultValue()
+    this.popoverWrapClass = `popover-wrap-${randomChar(12)}`
   },
   watch: {
     value(val) {
@@ -202,7 +215,7 @@ export default {
     },
     // 树节点搜索
     filterText(val) {
-      this.$refs["tree-select"].filter(val)
+      this.$refs["tree"].filter(val)
     },
   },
   computed: {
@@ -251,24 +264,27 @@ export default {
     window.addEventListener(
       "resize",
       function() {
-        if (that.$refs["tree-select"].$el) {
-          that.$refs["tree-select"].$el.style.minWidth =
-            that.$refs.wrap.offsetWidth - 26 + "px"
-        }
+        that.popResize(that)
       },
       false
     )
   },
   methods: {
-    popShow() {
-      this.$refs["tree-select"].$el.style.minWidth =
-        this.$refs.wrap.offsetWidth - 26 + "px"
+    popResize(context = this) {
+      if (context.$refs["tree"]) {
+        // context.$refs["tree"].$el.style.minWidth =
+        //   context.$refs.wrap.offsetWidth - 26 + "px"
+
+        let dom = document.querySelector("." + this.popoverWrapClass)
+
+        dom.style.width = context.$refs.wrap.offsetWidth + "px"
+      }
     },
     // 树节点-showCheckbox选中
     handleCheckChange(val, { checkedNodes, checkedKeys }) {
       /* let nodes = [];
       if (this.leaf) {
-        nodes = this.$refs["tree-select"].getCheckedNodes(this.leaf);
+        nodes = this.$refs["tree"].getCheckedNodes(this.leaf);
       } else {
         checkedNodes.forEach(i => {
           let parent_node =
@@ -278,7 +294,7 @@ export default {
         });
       }
       */
-      let nodes = this.$refs["tree-select"].getCheckedNodes(this.leaf)
+      let nodes = this.$refs["tree"].getCheckedNodes(this.leaf)
       this.selecteds = nodes
       this.$emit("change", nodes)
       if (checkedKeys.length === 0 && this.noCheckedClose) {
@@ -303,13 +319,13 @@ export default {
     tabClose(Id) {
       if (this.disabled) return
       if (this.showCheckbox) {
-        this.$refs["tree-select"].setChecked(Id, false, true)
-        this.selecteds = this.$refs["tree-select"].getCheckedNodes()
+        this.$refs["tree"].setChecked(Id, false, true)
+        this.selecteds = this.$refs["tree"].getCheckedNodes()
         if (this.selecteds.length === 0 && this.noCheckedClose)
           this.options_show = false
       } else {
         this.selecteds = []
-        this.$refs["tree-select"].setCurrentKey(null)
+        this.$refs["tree"].setCurrentKey(null)
         this.options_show = false
       }
       this.$emit("change", this.selecteds)
@@ -332,7 +348,7 @@ export default {
         if (!this.showCheckbox) return
         this.checked_keys = []
         this.$nextTick(() => {
-          this.$refs["tree-select"].setCheckedKeys([])
+          this.$refs["tree"].setCheckedKeys([])
         })
         return
       }
@@ -341,7 +357,7 @@ export default {
         this.checked_keys =
           typeof val[0] === "object" ? val.map((i) => i[this.nodeKey]) : val
         this.$nextTick(() => {
-          this.selecteds = this.$refs["tree-select"].getCheckedNodes(this.leaf)
+          this.selecteds = this.$refs["tree"].getCheckedNodes(this.leaf)
         })
         return
       }
@@ -350,12 +366,12 @@ export default {
         let _val = Array.isArray(val) ? val[0] : val
         this.selecteds = [_val]
         this.$nextTick(() => {
-          this.$refs["tree-select"].setCurrentNode(_val)
+          this.$refs["tree"].setCurrentNode(_val)
         })
       } else {
         this.$nextTick(() => {
-          this.$refs["tree-select"].setCurrentKey(val)
-          let _node = this.$refs["tree-select"].getCurrentNode()
+          this.$refs["tree"].setCurrentKey(val)
+          let _node = this.$refs["tree"].getCurrentNode()
           this.selecteds = _node ? [_node] : []
         })
       }
@@ -365,8 +381,8 @@ export default {
       this.options_show = false
     },
     // 树节点筛选
-    filterNode(value, data) {
-      if (this.filterFnc) return this.filterFnc(value, data)
+    filterNode(value, data, node) {
+      if (this.filterNodeMethod) return this.filterNodeMethod(value, data, node)
       if (!value) return true
       return data[this.selfProps.label].indexOf(value) !== -1
     },
@@ -401,6 +417,7 @@ export default {
       display: inline-block;
       width: calc(100% - 20px);
       text-align: left;
+      padding-bottom: 2px;
     }
 
     > .icon-box {
@@ -464,8 +481,10 @@ export default {
   .nui-select-tag + .nui-select-tag {
   }
 }
-
+.popover-wrap {
+}
 .nui-treeselect-popover {
+  box-sizing: border-box;
   height: 300px;
   > .el-scrollbar__wrap {
     overflow-x: hidden;
@@ -483,8 +502,13 @@ export default {
 }
 
 .nui-placeholder-box {
+  padding-left: 5px;
   color: #c0c4cc;
   font-size: 14px;
   margin: 0;
+}
+
+.filter-input {
+  padding: 0 9px;
 }
 </style>

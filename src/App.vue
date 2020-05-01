@@ -139,6 +139,10 @@ export default {
     font-size: 14px;
     margin-bottom: 45px;
     line-height: 1.5em;
+
+    em {
+      color: #409eff;
+    }
   }
   .intro-list > table strong {
     font-weight: 400;

@@ -26,7 +26,6 @@
               <nui-select
                 :options="options2"
                 width="200px"
-                :change-width="true"
                 v-model="value2"
                 placeholder="请选择"
                 clearable

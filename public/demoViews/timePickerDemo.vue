@@ -11,7 +11,7 @@
         :picker-options="{
           start: '08:30',
           step: '00:15',
-          end: '18:30'
+          end: '18:30',
         }"
         placeholder="选择时间"
       >
@@ -21,11 +21,9 @@
     <h3>任意时间点nui-time-picker</h3>
     <div class="demo-block">
       <nui-time-picker
-        v-model="value"
+        v-model="value1"
         :picker-options="{
-          start: '08:30',
-          step: '00:15',
-          end: '18:30'
+          selectableRange: '12:30:00 - 20:30:00',
         }"
         placeholder="选择时间"
       >
@@ -40,12 +38,12 @@ export default {
   data() {
     return {
       value: "",
-      value1: new Date(2016, 9, 10, 18, 40)
+      value1: new Date(2016, 9, 10, 18, 40),
     }
   },
   created() {},
   mounted() {},
-  methods: {}
+  methods: {},
 }
 </script>
 
