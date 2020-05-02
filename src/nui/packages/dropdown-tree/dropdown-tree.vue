@@ -21,7 +21,23 @@
           :size="size"
           placeholder="请输入关键词"
         ></el-input>
-        <el-tree
+
+        <nui-tree
+          ref="tree"
+          v-bind="$attrs"
+          v-on="$listeners"
+          :leaf-only="leafOnly"
+          :data="selfData"
+          :props="selfProps"
+          :node-key="nodeKey"
+          :show-checkbox="showCheckbox"
+          :expand-on-click-node="expandOnClickNode"
+          :filter-node-method="filterNode"
+          :default-checked-keys="checked_keys"
+          v-model="checked_keys"
+        ></nui-tree>
+
+        <!-- <el-tree
           ref="tree"
           class="nui-options-tree"
           highlight-current
@@ -36,7 +52,7 @@
           :default-checked-keys="checked_keys"
           @check="handleCheckChange"
           @node-click="treeItemClick"
-        ></el-tree>
+        ></el-tree> -->
       </el-scrollbar>
       <!---->
       <div
@@ -206,7 +222,6 @@ export default {
     event: "change",
   },
   created() {
-    this.chaeckDefaultValue()
     this.popoverWrapClass = `popover-wrap-${randomChar(12)}`
   },
   watch: {
@@ -261,6 +276,12 @@ export default {
   mounted() {
     let that = this
 
+    this.$refs["tree"] = this.$refs["tree"].$refs["tree"]
+
+    this.$nextTick(() => {
+      this.chaeckDefaultValue()
+    })
+
     window.addEventListener(
       "resize",
       function() {
@@ -279,41 +300,6 @@ export default {
 
         dom.style.width = context.$refs.wrap.offsetWidth + "px"
       }
-    },
-    // 树节点-showCheckbox选中
-    handleCheckChange(val, { checkedNodes, checkedKeys }) {
-      /* let nodes = [];
-      if (this.leafOnly) {
-        nodes = this.$refs["tree"].getCheckedNodes(this.leafOnly);
-      } else {
-        checkedNodes.forEach(i => {
-          let parent_node =
-            Array.isArray(i[this.selfProps.children]) &&
-            i[this.selfProps.children].length > 0;
-          nodes.push();
-        });
-      }
-      */
-      let nodes = this.$refs["tree"].getCheckedNodes(this.leafOnly)
-      this.selecteds = nodes
-      this.$emit("change", nodes)
-      if (checkedKeys.length === 0 && this.noCheckedClose) {
-        this.options_show = false
-      }
-
-      this.$nextTick(() => {
-        let myEvent = new Event("resize") // resize是指resize事件
-        window.dispatchEvent(myEvent) // 触发window的resize事件
-      })
-    },
-    // 树节点-点击选中
-    treeItemClick(item, node) {
-      if (this.showCheckbox || (this.leafOnly && !node.isLeaf)) {
-        return
-      }
-      this.selecteds = [item]
-      this.options_show = false
-      this.$emit("change", this.selecteds)
     },
     // tag标签关闭
     tabClose(Id) {

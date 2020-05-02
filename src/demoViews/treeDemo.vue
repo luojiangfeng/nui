@@ -1,53 +1,130 @@
 <template>
   <div class="page-main">
-    <h2>Tree 树形控件</h2>
+    <el-tabs class="page-tab" v-model="activeTab">
+      <el-tab-pane label="文档" name="doc">
+        <h2>Tree 树形控件</h2>
 
-    <h3>普通单选</h3>
-    <div class="demo-block">
-      <nui-tree :data="tree1.treeData" v-model="tree1.selectedNodes"></nui-tree>
+        <h3>普通单选</h3>
+        <div class="demo-block">
+          <nui-tree
+            :data="tree1.treeData"
+            v-model="tree1.selectedNodes"
+          ></nui-tree>
 
-      <p>当前选中值：{{ tree1.selectedNodes }}</p>
-    </div>
+          <p>当前选中值：{{ tree1.selectedNodes }}</p>
+        </div>
 
-    <h3>带选框的单选</h3>
-    <h5>
-      可通过设置leaf-only属性来控制“是否只能选择子叶节点”。如果不设置leaf-only或者为false，则父节点可以被选择，此时该父节点的所有子节点全部选中。
-    </h5>
-    <div class="demo-block">
-      <nui-tree
-        leaf-only
-        default-expand-all
-        show-checkbox
-        :multi-check="false"
-        :data="tree2.treeData"
-        v-model="tree2.selectedNodes"
-      ></nui-tree>
+        <h3>带选框的单选</h3>
+        <h5>
+          可通过设置leaf-only属性来控制“是否只能选择子叶节点”。如果不设置leaf-only或者为false，则父节点可以被选择，此时该父节点的所有子节点全部选中。
+        </h5>
+        <div class="demo-block">
+          <nui-tree
+            leaf-only
+            default-expand-all
+            show-checkbox
+            :multi-check="false"
+            :data="tree2.treeData"
+            v-model="tree2.selectedNodes"
+          ></nui-tree>
 
-      <p>当前选中值：{{ tree2.selectedNodes }}</p>
-    </div>
+          <p>当前选中值：{{ tree2.selectedNodes }}</p>
+        </div>
 
-    <h3>多选</h3>
-    <h5>
-      当设置show-checkbox时，默认是可以多选的。增加了一个check-type属性，当设置check-type="radio"时，可变为单选模式。
-    </h5>
-    <div class="demo-block">
-      <nui-tree
-        show-checkbox
-        :default-expanded-keys="[9]"
-        :data="tree3.treeData"
-        v-model="tree3.selectedNodes"
-      ></nui-tree>
+        <h3>多选</h3>
+        <h5>
+          当设置show-checkbox时，默认是可以多选的。增加了一个check-type属性，当设置check-type="radio"时，可变为单选模式。
+        </h5>
+        <div class="demo-block">
+          <nui-tree
+            leaf-only
+            show-checkbox
+            :default-expanded-keys="[9]"
+            :data="tree3.treeData"
+            v-model="tree3.selectedNodes"
+          ></nui-tree>
 
-      <p>当前选中值：{{ tree3.selectedNodes }}</p>
+          <p>当前选中值：{{ tree3.selectedNodes }}</p>
+        </div>
 
-      <!-- <nui-dropdown-tree
-        show-checkbox
-        leaf-only
-        filterable
-        :data="tree2.treeData"
-        v-model="tree2.selectedNodes"
-      ></nui-dropdown-tree> -->
-    </div>
+        <article class="intro-list">
+          <h3>DropdownTree Attributes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>参数</th>
+                <th>说明</th>
+                <th>类型</th>
+                <th>可选值</th>
+                <th>默认值</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>v-model</td>
+                <td>当前选中的数据(可在此处设置默认选中的值)</td>
+                <td>array</td>
+                <td>—</td>
+                <td>[]</td>
+              </tr>
+              <tr>
+                <td>leaf-only</td>
+                <td>是否只能选择子叶</td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>false</td>
+              </tr>
+              <tr>
+                <td>multi-check</td>
+                <td>当show-checkbox为true的时候(即显示选框时)，开启多选功能</td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>true</td>
+              </tr>
+
+              <tr>
+                <td>expand-on-click-node</td>
+                <td>
+                  是否在点击节点的时候展开或者收缩节点， 默认值为 true，如果为
+                  false，则只有点箭头图标的时候才会展开或者收缩节点。
+                </td>
+                <td>boolean</td>
+                <td>—</td>
+                <td><em>true</em></td>
+              </tr>
+              <tr>
+                <td>filterable</td>
+                <td>
+                  是否开启搜索功能，设置为true后，默认为搜索是否存在相应的字符
+                </td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>false</td>
+              </tr>
+              <tr>
+                <td>filter-node-method</td>
+                <td>
+                  自定义筛选时执行的方法，返回 true 表示这个节点可以显示，返回
+                  false 则表示这个节点会被隐藏
+                </td>
+                <td>Function(value, data, node)</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+          <h6>
+            注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
+          </h6>
+        </article>
+      </el-tab-pane>
+      <el-tab-pane label="查看代码" name="code">
+        <show-code
+          v-if="activeTab == 'code'"
+          url="demoViews/DropdownTreeDemo.vue"
+        ></show-code>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -55,6 +132,7 @@
 export default {
   data() {
     return {
+      activeTab: "doc",
       tree1: {
         treeData: [
           {

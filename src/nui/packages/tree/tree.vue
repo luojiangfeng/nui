@@ -10,7 +10,7 @@
     <el-tree
       ref="tree"
       class="nui-options-tree"
-      :highlight-current="true"
+      :highlight-current="highlightCurrent"
       v-bind="$attrs"
       v-on="$listeners"
       :data="selfData"
@@ -52,6 +52,10 @@ export default {
       },
     },
     multiCheck: {
+      type: Boolean,
+      default: true,
+    },
+    highlightCurrent: {
       type: Boolean,
       default: true,
     },
@@ -148,7 +152,13 @@ export default {
       }
       */
 
-      if (this.leafOnly && val.children && val.children.length > 0) {
+      if (
+        this.showCheckbox &&
+        !this.multiCheck &&
+        this.leafOnly &&
+        val.children &&
+        val.children.length > 0
+      ) {
         if (this.selecteds[0]) {
           this.$refs["tree"].setCheckedKeys(
             [this.selecteds[0].id],
@@ -159,7 +169,6 @@ export default {
         }
         return 0
       }
-      console.log(455)
 
       if (!this.multiCheck) {
         if (checkedKeys.length > 0) {
@@ -193,9 +202,6 @@ export default {
       this.selecteds = [item]
       this.options_show = false
       this.$emit("change", this.selecteds)
-
-      console.log(item)
-      console.log(node)
     },
     // 清空数据
     clear() {
