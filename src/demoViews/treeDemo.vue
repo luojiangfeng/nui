@@ -10,6 +10,9 @@
     </div>
 
     <h3>带选框的单选</h3>
+    <h5>
+      可通过设置leaf-only属性来控制“是否只能选择子叶节点”。如果不设置leaf-only或者为false，则父节点可以被选择，此时该父节点的所有子节点全部选中。
+    </h5>
     <div class="demo-block">
       <nui-tree
         leaf-only

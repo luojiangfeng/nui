@@ -148,6 +148,19 @@ export default {
       }
       */
 
+      if (this.leafOnly && val.children && val.children.length > 0) {
+        if (this.selecteds[0]) {
+          this.$refs["tree"].setCheckedKeys(
+            [this.selecteds[0].id],
+            this.leafOnly
+          )
+        } else {
+          this.$refs["tree"].setCheckedKeys([], this.leafOnly)
+        }
+        return 0
+      }
+      console.log(455)
+
       if (!this.multiCheck) {
         if (checkedKeys.length > 0) {
           this.$refs["tree"].setCheckedKeys([val.id], this.leafOnly)
