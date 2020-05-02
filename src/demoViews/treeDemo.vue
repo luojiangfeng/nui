@@ -4,11 +4,7 @@
 
     <h3>普通单选</h3>
     <div class="demo-block">
-      <nui-tree
-        default-expand-all
-        :data="tree1.treeData"
-        v-model="tree1.selectedNodes"
-      ></nui-tree>
+      <nui-tree :data="tree1.treeData" v-model="tree1.selectedNodes"></nui-tree>
 
       <p>当前选中值：{{ tree1.selectedNodes }}</p>
     </div>
@@ -16,6 +12,8 @@
     <h3>带选框的单选</h3>
     <div class="demo-block">
       <nui-tree
+        leaf-only
+        default-expand-all
         show-checkbox
         :multi-check="false"
         :data="tree2.treeData"

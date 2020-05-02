@@ -48,7 +48,7 @@ export default {
   border-radius: 3px;
   transition: 0.2s;
 
-  p {
+  & > p {
     font-size: 14px;
     margin-top: 20px;
   }
