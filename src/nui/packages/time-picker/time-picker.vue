@@ -9,8 +9,9 @@ export default {
   name: "nui-time-picker",
   props: {
     width: {
-      type: String
-    }
+      type: String,
+      default: "100%",
+    },
   },
   data() {
     return {}
@@ -18,7 +19,7 @@ export default {
   computed: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {},
 }
 </script>
 <style scoped lang="scss"></style>

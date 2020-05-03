@@ -89,28 +89,60 @@
               </nui-form-item>
               <nui-form-item :span="12" label="上班时间" prop="workTime">
                 <nui-time-select
-                  v-model="form.workTime"
+                  width="45%"
+                  placeholder="起始时间"
+                  v-model="form.workTime[0]"
                   :picker-options="{
                     start: '08:30',
-                    step: '00:30',
+                    step: '00:15',
                     end: '18:30',
                   }"
-                  placeholder="选择时间"
+                >
+                </nui-time-select>
+                <span class="range-separator">至</span>
+                <nui-time-select
+                  width="45%"
+                  placeholder="结束时间"
+                  v-model="form.workTime[1]"
+                  :picker-options="{
+                    start: '17:00',
+                    step: '00:15',
+                    end: '20:30',
+                    minTime: form.workTime[0],
+                  }"
                 >
                 </nui-time-select>
               </nui-form-item>
             </nui-row>
 
             <nui-form-item label="所属部门" prop="department">
-              <nui-input v-model="form.department"></nui-input>
+              <!-- <nui-input v-model="form.department"></nui-input> -->
+              <nui-cascader
+                v-model="form.department"
+                :options="departmentOptions"
+              ></nui-cascader>
             </nui-form-item>
 
             <nui-form-item label="当前参与项目" prop="curProject">
-              <nui-input v-model="form.curProject"></nui-input>
+              <nui-select
+                filterable
+                :options="projectArr"
+                v-model="form.curProject"
+                placeholder="请选择"
+                clearable
+              >
+              </nui-select>
             </nui-form-item>
 
             <nui-form-item label="所有参与项目" prop="allProject">
-              <nui-input v-model="form.allProject"></nui-input>
+              <nui-select
+                multiple
+                :options="projectArr"
+                v-model="form.allProject"
+                placeholder="请选择"
+                clearable
+              >
+              </nui-select>
             </nui-form-item>
 
             <nui-form-item label="证件资料" prop="certificateData">
@@ -150,6 +182,7 @@ export default {
   data() {
     return {
       activeTab: "doc",
+
       treeCityData: [
         {
           id: 1,
@@ -194,6 +227,96 @@ export default {
           ],
         },
       ],
+      departmentOptions: [
+        {
+          value: "1",
+          label: "利通数字研究院",
+          children: [
+            {
+              value: "2",
+              label: "软件研发部",
+              children: [
+                {
+                  value: "3",
+                  label: "公共组件产品线",
+                },
+                {
+                  value: "4",
+                  label: "道路监控产品线",
+                },
+                {
+                  value: "5",
+                  label: "数据应用产品线",
+                },
+              ],
+            },
+            {
+              value: "6",
+              label: "硬件设计部",
+              children: [
+                {
+                  value: "7",
+                  label: "etc设计",
+                },
+                {
+                  value: "8",
+                  label: "基础设备研发",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          value: "10",
+          label: "东方思维",
+          children: [
+            {
+              value: "11",
+              label: "软件研发部",
+              children: [
+                {
+                  value: "12",
+                  label: "微信小程序",
+                },
+                {
+                  value: "13",
+                  label: "IOS",
+                },
+                {
+                  value: "14",
+                  label: "Andriod",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      projectArr: [
+        {
+          value: 1,
+          label: "基于微服务的新一代软件开发平台研发",
+        },
+        {
+          value: 2,
+          label: "路段数字化运行监测平台研究项目",
+        },
+        {
+          value: 3,
+          label: "广西交投数据管理中心项目",
+        },
+        {
+          value: 4,
+          label: "数据应用产品线技术支持工作",
+        },
+        {
+          value: 5,
+          label: "新一代全国联网收费系统",
+        },
+        {
+          value: 6,
+          label: "基于新收费模式下的路段稽核系统研发",
+        },
+      ],
       form: {
         name: "",
         sex: 0,
@@ -219,13 +342,14 @@ export default {
         birthday: "",
         nativePlace: "",
         usualAddress: "",
+        department: [],
         phone: "",
         email: "",
         hobby: [],
         entryTime: "",
-        workTime: 0,
-        curProject: "",
-        allProject: "",
+        workTime: ["08:30", "17:00"],
+        curProject: [],
+        allProject: [],
         certificateData: "",
         otherData: "",
         vedioData: "",
@@ -244,6 +368,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.range-separator {
+  display: inline-block;
+  font-size: 12px;
+  text-align: center;
+  width: 10%;
+}
 /deep/ .test-col {
   color: green;
 }

@@ -18,6 +18,7 @@ export default {
   props: {
     width: {
       type: String,
+      default: "100%",
     },
     changeWidth: {
       type: Boolean,
