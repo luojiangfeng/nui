@@ -16,7 +16,12 @@
 
         <h3>带选框的单选</h3>
         <h5>
-          可通过设置leaf-only属性来控制“是否只能选择子叶节点”。如果不设置leaf-only或者为false，则父节点可以被选择，此时该父节点的所有子节点全部选中。
+          <p>
+            可通过设置leaf-only属性来控制“是否只能选择子叶节点”。如果不设置leaf-only或者为false，则父节点可以被选择，此时该父节点的所有子节点全部选中。
+          </p>
+          <p>
+            建议只在leaf-only为true的时候使用带选框的单选，如果leaf-only为false的时候要用单选建议不带选框。如果leaf-only为false的时候，又带选框，则为了避免混乱：若某节点是父节点的唯一子节点，且被选中，则等价于其父节点被选中。（如示例的数据，选择“广州”等价于选择“广东”）
+          </p>
         </h5>
         <div class="demo-block">
           <nui-tree
@@ -48,7 +53,7 @@
         </div>
 
         <article class="intro-list">
-          <h3>DropdownTree Attributes</h3>
+          <h3>Tree Attributes</h3>
           <table>
             <thead>
               <tr>

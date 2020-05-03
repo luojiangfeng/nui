@@ -51,6 +51,7 @@ export default {
   & > p {
     font-size: 14px;
     margin-top: 20px;
+    margin-bottom: 10px;
   }
 }
 

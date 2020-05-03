@@ -34,6 +34,7 @@
           :expand-on-click-node="expandOnClickNode"
           :filter-node-method="filterNode"
           :default-checked-keys="checked_keys"
+          @change="handleChange"
           v-model="checked_keys"
         ></nui-tree>
 
@@ -282,24 +283,32 @@ export default {
       this.chaeckDefaultValue()
     })
 
-    window.addEventListener(
-      "resize",
-      function() {
-        that.popResize(that)
-      },
-      false
-    )
+    window.addEventListener("resize", this.popResize, false)
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.popResize, false)
   },
   methods: {
-    popResize(context = this) {
-      if (context.$refs["tree"]) {
-        // context.$refs["tree"].$el.style.minWidth =
-        //   context.$refs.wrap.offsetWidth - 26 + "px"
-
+    popResize() {
+      if (this.$refs["tree"]) {
         let dom = document.querySelector("." + this.popoverWrapClass)
 
-        dom.style.width = context.$refs.wrap.offsetWidth + "px"
+        dom.style.width = this.$refs.wrap.offsetWidth + "px"
       }
+    },
+    handleChange(val) {
+      let that = this
+
+      setTimeout(() => {
+        that.selecteds = val
+      }, 0)
+
+      this.$nextTick(() => {
+        setTimeout(() => {
+          let myEvent = new Event("resize") // resize是指resize事件
+          window.dispatchEvent(myEvent) // 触发window的resize事件
+        }, 0)
+      })
     },
     // tag标签关闭
     tabClose(Id) {

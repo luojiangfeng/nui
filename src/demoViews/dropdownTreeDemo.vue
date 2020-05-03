@@ -18,15 +18,31 @@
         </div>
 
         <h3>带选框的单选下拉树</h3>
+        <h5>
+          建议只在leaf-only为true的时候使用带选框的单选，如果leaf-only为false的时候要用单选建议不带选框。如果leaf-only为false的时候，又带选框，则为了避免混乱：若某节点是父节点的唯一子节点，且被选中，则等价于其父节点被选中。（如示例的数据，选择“广州”等价于选择“广东”）
+        </h5>
         <div class="demo-block">
+          <p>只能选择子叶节点，leaf-only为true</p>
           <nui-dropdown-tree
-            leaf-only
             show-checkbox
+            leaf-only
             :multi-check="false"
             :data="treeData"
             placeholder="选择内容"
             @change="hindleChanged"
             v-model="selectedRadio2"
+          >
+          </nui-dropdown-tree>
+
+          <p>可以选择所有节点，leaf-only为false</p>
+
+          <nui-dropdown-tree
+            show-checkbox
+            :multi-check="false"
+            :data="treeData"
+            placeholder="选择内容"
+            @change="hindleChanged"
+            v-model="selectedRadio3"
           >
           </nui-dropdown-tree>
         </div>
@@ -236,6 +252,7 @@ export default {
       ], // 多选树下拉框选中数据
       selectedRadio1: [], // 单选树下拉框选中数据
       selectedRadio2: [], // 单选树下拉框选中数据
+      selectedRadio3: [], // 单选树下拉框选中数据
     }
   },
   created() {},

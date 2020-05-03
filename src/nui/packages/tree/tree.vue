@@ -152,6 +152,7 @@ export default {
       }
       */
 
+      //单选且leafOnly，点击非leaf无效
       if (
         this.showCheckbox &&
         !this.multiCheck &&
@@ -170,7 +171,8 @@ export default {
         return 0
       }
 
-      if (!this.multiCheck) {
+      //单选
+      if (this.showCheckbox && !this.multiCheck) {
         if (checkedKeys.length > 0) {
           this.$refs["tree"].setCheckedKeys([val.id], this.leafOnly)
         } else {
@@ -179,20 +181,19 @@ export default {
       }
 
       let nodes = this.$refs["tree"].getCheckedNodes(this.leafOnly)
-      this.selecteds = nodes
+      //单选且可选非leaf
+      if (this.showCheckbox && !this.multiCheck && !this.leafOnly) {
+        this.selecteds = nodes.length > 0 ? [nodes[0]] : []
+        nodes = this.selecteds
+      } else {
+        this.selecteds = nodes
+      }
+
       this.$emit("change", nodes)
+
       if (checkedKeys.length === 0 && this.noCheckedClose) {
         this.options_show = false
       }
-
-      // if (!this.multiCheck) {
-      //   this.$refs.tree.setCheckedNodes([data])
-      // }
-
-      this.$nextTick(() => {
-        let myEvent = new Event("resize") // resize是指resize事件
-        window.dispatchEvent(myEvent) // 触发window的resize事件
-      })
     },
     // 树节点-点击选中
     treeItemClick(item, node) {
