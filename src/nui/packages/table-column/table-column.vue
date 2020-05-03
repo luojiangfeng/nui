@@ -7,7 +7,9 @@
     :min-width="config['min-width'] || config.minWidth || config.width"
     :sortable="config.sortable"
     :align="config.align || 'center'"
-    show-overflow-tooltip
+    :show-overflow-tooltip="
+      config.ellipsis == undefined ? true : config.ellipsis
+    "
     v-bind="config.$attrs"
     v-on="config.$listeners"
   >

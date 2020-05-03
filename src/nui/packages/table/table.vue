@@ -589,6 +589,17 @@ export default {
   }
 }
 
+/deep/ .el-table .cell.el-tooltip {
+  height: 100%;
+  padding-right: 8px;
+  padding-left: 8px;
+  & > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 //滚动条
 /deep/::-webkit-scrollbar {
   width: 10px;

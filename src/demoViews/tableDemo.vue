@@ -312,7 +312,7 @@ export default {
           {
             prop: "joinDate",
             label: "入职日期",
-            minWidth: "120",
+            minWidth: "100",
             hidden: false,
             sortable: true,
             align: "left",
@@ -320,7 +320,7 @@ export default {
           {
             prop: "loginName",
             label: "登录名",
-            minWidth: "200",
+            minWidth: "100",
             $attrs: {
               //其他elementUI的属性
               "class-name": "test-col",
@@ -343,10 +343,15 @@ export default {
           {
             prop: "dataStatus",
             label: "状态",
-            minWidth: "160",
+            minWidth: "60",
             filters: { param: "ROLE_STATUS" },
           },
-          { prop: "entName", label: "所属企业", minWidth: "200" },
+          {
+            prop: "entName",
+            label: "所属企业",
+            minWidth: "200",
+            ellipsis: false, //当超过列宽时，是否显示省略号。默认为true。当为false的时候会换行显示完整的内容。
+          },
         ],
         // 表格内操作列
         operatorColumn: {
