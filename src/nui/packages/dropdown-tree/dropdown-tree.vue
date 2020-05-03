@@ -35,6 +35,7 @@
           :filter-node-method="filterNode"
           :default-checked-keys="checked_keys"
           @change="handleChange"
+          @node-click="treeItemClick"
           v-model="checked_keys"
         ></nui-tree>
 
@@ -309,6 +310,15 @@ export default {
           window.dispatchEvent(myEvent) // 触发window的resize事件
         }, 0)
       })
+    },
+    // 树节点-点击选中
+    treeItemClick(item, node) {
+      if (this.showCheckbox || (this.leafOnly && !node.isLeaf)) {
+        return
+      }
+      this.selecteds = [item]
+      this.options_show = false
+      this.$emit("change", this.selecteds)
     },
     // tag标签关闭
     tabClose(Id) {
