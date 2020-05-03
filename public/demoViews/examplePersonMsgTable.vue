@@ -162,6 +162,7 @@ export default {
           {
             prop: "hobby",
             label: "兴趣爱好",
+            ellipsis: false,
             minWidth: "220",
           },
           {

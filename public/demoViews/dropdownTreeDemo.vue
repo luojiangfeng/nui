@@ -5,15 +5,44 @@
         <h2>DropdownTree 下拉树</h2>
         <h3></h3>
 
-        <h3>单选下拉树</h3>
+        <h3>默认单选下拉树</h3>
         <div class="demo-block">
           <nui-dropdown-tree
-            leaf
-            default-expand-all
+            leaf-only
             :data="treeData"
             placeholder="选择内容"
             @change="hindleChanged"
-            v-model="selectedRadio"
+            v-model="selectedRadio1"
+          >
+          </nui-dropdown-tree>
+        </div>
+
+        <h3>带选框的单选下拉树</h3>
+        <h5>
+          建议只在leaf-only为true的时候使用带选框的单选，如果leaf-only为false的时候要用单选建议不带选框。如果leaf-only为false的时候，又带选框，则为了避免混乱：若某节点是父节点的唯一子节点，且被选中，则等价于其父节点被选中。（如示例的数据，选择“广州”等价于选择“广东”）
+        </h5>
+        <div class="demo-block">
+          <p>只能选择子叶节点，leaf-only为true</p>
+          <nui-dropdown-tree
+            show-checkbox
+            leaf-only
+            :multi-check="false"
+            :data="treeData"
+            placeholder="选择内容"
+            @change="hindleChanged"
+            v-model="selectedRadio2"
+          >
+          </nui-dropdown-tree>
+
+          <p>可以选择所有节点，leaf-only为false</p>
+
+          <nui-dropdown-tree
+            show-checkbox
+            :multi-check="false"
+            :data="treeData"
+            placeholder="选择内容"
+            @change="hindleChanged"
+            v-model="selectedRadio3"
           >
           </nui-dropdown-tree>
         </div>
@@ -22,7 +51,7 @@
         <div class="demo-block">
           <nui-dropdown-tree
             show-checkbox
-            filterable
+            leaf-only
             :default-expanded-keys="[4]"
             :data="treeData"
             @change="hindleChanged"
@@ -49,6 +78,20 @@
                 <td>array</td>
                 <td>—</td>
                 <td>[]</td>
+              </tr>
+              <tr>
+                <td>leaf-only</td>
+                <td>是否只能选择子叶</td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>false</td>
+              </tr>
+              <tr>
+                <td>multi-check</td>
+                <td>当show-checkbox为true的时候(即显示选框时)，开启多选功能</td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>true</td>
               </tr>
               <tr>
                 <td>trigger</td>
@@ -79,13 +122,6 @@
                 <td>260px</td>
               </tr>
 
-              <tr>
-                <td>leaf</td>
-                <td>是否只能选择子叶</td>
-                <td>boolean</td>
-                <td>—</td>
-                <td>false</td>
-              </tr>
               <tr>
                 <td>disabled</td>
                 <td>是否禁用</td>
@@ -214,7 +250,9 @@ export default {
           label: "浦东区",
         },
       ], // 多选树下拉框选中数据
-      selectedRadio: [], // 单选树下拉框选中数据
+      selectedRadio1: [], // 单选树下拉框选中数据
+      selectedRadio2: [], // 单选树下拉框选中数据
+      selectedRadio3: [], // 单选树下拉框选中数据
     }
   },
   created() {},

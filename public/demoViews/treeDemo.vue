@@ -1,33 +1,135 @@
 <template>
   <div class="page-main">
-    <h2>Tree 树形控件</h2>
-    <div class="demo-block">
-      <!-- 比elementUI多的属性：width， -->
-      <nui-tree
-        :data="tree1.data"
-        :props="tree1.defaultProps"
-        @node-click="handleNodeClick"
-      ></nui-tree>
-    </div>
+    <el-tabs class="page-tab" v-model="activeTab">
+      <el-tab-pane label="文档" name="doc">
+        <h2>Tree 树形控件</h2>
 
-    <h3>单选</h3>
-    <h5>
-      当设置show-checkbox时，默认是可以多选的。增加了一个check-type属性，当设置check-type="radio"时，可变为单选模式。
-    </h5>
-    <div class="demo-block">
-      <!-- 比elementUI多的属性：width， -->
-      <nui-tree
-        :data="tree2.treeData"
-        check-type="radio"
-        @check="handleRadioClick"
-        ref="tree"
-        :check-on-click-node="false"
-        show-checkbox
-        :check-strictly="false"
-        node-key="id"
-      >
-      </nui-tree>
-    </div>
+        <h3>普通单选</h3>
+        <div class="demo-block">
+          <nui-tree
+            :data="tree1.treeData"
+            v-model="tree1.selectedNodes"
+          ></nui-tree>
+
+          <p>当前选中值：{{ tree1.selectedNodes }}</p>
+        </div>
+
+        <h3>带选框的单选</h3>
+        <h5>
+          <p>
+            可通过设置leaf-only属性来控制“是否只能选择子叶节点”。如果不设置leaf-only或者为false，则父节点可以被选择，此时该父节点的所有子节点全部选中。
+          </p>
+          <p>
+            建议只在leaf-only为true的时候使用带选框的单选，如果leaf-only为false的时候要用单选建议不带选框。如果leaf-only为false的时候，又带选框，则为了避免混乱：若某节点是父节点的唯一子节点，且被选中，则等价于其父节点被选中。（如示例的数据，选择“广州”等价于选择“广东”）
+          </p>
+        </h5>
+        <div class="demo-block">
+          <nui-tree
+            leaf-only
+            default-expand-all
+            show-checkbox
+            :multi-check="false"
+            :data="tree2.treeData"
+            v-model="tree2.selectedNodes"
+          ></nui-tree>
+
+          <p>当前选中值：{{ tree2.selectedNodes }}</p>
+        </div>
+
+        <h3>多选</h3>
+        <h5>
+          当设置show-checkbox时，默认是可以多选的。增加了一个check-type属性，当设置check-type="radio"时，可变为单选模式。
+        </h5>
+        <div class="demo-block">
+          <nui-tree
+            leaf-only
+            show-checkbox
+            :default-expanded-keys="[9]"
+            :data="tree3.treeData"
+            v-model="tree3.selectedNodes"
+          ></nui-tree>
+
+          <p>当前选中值：{{ tree3.selectedNodes }}</p>
+        </div>
+
+        <article class="intro-list">
+          <h3>Tree Attributes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>参数</th>
+                <th>说明</th>
+                <th>类型</th>
+                <th>可选值</th>
+                <th>默认值</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>v-model</td>
+                <td>当前选中的数据(可在此处设置默认选中的值)</td>
+                <td>array</td>
+                <td>—</td>
+                <td>[]</td>
+              </tr>
+              <tr>
+                <td>leaf-only</td>
+                <td>是否只能选择子叶</td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>false</td>
+              </tr>
+              <tr>
+                <td>multi-check</td>
+                <td>当show-checkbox为true的时候(即显示选框时)，开启多选功能</td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>true</td>
+              </tr>
+
+              <tr>
+                <td>expand-on-click-node</td>
+                <td>
+                  是否在点击节点的时候展开或者收缩节点， 默认值为 true，如果为
+                  false，则只有点箭头图标的时候才会展开或者收缩节点。
+                </td>
+                <td>boolean</td>
+                <td>—</td>
+                <td><em>true</em></td>
+              </tr>
+              <tr>
+                <td>filterable</td>
+                <td>
+                  是否开启搜索功能，设置为true后，默认为搜索是否存在相应的字符
+                </td>
+                <td>boolean</td>
+                <td>—</td>
+                <td>false</td>
+              </tr>
+              <tr>
+                <td>filter-node-method</td>
+                <td>
+                  自定义筛选时执行的方法，返回 true 表示这个节点可以显示，返回
+                  false 则表示这个节点会被隐藏
+                </td>
+                <td>Function(value, data, node)</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+          <h6>
+            注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
+          </h6>
+        </article>
+      </el-tab-pane>
+      <el-tab-pane label="查看代码" name="code">
+        <show-code
+          v-if="activeTab == 'code'"
+          url="demoViews/DropdownTreeDemo.vue"
+        ></show-code>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -35,68 +137,63 @@
 export default {
   data() {
     return {
+      activeTab: "doc",
       tree1: {
-        data: [
+        treeData: [
           {
-            label: "一级 1",
+            id: 1,
+            label: "中餐",
             children: [
               {
-                label: "二级 1-1",
+                id: 4,
+                label: "湘菜",
                 children: [
                   {
-                    label: "三级 1-1-1",
+                    id: 9,
+                    label: "剁椒鱼头",
+                  },
+                  {
+                    id: 10,
+                    label: "啤酒鸭",
+                  },
+                ],
+              },
+              {
+                id: 11,
+                label: "川菜",
+                children: [
+                  {
+                    id: 12,
+                    label: "麻婆豆腐",
+                  },
+                  {
+                    id: 13,
+                    label: "麻辣火锅",
+                  },
+                  {
+                    id: 14,
+                    label: "宫保鸡丁",
                   },
                 ],
               },
             ],
           },
           {
-            label: "一级 2",
+            id: 2,
+            label: "西餐",
             children: [
               {
-                label: "二级 2-1",
-                children: [
-                  {
-                    label: "三级 2-1-1",
-                  },
-                ],
+                id: 5,
+                label: "汉堡包",
               },
               {
-                label: "二级 2-2",
-                children: [
-                  {
-                    label: "三级 2-2-1",
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: "一级 3",
-            children: [
-              {
-                label: "二级 3-1",
-                children: [
-                  {
-                    label: "三级 3-1-1",
-                  },
-                ],
-              },
-              {
-                label: "二级 3-2",
-                children: [
-                  {
-                    label: "三级 3-2-1",
-                  },
-                ],
+                id: 6,
+                label: "意大利面",
               },
             ],
           },
         ],
-        defaultProps: {
-          children: "children",
-          label: "label",
-        },
+        selectedNodes: [],
       },
       tree2: {
         treeData: [
@@ -135,7 +232,52 @@ export default {
             ],
           },
         ],
-        checkedNode: {},
+        selectedNodes: [],
+      },
+
+      tree3: {
+        treeData: [
+          {
+            id: 1,
+            label: "广东",
+            children: [
+              {
+                id: 4,
+                label: "广州",
+                children: [
+                  {
+                    id: 9,
+                    label: "天河区",
+                  },
+                  {
+                    id: 10,
+                    label: "越秀区",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 2,
+            label: "上海",
+            children: [
+              {
+                id: 5,
+                label: "静安区",
+              },
+              {
+                id: 6,
+                label: "浦东区",
+              },
+            ],
+          },
+        ],
+        selectedNodes: [
+          {
+            id: 10,
+            label: "越秀区",
+          },
+        ],
       },
     }
   },
