@@ -136,8 +136,9 @@
 
             <nui-form-item label="所有参与项目" prop="allProject">
               <nui-select
+                filterable
                 multiple
-                :options="projectArr"
+                :groupOptions="projectGroupArr"
                 v-model="form.allProject"
                 placeholder="请选择"
                 clearable
@@ -146,31 +147,45 @@
             </nui-form-item>
 
             <nui-form-item label="证件资料" prop="certificateFile">
+              <el-upload
+                action="https://jsonplaceholder.typicode.com/posts/"
+                list-type="picture-card"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove"
+                :limit="5"
+                :before-upload="beforeImgUpload"
+              >
+                <i class="el-icon-plus"></i>
+                <div slot="tip" class="el-upload__tip">
+                  只能上传jpg/png文件，最多上传5张图片，且每个文件不超过500kb
+                </div>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="" />
+              </el-dialog>
+            </nui-form-item>
+
+            <nui-form-item label="其他资料" prop="otherFile">
               <nui-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :before-remove="beforeRemove"
+                :before-upload="beforeOtherDataUpload"
                 multiple
-                :limit="3"
+                :limit="5"
                 :on-exceed="handleExceed"
-                :file-list="form.certificateFile"
+                :file-list="form.otherFile"
               >
                 <nui-button size="small" type="primary">点击上传</nui-button>
                 <div slot="tip" class="el-upload__tip">
-                  只能上传jpg/png文件，且不超过500kb
+                  最多上传3个文件，且每个文件不超过1500kb
                 </div>
               </nui-upload>
             </nui-form-item>
 
-            <nui-form-item label="其他资料" prop="otherData">
-              <nui-input v-model="form.otherData"></nui-input>
-            </nui-form-item>
-
-            <nui-form-item label="影像资料" prop="vedioData">
-              <nui-input v-model="form.vedioData"></nui-input>
-            </nui-form-item>
+            <!-- <nui-form-item label="影像资料" prop="vedioFile"> </nui-form-item> -->
 
             <nui-form-item>
               <nui-button type="primary" @click.prevent="submitForm('form')"
@@ -197,6 +212,8 @@ export default {
   data() {
     return {
       activeTab: "doc",
+      dialogImageUrl: "",
+      dialogVisible: false,
 
       treeCityData: [
         {
@@ -332,6 +349,55 @@ export default {
           label: "基于新收费模式下的路段稽核系统研发",
         },
       ],
+      projectGroupArr: [
+        {
+          label: "软件研发部",
+          options: [
+            {
+              value: 1,
+              label: "基于微服务的新一代软件开发平台研发",
+            },
+            {
+              value: 2,
+              label: "路段数字化运行监测平台研究项目",
+            },
+            {
+              value: 3,
+              label: "广西交投数据管理中心项目",
+            },
+            {
+              value: 4,
+              label: "数据应用产品线技术支持工作",
+            },
+            {
+              value: 5,
+              label: "新一代全国联网收费系统",
+            },
+            {
+              value: 6,
+              label: "基于新收费模式下的路段稽核系统研发",
+            },
+          ],
+        },
+        {
+          label: "移动开发部",
+          options: [
+            {
+              value: 12,
+              label: "微信小程序",
+            },
+            {
+              value: 13,
+              label: "IOS开发",
+            },
+            {
+              value: 14,
+              label: "Andriod开发",
+            },
+          ],
+        },
+      ],
+
       form: {
         name: "",
         sex: 0,
@@ -365,20 +431,20 @@ export default {
         workTime: ["08:30", "17:00"],
         curProject: [],
         allProject: [],
-        certificateFile: [
-          {
-            name: "food.jpeg",
-            url:
-              "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-          },
-          {
-            name: "food2.jpeg",
-            url:
-              "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-          },
+        certificateFile: [],
+        otherFile: [
+          // {
+          //   name: "food.jpeg",
+          //   url:
+          //     "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+          // },
+          // {
+          //   name: "food2.jpeg",
+          //   url:
+          //     "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+          // },
         ],
-        otherData: "",
-        vedioData: "",
+        vedioFile: [],
       },
       rules: {
         name: [{ required: true, message: "请输入公司名称", trigger: "blur" }],
@@ -389,6 +455,28 @@ export default {
   mounted() {},
   methods: {
     testInput(val) {},
+    beforeImgUpload(file) {
+      const isImg = file.type === "image/jpeg" || file.type === "image/png"
+      const isLtSize = file.size / 1024 / 1024 < 0.5
+
+      if (!isImg) {
+        this.$message.error("上传图片只能是 jpg/png 格式!")
+        return false
+      }
+      if (!isLtSize) {
+        this.$message.error("上传图片大小不能超过 500KB!")
+        return false
+      }
+      return isImg && isLtSize
+    },
+    beforeOtherDataUpload(file) {
+      const isLtSize = file.size / 1024 / 1024 < 1.5
+
+      if (!isLtSize) {
+        this.$message.error("文件大小不能超过 1500KB!")
+      }
+      return isLtSize
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList)
     },
@@ -403,6 +491,10 @@ export default {
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`,
         offset: 60,
       })
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`)

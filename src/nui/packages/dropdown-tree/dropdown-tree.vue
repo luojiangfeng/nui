@@ -402,6 +402,7 @@ export default {
   width: 240px;
   vertical-align: middle;
   outline: none;
+  background: #fff;
 
   .selected-box {
     display: flex;
@@ -422,7 +423,13 @@ export default {
       display: inline-block;
       width: calc(100% - 20px);
       text-align: left;
-      padding-bottom: 2px;
+
+      > div {
+        height: 100%;
+        flex-wrap: wrap;
+        display: flex;
+        align-items: center;
+      }
     }
 
     > .icon-box {
@@ -475,7 +482,7 @@ export default {
 
   .nui-select-tag {
     max-width: 100%;
-    margin: 0 3px;
+    margin: 2px 3px;
     text-overflow: ellipsis;
     overflow: hidden;
     word-wrap: break-word;

@@ -257,106 +257,6 @@ export default {
 </script>
 
 <style lang="scss">
-.nui-tree-select {
-  position: relative;
-  display: inline-block;
-  width: 240px;
-  vertical-align: middle;
-  outline: none;
-
-  .selected-box {
-    display: flex;
-    border: 1px solid #dcdfe6;
-    padding: 0 5px 0 8px;
-    width: 100%;
-    min-height: 36px;
-    line-height: 34px;
-    box-sizing: border-box;
-    border-radius: 4px;
-    cursor: pointer;
-    outline: none;
-    &:focus {
-      border-color: #409eff;
-    }
-
-    > .tag-box {
-      display: inline-block;
-      width: calc(100% - 20px);
-      text-align: left;
-      padding-bottom: 2px;
-    }
-
-    > .icon-box {
-      float: right;
-      display: flex;
-      width: 20px;
-      justify-content: center;
-      align-items: Center;
-      font-size: 14px;
-      color: #c0c4cc;
-    }
-  }
-
-  .el-tag .el-icon-close {
-    line-height: 18px;
-  }
-
-  .selected-box.size-small {
-    min-height: 32px;
-    line-height: 30px;
-  }
-  .selected-box.size-mini {
-    min-height: 28px;
-    line-height: 26px;
-  }
-  .selected-box.size-default {
-    min-height: 40px;
-    line-height: 38px;
-  }
-
-  .no-wrap {
-    height: 36px;
-    > .tag-box {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }
-
-  .nui-disabled {
-    background: #eee;
-    cursor: no-drop;
-    &:focus {
-      border-color: #dcdfe6;
-    }
-    .el-tag__close {
-      cursor: no-drop;
-    }
-  }
-
-  .nui-select-tag {
-    max-width: 100%;
-    margin: 0 3px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    word-wrap: break-word;
-    word-break: break-all;
-    vertical-align: middle;
-  }
-
-  .nui-select-tag + .nui-select-tag {
-  }
-}
-.popover-wrap {
-}
-.nui-treeselect-popover {
-  box-sizing: border-box;
-  height: 300px;
-  > .el-scrollbar__wrap {
-    overflow-x: hidden;
-  }
-}
-
 .nui-options-tree {
   display: inline-block !important;
   min-width: 100%;
@@ -365,13 +265,6 @@ export default {
     height: 34px;
     line-height: 34px;
   }
-}
-
-.nui-placeholder-box {
-  padding-left: 5px;
-  color: #c0c4cc;
-  font-size: 14px;
-  margin: 0;
 }
 
 .filter-input {

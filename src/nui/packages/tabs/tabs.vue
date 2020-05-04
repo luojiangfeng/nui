@@ -16,14 +16,25 @@
 <script>
 export default {
   name: "nui-tabs",
-  props: {},
+  props: {
+    skin: {
+      type: String,
+    },
+  },
   data() {
-    return {}
+    return {
+      a: 123,
+    }
   },
   computed: {},
-  created() {},
+  created() {
+    // this.$parent = this
+  },
   mounted() {},
   methods: {},
+  model: {
+    prop: "value", //这里使我们定义的v-model属性
+  },
 }
 </script>
 <style scoped lang="scss"></style>

@@ -6,14 +6,30 @@
       :style="{ width: width }"
       @change="selectChange"
     >
+      <template v-if="groupOptions.length > 0">
+        <el-option-group
+          v-for="group in groupOptions"
+          :key="group.label"
+          :label="group.label"
+        >
+          <el-option
+            v-for="item in group.options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-option-group>
+      </template>
+
       <el-option
+        v-else
         v-for="item in options"
         :key="item.value"
         :label="item.label"
         :value="item.value"
       >
       </el-option>
-      <!-- <span class="test">112222222221</span> -->
     </el-select>
   </div>
 </template>
@@ -30,7 +46,11 @@ export default {
     },
     options: {
       type: Array,
-      default: [],
+      default: () => [],
+    },
+    groupOptions: {
+      type: Array,
+      default: () => [],
     },
     changeWidth: {
       type: Boolean,
@@ -45,6 +65,8 @@ export default {
   computed: {},
   created() {
     this.id = "select" + randomChar(20)
+
+    console.log(this.groupOptions)
   },
   mounted() {},
   methods: {

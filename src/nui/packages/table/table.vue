@@ -103,6 +103,25 @@
 
                 <el-form-item
                   v-show="!item.hidden"
+                  v-if="item.type == 'dropdownTree'"
+                  :ref="item.ref"
+                  :label="item.label"
+                  :key="index"
+                >
+                  <nui-dropdown-tree
+                    v-bind="item.$attrs"
+                    v-on="item.$listeners"
+                    size="small"
+                    :leaf-only="item.leafOnly"
+                    :data="item.data"
+                    :placeholder="item.placeholder"
+                    v-model="config.api.params[item.ref]"
+                  >
+                  </nui-dropdown-tree>
+                </el-form-item>
+
+                <el-form-item
+                  v-show="!item.hidden"
                   v-if="item.type == 'date'"
                   :key="index"
                   :label="item.label"

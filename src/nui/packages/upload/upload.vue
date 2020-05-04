@@ -1,6 +1,8 @@
 <template>
   <el-upload v-bind="$attrs" v-on="$listeners" :style="{ width: width }">
     <slot></slot>
+    <slot name="tip" slot="tip"></slot>
+    <slot name="trigger" slot="trigger"></slot>
   </el-upload>
 </template>
 
@@ -9,8 +11,8 @@ export default {
   name: "nui-upload",
   props: {
     width: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {}
@@ -18,7 +20,7 @@ export default {
   computed: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {},
 }
 </script>
 <style scoped lang="scss"></style>

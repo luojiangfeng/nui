@@ -60,16 +60,16 @@ export default {
 }
 
 .page-tab {
-  .el-tab-pane {
+  > .el-tabs__content > .el-tab-pane {
     padding-top: 40px;
   }
-  .el-tabs__item {
+  > .el-tabs__header .el-tabs__item {
     padding: 0 10px;
   }
 
-  .el-tabs__header {
+  > .el-tabs__header {
     position: fixed;
-    z-index: 9999;
+    z-index: 999;
     width: 100%;
     background: #fff;
   }

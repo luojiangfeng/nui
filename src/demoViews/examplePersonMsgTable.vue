@@ -56,27 +56,60 @@ export default {
                 label: "出生日期:",
                 dateType: "daterange",
               },
-
               {
-                ref: "company",
-                type: "select", //下拉选择器
+                ref: "nativePlace",
+                type: "dropdownTree", //下拉选择器
                 label: "籍贯:",
-                options: [
+                data: [
                   {
-                    value: "0",
-                    label: "华为技术有限公司",
+                    id: 1,
+                    label: "广东",
+                    children: [
+                      {
+                        id: 4,
+                        label: "广州",
+                        children: [
+                          {
+                            id: 9,
+                            label: "天河区",
+                          },
+                          {
+                            id: 10,
+                            label: "越秀区",
+                          },
+                          {
+                            id: 11,
+                            label: "萝岗区",
+                          },
+                          {
+                            id: 12,
+                            label: "黄浦区",
+                          },
+                        ],
+                      },
+                    ],
                   },
                   {
-                    value: "1",
-                    label: "中山TCL制冷制热设备有限公司",
-                  },
-                  {
-                    value: "2",
-                    label: "惠州市普安电子有限公司",
+                    id: 2,
+                    label: "上海",
+                    children: [
+                      {
+                        id: 5,
+                        label: "静安区",
+                      },
+                      {
+                        id: 6,
+                        label: "浦东区",
+                      },
+                    ],
                   },
                 ],
                 width: "120px",
                 placeholder: "请选择籍贯",
+                leafOnly: true,
+                $listeners: {
+                  change: this.nativePlaceChange,
+                },
               },
               {
                 ref: "sex",
@@ -103,43 +136,8 @@ export default {
           },
           {
             title: {
-              text: "企业职工信息",
-              // class: ""
-              // style: { color: "#666", fontWeight: "normal" }
+              text: "人员信息列表",
             },
-            form: [
-              {
-                type: "button",
-                text: "添加",
-                circle: true,
-                icon: "el-icon-plus",
-                buttonType: "success",
-                fun: this.cancelSelect, //测试调用el-table的methods
-              },
-              {
-                type: "button",
-                text: "修改",
-                icon: "el-icon-edit",
-                buttonType: "warning",
-                fun: this.cancelSelect, //测试调用el-table的methods
-              },
-              {
-                type: "button",
-                text: "删除",
-                icon: "el-icon-delete",
-                buttonType: "danger",
-                fun: this.cancelSelect, //测试调用el-table的methods
-              },
-              {
-                type: "button",
-                text: "导出",
-                icon: "el-icon-download",
-                loading: true,
-                plain: true,
-                round: true,
-                fun: this.tableExport,
-              },
-            ],
           },
         ],
         /*================================= 表格内容 ===============================*/
@@ -234,6 +232,9 @@ export default {
   methods: {
     tableSearch() {
       console.log("搜索表格")
+    },
+    nativePlaceChange(val) {
+      console.log(val)
     },
     tableRowDetail(row) {
       this.$alert("这是一段内容", row.userName, {
