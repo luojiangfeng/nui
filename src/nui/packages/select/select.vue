@@ -65,8 +65,6 @@ export default {
   computed: {},
   created() {
     this.id = "select" + randomChar(20)
-
-    console.log(this.groupOptions)
   },
   mounted() {},
   methods: {

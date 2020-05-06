@@ -14,7 +14,7 @@
                 <nui-select
                   clearable
                   v-model="form.political"
-                  :options="form.politicalOptions"
+                  :options="politicalOptions"
                   placeholder="请选择"
                 >
                 </nui-select>
@@ -152,12 +152,12 @@
                 list-type="picture-card"
                 :on-preview="handlePictureCardPreview"
                 :on-remove="handleRemove"
-                :limit="5"
+                :limit="3"
                 :before-upload="beforeImgUpload"
               >
                 <i class="el-icon-plus"></i>
                 <div slot="tip" class="el-upload__tip">
-                  只能上传jpg/png文件，最多上传5张图片，且每个文件不超过500kb
+                  只能上传jpg/png文件，最多上传3张图片，且每个文件不超过500kb
                 </div>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
@@ -174,7 +174,7 @@
                 :before-remove="beforeRemove"
                 :before-upload="beforeOtherDataUpload"
                 multiple
-                :limit="5"
+                :limit="3"
                 :on-exceed="handleExceed"
                 :file-list="form.otherFile"
               >
@@ -189,7 +189,7 @@
 
             <nui-form-item>
               <nui-button type="primary" @click.prevent="submitForm('form')"
-                >立即创建</nui-button
+                >立即录入</nui-button
               >
               <nui-button>取消</nui-button>
             </nui-form-item>
@@ -397,29 +397,30 @@ export default {
           ],
         },
       ],
+      politicalOptions: [
+        {
+          value: 1,
+          label: "正式党员",
+        },
+        {
+          value: 2,
+          label: "预备党员",
+        },
+        {
+          value: 3,
+          label: "共青团员",
+        },
+        {
+          value: 4,
+          label: "群众",
+        },
+      ],
 
       form: {
         name: "",
         sex: 0,
         political: "",
-        politicalOptions: [
-          {
-            value: 1,
-            label: "正式党员",
-          },
-          {
-            value: 2,
-            label: "预备党员",
-          },
-          {
-            value: 3,
-            label: "共青团员",
-          },
-          {
-            value: 4,
-            label: "群众",
-          },
-        ],
+
         birthday: "",
         nativePlace: "",
         usualAddress: "",
@@ -455,6 +456,7 @@ export default {
   mounted() {},
   methods: {
     testInput(val) {},
+    //上传有关
     beforeImgUpload(file) {
       const isImg = file.type === "image/jpeg" || file.type === "image/png"
       const isLtSize = file.size / 1024 / 1024 < 0.5
@@ -486,9 +488,7 @@ export default {
     handleExceed(files, fileList) {
       this.$message({
         type: "warning",
-        message: `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`,
+        message: `最多上传3个文件`,
         offset: 60,
       })
     },
@@ -498,6 +498,18 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`)
+    },
+    //提交表单
+    submitForm(formName) {
+      console.log(this.form)
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert("submit!")
+        } else {
+          console.log("error submit!!")
+          return false
+        }
+      })
     },
   },
 }
