@@ -36,6 +36,30 @@
           </nui-form>
         </div>
 
+        <h3>
+          选项分组
+        </h3>
+        <h5>
+          <p>要用分组传group-options属性，格式与elementUI相同。</p>
+        </h5>
+        <div class="demo-block">
+          <nui-form ref="form" label-width="80px">
+            <nui-form-item label="城市">
+              <nui-select
+                filterable
+                multiple
+                :group-options="groupOptions"
+                :change-width="true"
+                v-model="valueGroup"
+                placeholder="请选择"
+                clearable
+                @change="testChange"
+              >
+              </nui-select>
+            </nui-form-item>
+          </nui-form>
+        </div>
+
         <article class="intro-list">
           <h3>Select Attributes</h3>
           <table>
@@ -138,8 +162,45 @@ export default {
           label: "2北京烤鸭",
         },
       ],
+      groupOptions: [
+        {
+          label: "热门城市",
+          options: [
+            {
+              value: "Shanghai",
+              label: "上海",
+            },
+            {
+              value: "Beijing",
+              label: "北京",
+            },
+          ],
+        },
+        {
+          label: "城市名",
+          options: [
+            {
+              value: "Chengdu",
+              label: "成都",
+            },
+            {
+              value: "Shenzhen",
+              label: "深圳",
+            },
+            {
+              value: "Guangzhou",
+              label: "广州",
+            },
+            {
+              value: "Dalian",
+              label: "大连",
+            },
+          ],
+        },
+      ],
       value: "",
       value2: "",
+      valueGroup: "",
     }
   },
   created() {},
