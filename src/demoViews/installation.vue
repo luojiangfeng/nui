@@ -22,9 +22,9 @@
     </div>
 
     <h3>4、运行项目：</h3>
-    <h5>在项目根目录下，通过npm run serve命令运行开发项目：</h5>
+    <h5>进入到刚创建项目的根目录下，通过npm run serve命令运行开发项目：</h5>
     <div class="demo-block">
-      npm run serve
+      <p>npm run serve</p>
     </div>
   </div>
 </template>
