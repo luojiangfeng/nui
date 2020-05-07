@@ -6,11 +6,11 @@
 
 <script>
 export default {
-  name: "nui-date-picker",
+  name: 'nui-date-picker',
   props: {
     width: {
       type: String,
-      default: "100%",
+      default: '100%',
     },
   },
   data() {

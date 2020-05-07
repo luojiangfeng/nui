@@ -6,11 +6,11 @@
 
 <script>
 export default {
-  name: "nui-time-picker",
+  name: 'nui-time-picker',
   props: {
     width: {
       type: String,
-      default: "100%",
+      default: '100%',
     },
   },
   data() {
@@ -22,4 +22,8 @@ export default {
   methods: {},
 }
 </script>
-<style scoped lang="scss"></style>
+<style lang="scss">
+.el-date-editor .el-range-separator {
+  min-width: 18px;
+}
+</style>

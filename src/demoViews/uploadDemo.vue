@@ -8,20 +8,43 @@
           <nui-upload
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
+            :before-upload="beforeImgUpload"
+            :on-change="fileChange"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :before-remove="beforeRemove"
             multiple
             :limit="3"
             :on-exceed="handleExceed"
-            :file-list="fileList"
           >
             <nui-button size="small" type="primary">点击上传</nui-button>
             <div slot="tip" class="el-upload__tip">
-              只能上传jpg/png文件，且不超过500kb
+              只能上传jpg/png文件，且不超过500kb，不超过3个文件
             </div>
           </nui-upload>
         </div>
+
+        <h3>大文件分片上传</h3>
+        <div class="demo-block">
+          <nui-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :before-upload="beforeImgUpload"
+            :on-change="fileChange"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-remove="beforeRemove"
+            multiple
+            :limit="3"
+            :on-exceed="handleExceed"
+          >
+            <nui-button size="small" type="primary">点击上传</nui-button>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb，不超过3个文件
+            </div>
+          </nui-upload>
+        </div>
+
         <article class="intro-list">
           <h3>Table Attributes</h3>
           <table>
@@ -64,22 +87,25 @@
 export default {
   data() {
     return {
-      activeTab: "doc",
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-        },
-      ],
+      activeTab: 'doc',
+      fileList: [],
     }
   },
   methods: {
+    beforeImgUpload(file) {
+      const isImg = file.type === 'image/jpeg' || file.type === 'image/png'
+      const isLtSize = file.size / 1024 / 1024 < 0.5
+
+      if (!isImg) {
+        this.$message.error('上传图片只能是 jpg/png 格式!')
+        return false
+      }
+      if (!isLtSize) {
+        this.$message.error('上传图片大小不能超过 500KB!')
+        return false
+      }
+      return isImg && isLtSize
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList)
     },
@@ -92,6 +118,10 @@ export default {
           files.length
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       )
+    },
+    fileChange(file, fileList) {
+      this.fileList = fileList
+      console.log(this.fileList)
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`)

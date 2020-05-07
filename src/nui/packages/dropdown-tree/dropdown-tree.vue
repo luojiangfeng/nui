@@ -18,8 +18,9 @@
           v-if="filterable"
           v-model="filterText"
           class="filter-input"
+          clearable
           :size="size"
-          placeholder="请输入关键词"
+          placeholder="输入关键词"
         ></el-input>
 
         <nui-tree
@@ -111,7 +112,7 @@
 </template>
 
 <script>
-import { randomChar } from "../../utils.js"
+import { randomChar } from '../../utils.js'
 /**
  * name:"树形select"
  * description:"基于element-ui的tab和tree的树形下拉选项框"
@@ -125,20 +126,20 @@ import { randomChar } from "../../utils.js"
  * selected -> 选中数据
  */
 export default {
-  name: "nui-dropdown-tree",
+  name: 'nui-dropdown-tree',
   data() {
     return {
       selecteds: [], // 选中数据
       options_show: false, // 是否显示下拉选项
       checked_keys: [], // 默认选中
-      filterText: "",
-      popoverWrapClass: "",
+      filterText: '',
+      popoverWrapClass: '',
     }
   },
   props: {
     popHeight: {
       type: String,
-      default: "260px",
+      default: '260px',
     },
     // 数据
     data: {
@@ -155,7 +156,7 @@ export default {
     // node-key
     nodeKey: {
       type: String,
-      default: "id",
+      default: 'id',
     },
     // 选中数据
     value: [String, Number, Array, Object],
@@ -181,12 +182,12 @@ export default {
     // 宽度
     width: {
       type: String,
-      default: "100%",
+      default: '100%',
     },
     // 触发方式 click/focus/hover/manual
     trigger: {
       type: String,
-      default: "click",
+      default: 'click',
     },
     // 是否禁用
     disabled: {
@@ -205,11 +206,11 @@ export default {
     },
     placeholder: {
       type: String,
-      default: "请选择",
+      default: '请选择',
     },
     size: {
       type: String,
-      default: "default",
+      default: 'default',
     },
     // 是否使用搜索
     filterable: {
@@ -220,8 +221,8 @@ export default {
     filterNodeMethod: Function,
   },
   model: {
-    prop: "value", //这里使我们定义的v-model属性
-    event: "change",
+    prop: 'value', //这里使我们定义的v-model属性
+    event: 'change',
   },
   created() {
     this.popoverWrapClass = `popover-wrap-${randomChar(12)}`
@@ -232,7 +233,7 @@ export default {
     },
     // 树节点搜索
     filterText(val) {
-      this.$refs["tree"].filter(val)
+      this.$refs['tree'].filter(val)
     },
   },
   computed: {
@@ -241,8 +242,8 @@ export default {
     },
     selfProps() {
       return {
-        label: "label",
-        children: "children",
+        label: 'label',
+        children: 'children',
         disabled: (data) => {
           return data.disabled
         },
@@ -250,22 +251,22 @@ export default {
       }
     },
     sizeClass() {
-      let size_class = "size-medium"
+      let size_class = 'size-medium'
       switch (this.size) {
-        case "medium":
-          size_class = "size-medium"
+        case 'medium':
+          size_class = 'size-medium'
           break
-        case "small":
-          size_class = "size-small"
+        case 'small':
+          size_class = 'size-small'
           break
-        case "default":
-          size_class = "size-default"
+        case 'default':
+          size_class = 'size-default'
           break
-        case "mini":
-          size_class = "size-mini"
+        case 'mini':
+          size_class = 'size-mini'
           break
         default:
-          size_class = "size-medium"
+          size_class = 'size-medium'
           break
       }
       return size_class
@@ -278,23 +279,24 @@ export default {
   mounted() {
     let that = this
 
-    this.$refs["tree"] = this.$refs["tree"].$refs["tree"]
+    this.$refs['tree'] = this.$refs['tree'].$refs['tree']
 
     this.$nextTick(() => {
       this.chaeckDefaultValue()
     })
 
-    window.addEventListener("resize", this.popResize, false)
+    window.addEventListener('resize', this.popResize, false)
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.popResize, false)
+    window.removeEventListener('resize', this.popResize, false)
   },
   methods: {
     popResize() {
-      if (this.$refs["tree"]) {
-        let dom = document.querySelector("." + this.popoverWrapClass)
+      if (this.$refs['tree']) {
+        let dom = document.querySelector('.' + this.popoverWrapClass)
 
-        dom.style.width = this.$refs.wrap.offsetWidth + "px"
+        dom.style.width = this.$refs.wrap.offsetWidth + 'px'
+        dom.style.minWidth = '160px'
       }
     },
     handleChange(val) {
@@ -306,7 +308,7 @@ export default {
 
       this.$nextTick(() => {
         setTimeout(() => {
-          let myEvent = new Event("resize") // resize是指resize事件
+          let myEvent = new Event('resize') // resize是指resize事件
           window.dispatchEvent(myEvent) // 触发window的resize事件
         }, 0)
       })
@@ -318,25 +320,25 @@ export default {
       }
       this.selecteds = [item]
       this.options_show = false
-      this.$emit("change", this.selecteds)
+      this.$emit('change', this.selecteds)
     },
     // tag标签关闭
     tabClose(Id) {
       if (this.disabled) return
       if (this.showCheckbox) {
-        this.$refs["tree"].setChecked(Id, false, true)
-        this.selecteds = this.$refs["tree"].getCheckedNodes()
+        this.$refs['tree'].setChecked(Id, false, true)
+        this.selecteds = this.$refs['tree'].getCheckedNodes()
         if (this.selecteds.length === 0 && this.noCheckedClose)
           this.options_show = false
       } else {
         this.selecteds = []
-        this.$refs["tree"].setCurrentKey(null)
+        this.$refs['tree'].setCurrentKey(null)
         this.options_show = false
       }
-      this.$emit("change", this.selecteds)
+      this.$emit('change', this.selecteds)
 
       this.$nextTick(() => {
-        let myEvent = new Event("resize") // resize是指resize事件
+        let myEvent = new Event('resize') // resize是指resize事件
         window.dispatchEvent(myEvent) // 触发window的resize事件
       })
     },
@@ -353,30 +355,30 @@ export default {
         if (!this.showCheckbox) return
         this.checked_keys = []
         this.$nextTick(() => {
-          this.$refs["tree"].setCheckedKeys([])
+          this.$refs['tree'].setCheckedKeys([])
         })
         return
       }
       // 多选处理
       if (this.showCheckbox) {
         this.checked_keys =
-          typeof val[0] === "object" ? val.map((i) => i[this.nodeKey]) : val
+          typeof val[0] === 'object' ? val.map((i) => i[this.nodeKey]) : val
         this.$nextTick(() => {
-          this.selecteds = this.$refs["tree"].getCheckedNodes(this.leafOnly)
+          this.selecteds = this.$refs['tree'].getCheckedNodes(this.leafOnly)
         })
         return
       }
       // 单选处理
-      if (typeof val === "object") {
+      if (typeof val === 'object') {
         let _val = Array.isArray(val) ? val[0] : val
         this.selecteds = [_val]
         this.$nextTick(() => {
-          this.$refs["tree"].setCurrentNode(_val)
+          this.$refs['tree'].setCurrentNode(_val)
         })
       } else {
         this.$nextTick(() => {
-          this.$refs["tree"].setCurrentKey(val)
-          let _node = this.$refs["tree"].getCurrentNode()
+          this.$refs['tree'].setCurrentKey(val)
+          let _node = this.$refs['tree'].getCurrentNode()
           this.selecteds = _node ? [_node] : []
         })
       }
@@ -493,8 +495,7 @@ export default {
   .nui-select-tag + .nui-select-tag {
   }
 }
-.popover-wrap {
-}
+
 .nui-treeselect-popover {
   box-sizing: border-box;
   height: 300px;
@@ -522,5 +523,9 @@ export default {
 
 .filter-input {
   padding: 0 9px;
+
+  .el-input__suffix {
+    padding-right: 5px;
+  }
 }
 </style>

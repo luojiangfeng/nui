@@ -113,6 +113,15 @@
                     v-on="item.$listeners"
                     size="small"
                     :leaf-only="item.leafOnly"
+                    :multi-check="item.multiCheck"
+                    :trigger="item.trigger"
+                    :width="item.width"
+                    :disabled="item.disabled"
+                    :pop-height="item.popHeight"
+                    :collapse-tags="item.collapseTags"
+                    :filterable="item.filterable"
+                    :filter-node-method="item.filterNodeMethod"
+                    :expand-on-click-node="item.expandOnClickNode"
                     :data="item.data"
                     :placeholder="item.placeholder"
                     v-model="config.api.params[item.ref]"
@@ -286,7 +295,7 @@
 
 <script>
 export default {
-  name: "nui-table",
+  name: 'nui-table',
   props: {
     url: {
       type: String,
@@ -302,14 +311,14 @@ export default {
   },
   data() {
     return {
-      rowData: "",
+      rowData: '',
     }
   },
   computed: {
     computedColTpl() {
       return function(data, tpl) {
         let res
-        if (typeof tpl === "function") {
+        if (typeof tpl === 'function') {
           res = tpl(data).replace(/{{data}}/g, data)
         } else {
           res = tpl.replace(/{{data}}/g, data)
@@ -330,14 +339,14 @@ export default {
           : this.config.pagination.showSize
       let _align = this.config.pagination.align
 
-      if (_align === "right") {
+      if (_align === 'right') {
         return _showSize
-          ? "total, sizes, prev, pager, next, jumper"
-          : "total, prev, pager, next, jumper"
+          ? 'total, sizes, prev, pager, next, jumper'
+          : 'total, prev, pager, next, jumper'
       } else {
         return _showSize
-          ? " prev, pager, next, jumper ,sizes,total "
-          : "prev, pager, next, jumper,total"
+          ? ' prev, pager, next, jumper ,sizes,total '
+          : 'prev, pager, next, jumper,total'
       }
     },
   },
@@ -345,10 +354,10 @@ export default {
     // 设置默认参数
     let resPropsNameDefault = {
       //返回的json主要字段名称&获取方式
-      code: "code", //解析接口状态
-      msg: "msg", //解析提示文本
-      rows: "data.rows", //解析数据列表数组
-      total: "data.total", //解析数据列表长度
+      code: 'code', //解析接口状态
+      msg: 'msg', //解析提示文本
+      rows: 'data.rows', //解析数据列表数组
+      total: 'data.total', //解析数据列表长度
     }
     this.config.api.resPropsName = Object.assign(
       {},
@@ -377,14 +386,14 @@ export default {
 
       for (let key in tableParam) {
         let val = tableParam[key]
-        if (val === undefined || val === "") {
+        if (val === undefined || val === '') {
           delete tableParam[key]
         }
       }
 
       this.$http({
         url: that.config.api.url,
-        method: "GET",
+        method: 'GET',
         params: tableParam,
         transformResponse(data) {
           let dataObj = JSON.parse(data)
@@ -413,7 +422,7 @@ export default {
         .catch(() => {})
     },
     formatResDataStr(res, str) {
-      let _strArr = str.split(".")
+      let _strArr = str.split('.')
       let _resData = res
 
       for (let i = 0; i < _strArr.length; i++) {
@@ -443,9 +452,9 @@ export default {
       this.rowData = row
       row.selectFlag = !row.selectFlag
       if (row.selectFlag) {
-        this.$refs["el-table"].setCurrentRow(row)
+        this.$refs['el-table'].setCurrentRow(row)
       } else {
-        this.$refs["el-table"].setCurrentRow()
+        this.$refs['el-table'].setCurrentRow()
       }
     },
     // 表格头部表单

@@ -54,6 +54,7 @@
             leaf-only
             :default-expanded-keys="[4]"
             :data="treeData"
+            filterable
             @change="hindleChanged"
             v-model="selectedCheckbox"
           ></nui-dropdown-tree>
@@ -191,35 +192,35 @@
 
 <script>
 export default {
-  name: "DropdownTree",
+  name: 'DropdownTree',
   data() {
     return {
-      activeTab: "doc",
-      code: "",
+      activeTab: 'doc',
+      code: '',
       treeData: [
         {
           id: 1,
-          label: "广东",
+          label: '广东',
           children: [
             {
               id: 4,
-              label: "广州",
+              label: '广州',
               children: [
                 {
                   id: 9,
-                  label: "天河区",
+                  label: '天河区',
                 },
                 {
                   id: 10,
-                  label: "越秀区",
+                  label: '越秀区',
                 },
                 {
                   id: 11,
-                  label: "萝岗区",
+                  label: '萝岗区',
                 },
                 {
                   id: 12,
-                  label: "黄浦区",
+                  label: '黄浦区',
                 },
               ],
             },
@@ -227,15 +228,15 @@ export default {
         },
         {
           id: 2,
-          label: "上海",
+          label: '上海',
           children: [
             {
               id: 5,
-              label: "静安区",
+              label: '静安区',
             },
             {
               id: 6,
-              label: "浦东区",
+              label: '浦东区',
             },
           ],
         },
@@ -243,11 +244,11 @@ export default {
       selectedCheckbox: [
         {
           id: 11,
-          label: "萝岗区",
+          label: '萝岗区',
         },
         {
           id: 6,
-          label: "浦东区",
+          label: '浦东区',
         },
       ], // 多选树下拉框选中数据
       selectedRadio1: [], // 单选树下拉框选中数据

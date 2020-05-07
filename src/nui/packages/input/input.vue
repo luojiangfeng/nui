@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "nui-input",
+  name: 'nui-input',
   props: {
     width: {
       type: String,
@@ -52,10 +52,10 @@ export default {
   directives: {
     enterNumber: {
       inserted: function(el) {
-        el.addEventListener("keypress", function(e) {
+        el.addEventListener('keypress', function(e) {
           e = e || window.event
 
-          let charcode = typeof e.charCode === "number" ? e.charCode : e.keyCode
+          let charcode = typeof e.charCode === 'number' ? e.charCode : e.keyCode
           let re = /\d/
 
           if (
@@ -84,11 +84,11 @@ export default {
   -webkit-appearance: none;
 }
 
-.hide-arrow /deep/input[type="number"] {
+.hide-arrow /deep/input[type='number'] {
   -moz-appearance: textfield;
 }
 
-.nui-number-input /deep/input[type="number"] {
+.nui-number-input /deep/input[type='number'] {
   -webkit-ime-mode: disabled;
   ime-mode: disabled;
 }

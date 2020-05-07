@@ -3,7 +3,7 @@
 }
 
 body {
-  font-family: Helvetica, "Microsoft YaHei", "黑体";
+  font-family: Helvetica, 'Microsoft YaHei', '黑体';
 }
 
 %clearfix {
@@ -11,12 +11,12 @@ body {
   &:before {
     display: table;
     line-height: 0;
-    content: "";
+    content: '';
   }
   &:after {
     display: table;
     line-height: 0;
-    content: "";
+    content: '';
     clear: both;
   }
 }
