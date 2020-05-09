@@ -9,7 +9,7 @@
       <el-tab-pane label="查看代码" name="code">
         <show-code
           v-if="activeTab == 'code'"
-          url="demoViews/tableDemo.vue"
+          url="demoViews/examplePersonMsgTable.vue"
         ></show-code>
       </el-tab-pane>
     </el-tabs>
