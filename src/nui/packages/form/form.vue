@@ -1,6 +1,6 @@
 <template>
   <el-form
-    ref="elForm"
+    ref="form"
     v-bind="$attrs"
     v-on="$listeners"
     :style="{ width: width, margin: isCenter }"
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "nui-form",
+  name: 'nui-form',
   props: {
     width: {
       type: String,
@@ -25,14 +25,17 @@ export default {
   },
   computed: {
     isCenter() {
-      return this.center ? "0 auto" : ""
+      return this.center ? '0 auto' : ''
     },
   },
   created() {},
   mounted() {},
   methods: {
     validate(callback) {
-      this.$refs["elForm"].validate(callback)
+      this.$refs['form'].validate(callback)
+    },
+    clearValidate(callback) {
+      this.$refs['form'].clearValidate(callback)
     },
   },
 }

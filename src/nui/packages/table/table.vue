@@ -1,5 +1,5 @@
 <template>
-  <div class="nui-table">
+  <div class="nui-table" :class="inset ? 'inset' : ''">
     <!-- 表格标题&操作按钮等 -->
     <slot name="titleBar">
       <template v-for="(eachBar, index) in config.titleBar">
@@ -185,7 +185,7 @@
     </slot>
     <!-- :style="{'width': $store.getters.tableWidth,'transition': 'width .3s'}" -->
     <el-table
-      ref="el-table"
+      ref="table"
       :data="config.data"
       v-bind="$attrs"
       v-on="$listeners"
@@ -239,17 +239,46 @@
       </slot>
 
       <el-table-column
+        v-if="config.operatorColumn && config.operatorColumn.type === 'sort'"
         v-show="!config.operatorColumn.hidden"
-        v-if="config.operatorColumn"
+        :fixed="
+          config.operatorColumn.fixed ? config.operatorColumn.fixed : 'right'
+        "
+        :label="
+          config.operatorColumn.label ? config.operatorColumn.label : '排序'
+        "
+        :width="config.operatorColumn.width ? config.operatorColumn.width : 100"
+        :min-width="config.operatorColumn.minWidth"
+        align="center"
+      >
+        <template slot-scope="scope">
+          <el-button
+            @click="upSort(scope.row, config.operatorColumn.sortBaseUrl)"
+            type="default"
+            icon="el-icon-top"
+            circle
+            size="small"
+          ></el-button>
+
+          <el-button
+            @click="downSort(scope.row, config.operatorColumn.sortBaseUrl)"
+            type="default"
+            icon="el-icon-bottom"
+            circle
+            size="small"
+          ></el-button>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        v-if="config.operatorColumn && config.operatorColumn.type !== 'sort'"
+        v-show="!config.operatorColumn.hidden"
         :fixed="config.operatorColumn && config.operatorColumn.fixed"
         :label="
           (config.operatorColumn && config.operatorColumn.label) || '操作'
         "
-        :min-width="
-          (config.operatorColumn && config.operatorColumn.width) ||
-            config.operatorColumn.minWidth ||
-            100
-        "
+        :width="config.operatorColumn.width"
+        :min-width="config.operatorColumn.minWidth"
         align="center"
       >
         <template slot-scope="scope">
@@ -269,6 +298,7 @@
           >
         </template>
       </el-table-column>
+
       <slot name="end"></slot>
     </el-table>
     <el-pagination
@@ -297,6 +327,10 @@
 export default {
   name: 'nui-table',
   props: {
+    inset: {
+      type: Boolean,
+      default: false,
+    },
     url: {
       type: String,
     },
@@ -356,8 +390,8 @@ export default {
       //返回的json主要字段名称&获取方式
       code: 'code', //解析接口状态
       msg: 'msg', //解析提示文本
-      rows: 'data.rows', //解析数据列表数组
-      total: 'data.total', //解析数据列表长度
+      rows: 'data.result', //解析数据列表数组
+      total: 'data.totalCount', //解析数据列表长度
     }
     this.config.api.resPropsName = Object.assign(
       {},
@@ -371,7 +405,7 @@ export default {
   },
   methods: {
     //获取数据
-    getTableData(_params) {
+    getTableData(_params, cb) {
       let that = this
 
       this.config.api.params = this.config.api.params
@@ -393,8 +427,11 @@ export default {
 
       this.$http({
         url: that.config.api.url,
-        method: 'GET',
-        params: tableParam,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
+        data: this.qs.stringify(tableParam),
         transformResponse(data) {
           let dataObj = JSON.parse(data)
 
@@ -418,6 +455,8 @@ export default {
           this.config.total = _total
           this.config.data = _rowData
           // this.config.currentPage = res.data.current;
+
+          typeof cb === 'function' && cb()
         })
         .catch(() => {})
     },
@@ -447,14 +486,42 @@ export default {
       this.config.currentPage = 1
       this.getTableData({ size: val })
     },
+    upSort(row, baseUrl) {
+      this.$http
+        .get(`${baseUrl}${row.id}/up`)
+        .then((res) => {
+          this.getTableData({}, () => {
+            this.$message({
+              type: 'success',
+              message: '上移成功',
+              duration: 1500,
+            })
+          })
+        })
+        .catch((err) => {})
+    },
+    downSort(row, baseUrl) {
+      this.$http
+        .get(`${baseUrl}${row.id}/down`)
+        .then((res) => {
+          this.getTableData({}, () => {
+            this.$message({
+              type: 'success',
+              message: '下移成功',
+              duration: 1500,
+            })
+          })
+        })
+        .catch((err) => {})
+    },
 
     rowClick(row) {
       this.rowData = row
       row.selectFlag = !row.selectFlag
       if (row.selectFlag) {
-        this.$refs['el-table'].setCurrentRow(row)
+        this.$refs['table'].setCurrentRow(row)
       } else {
-        this.$refs['el-table'].setCurrentRow()
+        this.$refs['table'].setCurrentRow()
       }
     },
     // 表格头部表单
@@ -472,6 +539,13 @@ export default {
   z-index: 0;
   background-color: #fff;
 
+  &.inset {
+    .el-table--border {
+      border-left: none;
+      border-right: none;
+    }
+  }
+
   .title-bar {
     display: flex;
     padding: 10px 12px;
@@ -479,7 +553,7 @@ export default {
     white-space: nowrap;
     .table-title {
       font-size: 18px;
-      color: #333;
+      color: #505050;
       line-height: 32px;
       padding-left: 12px;
       font-weight: bold;
@@ -630,8 +704,8 @@ export default {
 
 //滚动条
 /deep/::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 /deep/::-webkit-scrollbar-button,
 /deep/::-webkit-scrollbar-button:vertical {
@@ -639,6 +713,7 @@ export default {
 }
 /deep/::-webkit-scrollbar-track,
 /deep/::-webkit-scrollbar-track:vertical {
+  border-radius: 10px;
   background-color: black;
 }
 /deep/::-webkit-scrollbar-track-piece {
@@ -646,13 +721,12 @@ export default {
 }
 /deep/::-webkit-scrollbar-thumb,
 /deep/::-webkit-scrollbar-thumb:vertical {
-  border-radius: 0px;
-  margin-right: 10px;
-  background-color: #ddd;
+  border-radius: 10px;
+  background: rgba(144, 147, 153, 0.2);
 }
 /deep/::-webkit-scrollbar-thumb:hover,
 /deep/::-webkit-scrollbar-thumb:vertical:hover {
-  background-color: #bbb;
+  background: rgba(144, 147, 153, 0.3);
 }
 /deep/::-webkit-scrollbar-corner,
 /deep/::-webkit-scrollbar-corner:vertical {

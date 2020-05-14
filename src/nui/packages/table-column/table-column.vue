@@ -4,11 +4,12 @@
     :type="config.type"
     :label="config.label"
     :prop="config.prop"
-    :min-width="config['min-width'] || config.minWidth || config.width"
+    :min-width="config.minWidth"
+    :width="config.width"
     :sortable="config.sortable"
     :align="config.align || 'center'"
     :show-overflow-tooltip="
-      config.ellipsis == undefined ? true : config.ellipsis
+      config.ellipsis == undefined ? false : config.ellipsis
     "
     v-bind="config.$attrs"
     v-on="config.$listeners"
@@ -41,7 +42,7 @@
           }}</span>
           <span
             v-else-if="!config.filters.param && config.filters.method === '￥'"
-            >{{ scope.row[config.prop] | num3(2, "￥") }}</span
+            >{{ scope.row[config.prop] | num3(2, '￥') }}</span
           >
           <span
             v-else-if="!config.filters.param && config.filters.method === '%'"
@@ -59,7 +60,7 @@
 
 <script>
 export default {
-  name: "nui-table-column",
+  name: 'nui-table-column',
   props: {
     config: {
       type: Object,
@@ -98,7 +99,7 @@ export default {
     computedColTpl() {
       return function(data, tpl) {
         let res
-        if (typeof tpl === "function") {
+        if (typeof tpl === 'function') {
           res = tpl(data).replace(/{{data}}/g, data)
         } else {
           res = tpl.replace(/{{data}}/g, data)

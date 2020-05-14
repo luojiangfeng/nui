@@ -1,6 +1,47 @@
-/**
- * Created by Win on 20/02/21.
- */
+export function objToArr(obj, keyPropName = 'value', valuePropName = 'label') {
+  let resultArr = []
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      let item = {}
+
+      item[keyPropName] = key
+      item[valuePropName] = obj[key]
+
+      resultArr.push(item)
+    }
+  }
+  return resultArr
+}
+
+// 获取cookie
+export function getCookie(name, cookie = document.cookie) {
+  let arr
+  const reg = new RegExp(`(^| )${name}=([^;]*)(;|$)`)
+  if ((arr = cookie.match(reg))) {
+    return arr[2]
+  }
+  return null
+}
+
+// 设置cookie
+export function setCookie(c_name, value, expiredays) {
+  const exdate = new Date()
+  exdate.setDate(exdate.getDate() + expiredays)
+  document.cookie = `${c_name}=${escape(value)}${
+    expiredays == null ? '' : `;expires=${exdate.toGMTString()}`
+  }`
+}
+
+// 删除cookie
+export function delCookie(name) {
+  const exp = new Date()
+  exp.setTime(exp.getTime() - 1)
+  const cval = getCookie(name)
+  if (cval != null) {
+    document.cookie = `${name}=${cval};expires=${exp.toGMTString()}`
+  }
+}
 
 // 时间戳转化为年 月 日
 export function getLocalTime(nS) {
@@ -16,26 +57,26 @@ export function getLocalTime(nS) {
   let minute = date.getMinutes()
   // eslint-disable-next-line no-unused-vars
   let second = date.getSeconds()
-  month = month < 10 ? "0" + month : month
-  day = day < 10 ? "0" + day : day
-  h = h < 10 ? "0" + h : h
-  minute = minute < 10 ? "0" + minute : minute
-  second = second < 10 ? "0" + second : second
-  date = year + "-" + month + "-" + day + " " + h + ":" + minute + ":" + second
+  month = month < 10 ? '0' + month : month
+  day = day < 10 ? '0' + day : day
+  h = h < 10 ? '0' + h : h
+  minute = minute < 10 ? '0' + minute : minute
+  second = second < 10 ? '0' + second : second
+  date = year + '-' + month + '-' + day + ' ' + h + ':' + minute + ':' + second
   return date
 }
 // 获取当前时间，格式YYYY-MM-DD
 export function getNowFormatDate() {
   var date = new Date()
-  var seperator1 = "-"
+  var seperator1 = '-'
   var year = date.getFullYear()
   var month = date.getMonth() + 1
   var strDate = date.getDate()
   if (month >= 1 && month <= 9) {
-    month = "0" + month
+    month = '0' + month
   }
   if (strDate >= 0 && strDate <= 9) {
-    strDate = "0" + strDate
+    strDate = '0' + strDate
   }
   var currentdate = year + seperator1 + month + seperator1 + strDate
   return currentdate
@@ -45,9 +86,9 @@ export function getNowFormatDate() {
  * @param {String} name  想要获取的参数名字
  */
 export function getUrlVal(name) {
-  const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)")
-  const url = window.location.search.replace(/%26/g, "&")
-  const url1 = url.replace(/%3D/g, "=")
+  const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
+  const url = window.location.search.replace(/%26/g, '&')
+  const url1 = url.replace(/%3D/g, '=')
   const r = url1.substr(1).match(reg)
   if (r != null) return unescape(r[2])
   return null
@@ -96,36 +137,6 @@ export function debounce(func, wait, immediate) {
 }
 
 /**
- * 检查元素是否有类
- * @param {HTMLElement} elm
- * @param {string} cls
- * @returns {boolean}
- */
-export function hasClass(ele, cls) {
-  return !!ele.className.match(new RegExp("(\\s|^)" + cls + "(\\s|$)"))
-}
-/**
- * 向元素添加类
- * @param {HTMLElement} elm
- * @param {string} cls
- */
-export function addClass(ele, cls) {
-  if (!hasClass(ele, cls)) ele.className += " " + cls
-}
-
-/**
- * 从元素中删除类
- * @param {HTMLElement} elm
- * @param {string} cls
- */
-export function removeClass(ele, cls) {
-  if (hasClass(ele, cls)) {
-    const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)")
-    ele.className = ele.className.replace(reg, " ")
-  }
-}
-
-/**
  * 浮点数加法运算 arg1+arg2
  * @param {number} arg1
  * @param {number} arg2
@@ -134,12 +145,12 @@ export function removeClass(ele, cls) {
 export function floatAdd(arg1, arg2) {
   var r1, r2, m
   try {
-    r1 = arg1.toString().split(".")[1].length
+    r1 = arg1.toString().split('.')[1].length
   } catch (e) {
     r1 = 0
   }
   try {
-    r2 = arg2.toString().split(".")[1].length
+    r2 = arg2.toString().split('.')[1].length
   } catch (e) {
     r2 = 0
   }
@@ -156,12 +167,12 @@ export function floatAdd(arg1, arg2) {
 export function floatSub(arg1, arg2) {
   var r1, r2, m, n
   try {
-    r1 = arg1.toString().split(".")[1].length
+    r1 = arg1.toString().split('.')[1].length
   } catch (e) {
     r1 = 0
   }
   try {
-    r2 = arg2.toString().split(".")[1].length
+    r2 = arg2.toString().split('.')[1].length
   } catch (e) {
     r2 = 0
   }
@@ -171,7 +182,7 @@ export function floatSub(arg1, arg2) {
   return floatDiv(floatMul(arg1, m) - floatMul(arg2, m), m).toFixed(n)
 }
 
-/**  
+/**
  * 浮点数乘法运算 arg1*arg2
  * @param {number} arg1
  * @param {number} arg2
@@ -182,13 +193,13 @@ export function floatMul(arg1, arg2) {
   var s1 = arg1.toString()
   var s2 = arg2.toString()
   try {
-    m += s1.split(".")[1].length
+    m += s1.split('.')[1].length
   } catch (e) {}
   try {
-    m += s2.split(".")[1].length
+    m += s2.split('.')[1].length
   } catch (e) {}
   return (
-    (Number(s1.replace(".", "")) * Number(s2.replace(".", ""))) /
+    (Number(s1.replace('.', '')) * Number(s2.replace('.', ''))) /
     Math.pow(10, m)
   )
 }
@@ -205,13 +216,13 @@ export function floatDiv(arg1, arg2) {
   var r1
   var r2
   try {
-    t1 = arg1.toString().split(".")[1].length
+    t1 = arg1.toString().split('.')[1].length
   } catch (e) {}
   try {
-    t2 = arg2.toString().split(".")[1].length
+    t2 = arg2.toString().split('.')[1].length
   } catch (e) {}
-  r1 = Number(arg1.toString().replace(".", ""))
-  r2 = Number(arg2.toString().replace(".", ""))
+  r1 = Number(arg1.toString().replace('.', ''))
+  r2 = Number(arg2.toString().replace('.', ''))
   return (r1 / r2) * Math.pow(10, t2 - t1)
 }
 
@@ -226,18 +237,6 @@ export function ToFixed(val, pos) {
   return floatDiv(Math.round(mul), Math.pow(10, p))
 }
 
-/**
- * 求数组对象中数字的和
- * @param {array} arry:为数组，数组中装的是对象
- * @param {string} attr：为对象的属性
- */
-export function getSumArryObj(arry, attr) {
-  var sum = 0
-  for (var i in arry) {
-    sum += arry[i][attr]
-  }
-  return ToFixed(sum, 2)
-}
 /**
  * @param {string} path
  * @returns {Boolean}
@@ -274,7 +273,7 @@ export function validateAlphabets(str) {
 }
 /* 判断网络响应状态是否成功 */
 export function isStatusSucces(status) {
-  if (typeof status !== "number") {
+  if (typeof status !== 'number') {
     return false
   }
   return status >= 200 && status < 300
