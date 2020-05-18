@@ -8,12 +8,32 @@
           <nui-radio v-model="radio" label="2">备选项</nui-radio>
         </div>
 
-        <h3>单选框组</h3>
+        <h3>单选框组（3种方式）</h3>
+        <h5>1、单独传每个nui-checkbox组件</h5>
         <div class="demo-block">
-          <nui-radio-group v-model="radioGroup" @change="changeRadio">
+          <nui-radio-group v-model="radioGroup1" @change="changeRadio">
             <nui-radio :label="3">备选项1</nui-radio>
             <nui-radio :label="6">备选项2</nui-radio>
             <nui-radio :label="9">备选项3</nui-radio>
+          </nui-radio-group>
+        </div>
+
+        <h5>2、将每个选项的数据，通过nui-radio-group的options属性传入</h5>
+        <div class="demo-block">
+          <nui-radio-group v-model="radioGroup2" :options="radioOptions">
+          </nui-radio-group>
+        </div>
+
+        <h5>
+          3、选项通过接口获取:通过设置nui-radio-group的url属性，value-name属性，label-name属性
+        </h5>
+        <div class="demo-block">
+          <nui-radio-group
+            url="/api/getLocationList.json"
+            value-name="orgId"
+            label-name="orgName"
+            v-model="radioGroup3"
+          >
           </nui-radio-group>
         </div>
 
@@ -44,7 +64,7 @@
           </nui-radio-group>
         </div>
         <article class="intro-list">
-          <h3>Radio Attributes</h3>
+          <h3>Radio-group Attributes</h3>
           <table>
             <thead>
               <tr>
@@ -57,9 +77,34 @@
             </thead>
             <tbody>
               <tr>
-                <td></td>
-                <td></td>
+                <td>url</td>
+                <td>接口地址(支持GET请求)</td>
+                <td>string</td>
                 <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>value-name</td>
+                <td>
+                  接口返回的，对应option的value的属性名（一般为ID等唯一值）
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>key-name</td>
+                <td>
+                  接口返回的，对应option的label的属性名（一般为name等实际展示的名称）
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>options</td>
+                <td>选项列表</td>
+                <td>array</td>
                 <td>—</td>
                 <td>—</td>
               </tr>
@@ -85,11 +130,18 @@
 export default {
   data() {
     return {
-      activeTab: "doc",
-      radio: "2",
-      radioGroup: 9,
-      radioBtn1: "上海",
-      radioBtn2: "2",
+      activeTab: 'doc',
+      radio: '2',
+      radioGroup1: 9,
+      radioGroup2: 9,
+      radioGroup3: 9,
+      radioOptions: [
+        { label: '单选框A', value: 'A' },
+        { label: '单选框B', value: 'B' },
+        { label: '单选框C', value: 'C' },
+      ],
+      radioBtn1: '上海',
+      radioBtn2: '2',
     }
   },
   created() {},

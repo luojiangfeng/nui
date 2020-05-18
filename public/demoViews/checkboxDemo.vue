@@ -8,14 +8,34 @@
           <nui-checkbox v-model="checkbox2">备选项2</nui-checkbox>
         </div>
 
-        <h3>多选框组</h3>
+        <h3>多选框组（3种方式）</h3>
+        <h5>1、单独传每个nui-checkbox组件</h5>
         <div class="demo-block">
-          <nui-checkbox-group v-model="checkList">
+          <nui-checkbox-group v-model="checkList1">
             <nui-checkbox label="复选框 A"></nui-checkbox>
             <nui-checkbox label="复选框 B"></nui-checkbox>
             <nui-checkbox label="复选框 C"></nui-checkbox>
             <nui-checkbox label="禁用" disabled></nui-checkbox>
             <nui-checkbox label="选中且禁用" disabled></nui-checkbox>
+          </nui-checkbox-group>
+        </div>
+
+        <h5>2、将每个选项的数据，通过nui-checkbox-group的options属性传入</h5>
+        <div class="demo-block">
+          <nui-checkbox-group v-model="checkList2" :options="checkListOptions">
+          </nui-checkbox-group>
+        </div>
+
+        <h5>
+          3、选项通过接口获取:通过设置nui-checkbox-group的url属性，value-name属性，label-name属性
+        </h5>
+        <div class="demo-block">
+          <nui-checkbox-group
+            url="/api/getLocationList.json"
+            value-name="orgId"
+            label-name="orgName"
+            v-model="checkList3"
+          >
           </nui-checkbox-group>
         </div>
 
@@ -47,7 +67,7 @@
         </div>
 
         <article class="intro-list">
-          <h3>Table Attributes</h3>
+          <h3>Checkbox-group Attributes</h3>
           <table>
             <thead>
               <tr>
@@ -60,9 +80,34 @@
             </thead>
             <tbody>
               <tr>
-                <td></td>
-                <td></td>
-                <td>object</td>
+                <td>url</td>
+                <td>接口地址(支持GET请求)</td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>value-name</td>
+                <td>
+                  接口返回的，对应option的value的属性名（一般为ID等唯一值）
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>key-name</td>
+                <td>
+                  接口返回的，对应option的label的属性名（一般为name等实际展示的名称）
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>options</td>
+                <td>选项列表</td>
+                <td>array</td>
                 <td>—</td>
                 <td>—</td>
               </tr>
@@ -86,16 +131,23 @@
 
 <script>
 export default {
-  name: "DemoCheckbox",
+  name: 'DemoCheckbox',
   data() {
     return {
-      activeTab: "doc",
+      activeTab: 'doc',
       checkbox1: true,
       checkbox2: false,
-      checkList: ["选中且禁用", "复选框 A"],
-      checkboxBtn1: ["上海", "深圳"],
-      checkboxBtn2: ["1"],
-      checkboxBoder: ["2"],
+      checkList1: ['选中且禁用', '复选框 A'],
+      checkList2: ['B'],
+      checkList3: [],
+      checkListOptions: [
+        { label: '复选框 A', value: 'A' },
+        { label: '复选框 B', value: 'B' },
+        { label: '复选框 C', value: 'C' },
+      ],
+      checkboxBtn1: ['上海', '深圳'],
+      checkboxBtn2: ['1'],
+      checkboxBoder: ['2'],
     }
   },
   created() {},
