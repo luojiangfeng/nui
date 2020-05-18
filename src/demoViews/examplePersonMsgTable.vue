@@ -212,6 +212,7 @@ export default {
           {
             prop: 'allProject',
             label: '所有参与项目',
+            ellipsis: true,
             minWidth: '160',
           },
         ],

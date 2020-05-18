@@ -37,6 +37,12 @@ export default {
     clearValidate(callback) {
       this.$refs['form'].clearValidate(callback)
     },
+    validateField(props,callback) {
+      this.$refs['form'].validateField(props,callback)
+    },
+    resetFields() {
+      this.$refs['form'].resetFields()
+    },
   },
 }
 </script>

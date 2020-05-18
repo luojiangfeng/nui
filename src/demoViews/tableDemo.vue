@@ -149,7 +149,7 @@ export default {
       tableConfig: {
         /*================================= 接口有关 ===============================*/
         api: {
-          url: '/api/getEntUserList.json',
+          url: '/api/getEntUserListTest.json',
           params: {
             //接口需要的参数。"当前页page","每页数量pageSize"默认传递，可以不在此写
             dateRange: '',

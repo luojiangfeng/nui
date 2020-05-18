@@ -24,7 +24,7 @@
 
       <el-option
         v-else
-        v-for="item in options"
+        v-for="item in innerOptions"
         :key="item.value"
         :label="item.label"
         :value="item.value"
@@ -44,6 +44,17 @@ export default {
       type: String,
       default: "100%",
     },
+    url: {
+      type: String
+    },
+    valueName: {
+      type: String,
+      default: "value",
+    },
+    labelName: {
+      type: String,
+      default: "label",
+    },
     options: {
       type: Array,
       default: () => [],
@@ -60,11 +71,29 @@ export default {
   data() {
     return {
       id: "",
+      innerOptions:this.options
     }
   },
   computed: {},
   created() {
     this.id = "select" + randomChar(20)
+
+    if(this.url){
+      this.$http.get(this.url).then((res) => {
+        let resArr=res.data
+
+       let resOptions= resArr.map((item)=>{
+         let obj={}
+          obj.label=item[this.labelName]
+          obj.value=item[this.valueName]
+            return obj
+        })  
+
+        this.innerOptions=resOptions
+      }).catch((err) => {
+        
+      })
+    }
   },
   mounted() {},
   methods: {

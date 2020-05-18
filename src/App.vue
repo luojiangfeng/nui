@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import leftMenu from "./components/leftMenu"
+import leftMenu from './components/leftMenu'
 export default {
-  name: "app",
+  name: 'app',
   components: { leftMenu },
 }
 </script>
@@ -20,7 +20,7 @@ export default {
 <style lang="scss">
 #app {
   min-height: 100vh;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -42,8 +42,8 @@ export default {
 
 .demo-block {
   padding: 20px;
-  margin-right: 20px;
-  margin-top: 20px;
+  margin: 20px;
+  margin-left: 0px;
   border: 1px solid #ebebeb;
   border-radius: 3px;
   transition: 0.2s;
@@ -95,7 +95,7 @@ export default {
       position: relative;
       z-index: 100;
       top: -2px;
-      content: "";
+      content: '';
       border-radius: 2px;
       width: 4px;
       height: 30px;

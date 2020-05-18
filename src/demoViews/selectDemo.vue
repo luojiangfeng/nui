@@ -81,6 +81,31 @@
                 <td>—</td>
               </tr>
               <tr>
+                <td>url</td>
+                <td>接口地址(支持GET请求)</td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>value-name</td>
+                <td>
+                  接口返回的，对应option的value的属性名（一般为ID等唯一值）
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>key-name</td>
+                <td>
+                  接口返回的，对应option的label的属性名（一般为name等实际展示的名称）
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
                 <td>options</td>
                 <td>选项列表</td>
                 <td>array</td>
@@ -113,94 +138,94 @@
 
 <script>
 export default {
-  name: "DemoRadio",
+  name: 'DemoRadio',
   data() {
     return {
-      activeTab: "doc",
-      code: "",
+      activeTab: 'doc',
+      code: '',
       options: [
         {
           value: 1,
-          label: "黄金糕",
+          label: '黄金糕',
         },
         {
           value: 2,
-          label: "双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶",
+          label: '双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶',
         },
         {
           value: 3,
-          label: "蚵仔煎蚵仔煎蚵仔煎",
+          label: '蚵仔煎蚵仔煎蚵仔煎',
         },
         {
           value: 4,
-          label: "龙须面龙须面",
+          label: '龙须面龙须面',
         },
         {
           value: 5,
-          label: "北京烤鸭",
+          label: '北京烤鸭',
         },
       ],
       options2: [
         {
           value: 10,
-          label: "2黄金糕",
+          label: '2黄金糕',
         },
         {
           value: 20,
-          label: "2双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶",
+          label: '2双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶',
         },
         {
           value: 30,
-          label: "2蚵仔煎蚵仔煎蚵仔煎",
+          label: '2蚵仔煎蚵仔煎蚵仔煎',
         },
         {
           value: 40,
-          label: "2龙须面龙须面",
+          label: '2龙须面龙须面',
         },
         {
           value: 50,
-          label: "2北京烤鸭",
+          label: '2北京烤鸭',
         },
       ],
       groupOptions: [
         {
-          label: "热门城市",
+          label: '热门城市',
           options: [
             {
-              value: "Shanghai",
-              label: "上海",
+              value: 'Shanghai',
+              label: '上海',
             },
             {
-              value: "Beijing",
-              label: "北京",
+              value: 'Beijing',
+              label: '北京',
             },
           ],
         },
         {
-          label: "城市名",
+          label: '城市名',
           options: [
             {
-              value: "Chengdu",
-              label: "成都",
+              value: 'Chengdu',
+              label: '成都',
             },
             {
-              value: "Shenzhen",
-              label: "深圳",
+              value: 'Shenzhen',
+              label: '深圳',
             },
             {
-              value: "Guangzhou",
-              label: "广州",
+              value: 'Guangzhou',
+              label: '广州',
             },
             {
-              value: "Dalian",
-              label: "大连",
+              value: 'Dalian',
+              label: '大连',
             },
           ],
         },
       ],
-      value: "",
-      value2: "",
-      valueGroup: "",
+      value: '',
+      value2: '',
+      valueGroup: '',
     }
   },
   created() {},

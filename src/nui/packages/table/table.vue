@@ -324,6 +324,8 @@
 </template>
 
 <script>
+import qs from 'qs'
+
 export default {
   name: 'nui-table',
   props: {
@@ -425,13 +427,13 @@ export default {
         }
       }
 
-      this.$http({
+      let postConfig = {
         url: that.config.api.url,
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
         },
-        data: this.qs.stringify(tableParam),
+        data: qs.stringify(tableParam),
         transformResponse(data) {
           let dataObj = JSON.parse(data)
 
@@ -444,7 +446,32 @@ export default {
 
           return dataObj
         },
-      })
+      }
+
+      let getConfig = {
+        url: that.config.api.url,
+        method: 'GET',
+        transformResponse(data) {
+          let dataObj = JSON.parse(data)
+
+          let _codeStr = that.config.api.resPropsName.code
+          let _msgStr = that.config.api.resPropsName.msg
+          // that
+
+          dataObj.code = dataObj[_codeStr]
+          dataObj.msg = dataObj[_msgStr]
+
+          return dataObj
+        },
+      }
+
+      let thisConfig =
+        that.config.api.url.substring(that.config.api.url.length - 5) ===
+        '.json'
+          ? getConfig
+          : postConfig
+
+      this.$http(thisConfig)
         .then((res) => {
           let _rowsStr = this.config.api.resPropsName.rows
           let _totalStr = this.config.api.resPropsName.total
@@ -488,7 +515,13 @@ export default {
     },
     upSort(row, baseUrl) {
       this.$http
-        .get(`${baseUrl}${row.id}/up`)
+      this.$http({
+        url: `${baseUrl}${row.id}/up`,
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
         .then((res) => {
           this.getTableData({}, () => {
             this.$message({
@@ -501,8 +534,13 @@ export default {
         .catch((err) => {})
     },
     downSort(row, baseUrl) {
-      this.$http
-        .get(`${baseUrl}${row.id}/down`)
+      this.$http({
+        url: `${baseUrl}${row.id}/down`,
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
         .then((res) => {
           this.getTableData({}, () => {
             this.$message({
