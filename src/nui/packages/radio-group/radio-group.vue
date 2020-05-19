@@ -62,8 +62,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-/deep/.el-radio {
-  margin-top: 8px;
-  margin-bottom: 4px;
-}
+// /deep/.el-radio {
+//   margin-top: 8px;
+//   margin-bottom: 4px;
+// }
 </style>

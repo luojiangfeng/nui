@@ -62,27 +62,11 @@
                     v-bind="item.$attrs"
                     v-on="item.$listeners"
                     :width="item.width"
+                    :url="item.url"
+                    :value-name="item.valueName"
+                    :label-name="item.labelName"
                   >
                   </nui-select>
-
-                  <!-- <el-select
-                    v-model="config.api.params[item.ref]"
-                    v-bind="item.$attrs"
-                    v-on="item.$listeners"
-                    :id="item.ref"
-                    :style="{
-                      width: item.width
-                    }"
-                    placeholder="请选择"
-                  >
-                    <el-option
-                      v-for="(option, index) in item.options"
-                      :key="index"
-                      :label="option.label"
-                      :value="option.value"
-                    >
-                    </el-option>
-                  </el-select> -->
                 </el-form-item>
 
                 <el-form-item
@@ -92,13 +76,35 @@
                   :label="item.label"
                   :key="index"
                 >
-                  <el-radio
-                    v-for="(option, index) in item.options"
-                    :key="index"
-                    :label="option.value"
+                  <nui-radio-group
+                    :options="item.options"
+                    :url="item.url"
+                    :value-name="item.valueName"
+                    :label-name="item.labelName"
+                    v-bind="item.$attrs"
+                    v-on="item.$listeners"
                     v-model="config.api.params[item.ref]"
-                    >{{ option.label }}
-                  </el-radio>
+                  >
+                  </nui-radio-group>
+                </el-form-item>
+
+                <el-form-item
+                  v-show="!item.hidden"
+                  v-if="item.type == 'checkbox'"
+                  :ref="item.ref"
+                  :label="item.label"
+                  :key="index"
+                >
+                  <nui-checkbox-group
+                    :options="item.options"
+                    :url="item.url"
+                    :value-name="item.valueName"
+                    :label-name="item.labelName"
+                    v-model="config.api.params[item.ref]"
+                    v-bind="item.$attrs"
+                    v-on="item.$listeners"
+                  >
+                  </nui-checkbox-group>
                 </el-form-item>
 
                 <el-form-item
@@ -451,6 +457,7 @@ export default {
       let getConfig = {
         url: that.config.api.url,
         method: 'GET',
+        params: tableParam,
         transformResponse(data) {
           let dataObj = JSON.parse(data)
 
