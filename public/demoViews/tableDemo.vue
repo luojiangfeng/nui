@@ -149,13 +149,14 @@ export default {
       tableConfig: {
         /*================================= 接口有关 ===============================*/
         api: {
-          url: '/api/getEntUserListTest.json',
+          url: '/api/getEntUserList.json',
           params: {
             //接口需要的参数。"当前页page","每页数量pageSize"默认传递，可以不在此写
             dateRange: '',
             userName: '',
             company: '',
             sex: '',
+            hobby: [], //checkbox要用数组
           },
           resPropsName: {
             //返回的json主要字段名称&获取方式
@@ -215,6 +216,9 @@ export default {
                 width: '120px',
                 placeholder: '请选择企业',
                 changeWidth: true, //是否根据选择内容改变宽度。。默认为true
+                url: '/api/getLocationList.json', //接口获取参数，radio、checkbox用法相同
+                valueName: 'orgId', //接口获取参数，radio、checkbox用法相同
+                labelName: 'orgName', //接口获取参数，radio、checkbox用法相同
                 $attrs: {
                   clearable: true,
                 },
@@ -239,6 +243,34 @@ export default {
                 text: '查询',
                 icon: 'el-icon-search',
                 fun: this.tableSearch,
+              },
+            ],
+          },
+          {
+            // style: { background: "#f7fbff" },
+            form: [
+              {
+                ref: 'hobby',
+                type: 'checkbox', //单选checkbox
+                label: '兴趣爱好:',
+                options: [
+                  {
+                    value: '0',
+                    label: '体育运动',
+                  },
+                  {
+                    value: '1',
+                    label: '音乐',
+                  },
+                  {
+                    value: '2',
+                    label: '乐器',
+                  },
+                  {
+                    value: '3',
+                    label: '电影',
+                  },
+                ],
               },
             ],
           },
