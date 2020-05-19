@@ -243,6 +243,16 @@
                     >Drawer 抽屉</router-link
                   >
                 </li>
+                <li class="nav-item">
+                  <router-link active-class="active" to="/collapse"
+                    >Collapse 折叠面板</router-link
+                  >
+                </li>
+                <li class="nav-item">
+                  <router-link active-class="active" to="/divider"
+                    >Divider 分割线</router-link
+                  >
+                </li>
               </ul>
             </div>
 
@@ -269,7 +279,7 @@
 </template>
 <script>
 export default {
-  name: "leftMenu",
+  name: 'leftMenu',
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath)
@@ -290,7 +300,7 @@ export default {
   width: 134px;
   height: 116px;
   transform: scale(0.5);
-  @include bg("logo.png");
+  @include bg('logo.png');
 }
 .page-component__nav {
   background: #fff;
