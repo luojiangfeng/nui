@@ -29,6 +29,8 @@
                   :key="index"
                   :style="{
                     width: item.width,
+                    minWidth: item.minWidth,
+                    maxWidth: item.maxWidth,
                   }"
                 >
                   <el-input
@@ -58,7 +60,9 @@
                         ? '请选择'
                         : item.placeholder
                     "
-                    clearable
+                    :clearable="
+                      item.clearable == undefined ? true : item.clearable
+                    "
                     v-bind="item.$attrs"
                     v-on="item.$listeners"
                     :width="item.width"

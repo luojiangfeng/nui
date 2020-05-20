@@ -4,7 +4,7 @@
     :type="config.type"
     :label="config.label"
     :prop="config.prop"
-    :min-width="config.minWidth"
+    :style="{ minWidth: config.minWidth, maxWidth: config.maxWidth }"
     :width="config.width"
     :sortable="config.sortable"
     :align="config.align || 'center'"

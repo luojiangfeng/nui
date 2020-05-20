@@ -22,23 +22,30 @@
       :default-checked-keys="checked_keys"
       @check="handleCheckChange"
       @node-click="treeItemClick"
-    ></el-tree>
+    >
+      <template slot-scope="{ node, data }">
+        <!-- <slot v-if="customIconConfig" :node="node" :data="data"></slot> -->
+        <span v-if="customIconConfig" class="custom-tree-node">
+          <i class="icon" :class="setCustomClass(data)"></i>
+          <span class="el-tree-node__label">{{ node.label }}</span>
+        </span>
+
+        <span v-else class="el-tree-node__label">{{ node.label }}</span>
+      </template>
+    </el-tree>
   </div>
 </template>
 
 <script>
 export default {
-  name: "nui-tree",
-  data() {
-    return {
-      selecteds: [], // 选中数据
-      options_show: false, // 是否显示下拉选项
-      checked_keys: [], // 默认选中
-      filterText: "",
-      popoverWrapClass: "",
-    }
-  },
+  name: 'nui-tree',
+
   props: {
+    // 数据
+    customIconConfig: {
+      type: Array,
+      default: () => [],
+    },
     // 数据
     data: {
       type: Array,
@@ -62,7 +69,7 @@ export default {
     // node-key
     nodeKey: {
       type: String,
-      default: "id",
+      default: 'id',
     },
     // 选中数据
     value: [String, Number, Array, Object],
@@ -83,7 +90,7 @@ export default {
     // 宽度
     width: {
       type: String,
-      default: "100%",
+      default: '100%',
     },
 
     // 多选时，清空选项关闭
@@ -94,7 +101,7 @@ export default {
 
     size: {
       type: String,
-      default: "default",
+      default: 'default',
     },
     // 是否使用搜索
     filterable: {
@@ -104,20 +111,27 @@ export default {
     // 自定义筛选函数
     filterNodeMethod: Function,
   },
+  data() {
+    return {
+      selecteds: [], // 选中数据
+      options_show: false, // 是否显示下拉选项
+      checked_keys: [], // 默认选中
+      filterText: '',
+      popoverWrapClass: '',
+    }
+  },
   model: {
-    prop: "value", //这里使我们定义的v-model属性
-    event: "change",
+    prop: 'value', //这里使我们定义的v-model属性
+    event: 'change',
   },
-  created() {
-    this.chaeckDefaultValue()
-  },
+
   watch: {
     value(val) {
       this.chaeckDefaultValue()
     },
     // 树节点搜索
     filterText(val) {
-      this.$refs["tree"].filter(val)
+      this.$refs['tree'].filter(val)
     },
   },
   computed: {
@@ -126,8 +140,8 @@ export default {
     },
     selfProps() {
       return {
-        label: "label",
-        children: "children",
+        label: 'label',
+        children: 'children',
         disabled: (data) => {
           return data.disabled
         },
@@ -135,8 +149,29 @@ export default {
       }
     },
   },
+  created() {
+    this.chaeckDefaultValue()
+  },
   mounted() {},
   methods: {
+    setCustomClass(data) {
+      let config = this.customIconConfig
+      let res = ''
+
+      if (config.length === 1 && config[0].key === undefined) {
+        res = config[0].class
+      } else {
+        for (let i = 0; i < config.length; i++) {
+          const element = config[i]
+          let thisClass =
+            data[config[i].key] === config[i].value ? config[i].class : ''
+          res += thisClass + ' '
+        }
+      }
+
+      return res
+    },
+
     // 树节点-showCheckbox选中
     handleCheckChange(val, { checkedNodes, checkedKeys }) {
       /* let nodes = [];
@@ -161,12 +196,12 @@ export default {
         val.children.length > 0
       ) {
         if (this.selecteds[0]) {
-          this.$refs["tree"].setCheckedKeys(
+          this.$refs['tree'].setCheckedKeys(
             [this.selecteds[0].id],
             this.leafOnly
           )
         } else {
-          this.$refs["tree"].setCheckedKeys([], this.leafOnly)
+          this.$refs['tree'].setCheckedKeys([], this.leafOnly)
         }
         return 0
       }
@@ -174,13 +209,13 @@ export default {
       //单选
       if (this.showCheckbox && !this.multiCheck) {
         if (checkedKeys.length > 0) {
-          this.$refs["tree"].setCheckedKeys([val.id], this.leafOnly)
+          this.$refs['tree'].setCheckedKeys([val.id], this.leafOnly)
         } else {
-          this.$refs["tree"].setCheckedKeys([], this.leafOnly)
+          this.$refs['tree'].setCheckedKeys([], this.leafOnly)
         }
       }
 
-      let nodes = this.$refs["tree"].getCheckedNodes(this.leafOnly)
+      let nodes = this.$refs['tree'].getCheckedNodes(this.leafOnly)
       //单选且可选非leaf
       if (this.showCheckbox && !this.multiCheck && !this.leafOnly) {
         this.selecteds = nodes.length > 0 ? [nodes[0]] : []
@@ -189,7 +224,7 @@ export default {
         this.selecteds = nodes
       }
 
-      this.$emit("change", nodes)
+      this.$emit('change', nodes)
 
       if (checkedKeys.length === 0 && this.noCheckedClose) {
         this.options_show = false
@@ -202,7 +237,7 @@ export default {
       }
       this.selecteds = [item]
       this.options_show = false
-      this.$emit("change", this.selecteds)
+      this.$emit('change', this.selecteds)
     },
     // 清空数据
     clear() {
@@ -217,30 +252,30 @@ export default {
         if (!this.showCheckbox) return
         this.checked_keys = []
         this.$nextTick(() => {
-          this.$refs["tree"].setCheckedKeys([])
+          this.$refs['tree'].setCheckedKeys([])
         })
         return
       }
       // 多选处理
       if (this.showCheckbox) {
         this.checked_keys =
-          typeof val[0] === "object" ? val.map((i) => i[this.nodeKey]) : val
+          typeof val[0] === 'object' ? val.map((i) => i[this.nodeKey]) : val
         this.$nextTick(() => {
-          this.selecteds = this.$refs["tree"].getCheckedNodes(this.leafOnly)
+          this.selecteds = this.$refs['tree'].getCheckedNodes(this.leafOnly)
         })
         return
       }
       // 单选处理
-      if (typeof val === "object") {
+      if (typeof val === 'object') {
         let _val = Array.isArray(val) ? val[0] : val
         this.selecteds = [_val]
         this.$nextTick(() => {
-          this.$refs["tree"].setCurrentNode(_val)
+          this.$refs['tree'].setCurrentNode(_val)
         })
       } else {
         this.$nextTick(() => {
-          this.$refs["tree"].setCurrentKey(val)
-          let _node = this.$refs["tree"].getCurrentNode()
+          this.$refs['tree'].setCurrentKey(val)
+          let _node = this.$refs['tree'].getCurrentNode()
           this.selecteds = _node ? [_node] : []
         })
       }
@@ -257,6 +292,14 @@ export default {
 </script>
 
 <style lang="scss">
+.custom-tree-node {
+  .icon {
+    margin-right: 2px;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+  }
+}
 .nui-options-tree {
   display: inline-block !important;
   min-width: 100%;
