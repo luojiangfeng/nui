@@ -321,6 +321,12 @@ export default {
         firstColumn: {
           type: 'selection',
           reserveSelection: true,
+        },
+        secondColumn: {
+          type: 'index',
+        },
+        thirdColumn: {
+          type: 'expand',
           hidden: true,
         },
         // 表格列设置
@@ -330,6 +336,7 @@ export default {
             label: '用户名',
             minWidth: '100',
             sortable: true,
+
             /* 2种方式自定义模板字符串 （局限性：并不能解析类似<el-input>的各种组件，绑定数据等，适用于单纯的样式展示）。要用到更全面的功能，需要用tbody插槽插入完整的el-table-column */
             //第一种是直接传html字符串，其中{{data}}代表当前字段的值
             // template: "<div class='test-tpl'>{{data}}</div>",
@@ -358,6 +365,7 @@ export default {
             prop: 'loginName',
             label: '登录名',
             minWidth: '100',
+            clickFun: this.loginNameClick, //点击事件，回调函数第一个参数是本行的数据
             $attrs: {
               //其他elementUI的属性
               'class-name': 'test-col',
@@ -393,7 +401,7 @@ export default {
         // 表格内操作列
         operatorColumn: {
           fixed: 'right',
-          minWidth: 120,
+          width: 120,
           label: '操作',
           buttonArr: [
             {
@@ -443,6 +451,9 @@ export default {
         message: '导出成功',
         type: 'success',
       })
+    },
+    loginNameClick(row) {
+      alert(row.loginName)
     },
     // 获取列表数据的唯一标识
     getRowKey(row) {

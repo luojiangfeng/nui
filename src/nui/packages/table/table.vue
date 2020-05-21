@@ -202,8 +202,9 @@
       border
       @row-click="rowClick"
     >
-      <!-- 序列号/复选框 -->
-      <div v-if="config.firstColumn">
+      <!-- 表格前面的列：原本只有firstColumn，后面实际开发可能会需要定义前面2、3列。-->
+      <!-- 为了使之前项目代码改动最小，就不改成数组形式了 。而且第二、三列的情况很少 -->
+      <template v-if="config.firstColumn && !config.firstColumn.hidden">
         <el-table-column
           :type="config.firstColumn.type"
           width="50"
@@ -213,7 +214,6 @@
           v-bind="config.firstColumn.$attrs"
           v-if="config.firstColumn.type === 'selection'"
         ></el-table-column>
-
         <el-table-column
           :type="config.firstColumn.type"
           width="50"
@@ -239,7 +239,85 @@
             }}</span>
           </template>
         </el-table-column>
-      </div>
+      </template>
+
+      <!-- 第二列 -->
+      <template v-if="config.secondColumn && !config.secondColumn.hidden">
+        <el-table-column
+          :type="config.secondColumn.type"
+          width="50"
+          :label="config.secondColumn.label"
+          :reserve-selection="config.secondColumn.reserveSelection || false"
+          align="center"
+          v-bind="config.secondColumn.$attrs"
+          v-if="config.secondColumn.type === 'selection'"
+        ></el-table-column>
+
+        <el-table-column
+          :type="config.secondColumn.type"
+          width="50"
+          :label="config.secondColumn.label"
+          align="center"
+          v-bind="config.secondColumn.$attrs"
+          v-if="config.secondColumn.type === 'expand'"
+        ></el-table-column>
+        <el-table-column
+          :type="config.secondColumn.type"
+          width="50"
+          :reserve-selection="config.secondColumn.isPaging || false"
+          :label="config.secondColumn.label"
+          align="center"
+          v-bind="config.secondColumn.$attrs"
+          v-if="config.secondColumn.type === 'index'"
+        >
+          <template slot-scope="scope">
+            <span>{{
+              config.pagination
+                ? (config.currentPage - 1) * config.pageSize + scope.$index + 1
+                : scope.$index + 1
+            }}</span>
+          </template>
+        </el-table-column>
+      </template>
+
+      <!-- 第三列 -->
+      <template v-if="config.thirdColumn && !config.thirdColumn.hidden">
+        <el-table-column
+          :type="config.thirdColumn.type"
+          width="50"
+          :label="config.thirdColumn.label"
+          :reserve-selection="config.thirdColumn.reserveSelection || false"
+          align="center"
+          v-bind="config.thirdColumn.$attrs"
+          v-if="config.thirdColumn.type === 'selection'"
+        ></el-table-column>
+
+        <el-table-column
+          :type="config.thirdColumn.type"
+          width="50"
+          :label="config.thirdColumn.label"
+          align="center"
+          v-bind="config.thirdColumn.$attrs"
+          v-if="config.thirdColumn.type === 'expand'"
+        ></el-table-column>
+        <el-table-column
+          :type="config.thirdColumn.type"
+          width="50"
+          :reserve-selection="config.thirdColumn.isPaging || false"
+          :label="config.thirdColumn.label"
+          align="center"
+          v-bind="config.thirdColumn.$attrs"
+          v-if="config.thirdColumn.type === 'index'"
+        >
+          <template slot-scope="scope">
+            <span>{{
+              config.pagination
+                ? (config.currentPage - 1) * config.pageSize + scope.$index + 1
+                : scope.$index + 1
+            }}</span>
+          </template>
+        </el-table-column>
+      </template>
 
       <slot name="tbody">
         <template v-for="(item, index) in config.column">

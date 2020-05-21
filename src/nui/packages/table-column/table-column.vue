@@ -27,31 +27,71 @@
     </template>
     <template v-else> -->
     <template slot-scope="scope">
+      <!-- 是否用模板 -->
       <template v-if="config.template">
         <div
           v-html="computedColTpl(scope.row[config.prop], config.template)"
         ></div>
       </template>
       <template v-else>
-        <div v-if="!config.filters">
-          {{ scope.row[config.prop] }}
-        </div>
-        <div v-if="config.filters">
-          <span v-if="config.filters.param">{{
-            scope.row[config.prop] | constantKey2Value(config.filters.param)
-          }}</span>
-          <span
-            v-else-if="!config.filters.param && config.filters.method === '￥'"
-            >{{ scope.row[config.prop] | num3(2, '￥') }}</span
-          >
-          <span
-            v-else-if="!config.filters.param && config.filters.method === '%'"
-            >{{ scope.row[config.prop] | percentFilter }}</span
-          >
-          <span v-else-if="!config.filters.param && config.filters.method">{{
-            computedColFilter(scope.row[config.prop], config.filters.method)
-          }}</span>
-        </div>
+        <!-- 是否可点击 -->
+        <template v-if="config.clickFun !== undefined">
+          <div v-if="!config.filters">
+            <a class="table-cell-a" @click="config.clickFun(scope.row)">{{
+              scope.row[config.prop]
+            }}</a>
+          </div>
+          <div v-if="config.filters">
+            <span v-if="config.filters.param"
+              ><a class="table-cell-a">{{
+                scope.row[config.prop] | constantKey2Value(config.filters.param)
+              }}</a></span
+            >
+            <span
+              v-else-if="
+                !config.filters.param && config.filters.method === '￥'
+              "
+              ><a class="table-cell-a">{{
+                scope.row[config.prop] | num3(2, '￥')
+              }}</a></span
+            >
+            <span
+              v-else-if="!config.filters.param && config.filters.method === '%'"
+              ><a class="table-cell-a">{{
+                scope.row[config.prop] | percentFilter
+              }}</a></span
+            >
+            <span v-else-if="!config.filters.param && config.filters.method"
+              ><a class="table-cell-a">{{
+                computedColFilter(scope.row[config.prop], config.filters.method)
+              }}</a></span
+            >
+          </div>
+        </template>
+
+        <template v-else>
+          <div v-if="!config.filters">
+            {{ scope.row[config.prop] }}
+          </div>
+          <div v-if="config.filters">
+            <span v-if="config.filters.param">{{
+              scope.row[config.prop] | constantKey2Value(config.filters.param)
+            }}</span>
+            <span
+              v-else-if="
+                !config.filters.param && config.filters.method === '￥'
+              "
+              >{{ scope.row[config.prop] | num3(2, '￥') }}</span
+            >
+            <span
+              v-else-if="!config.filters.param && config.filters.method === '%'"
+              >{{ scope.row[config.prop] | percentFilter }}</span
+            >
+            <span v-else-if="!config.filters.param && config.filters.method">{{
+              computedColFilter(scope.row[config.prop], config.filters.method)
+            }}</span>
+          </div>
+        </template>
       </template>
     </template>
     <!-- </template> -->
@@ -119,4 +159,15 @@ export default {
   methods: {},
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+/deep/.table-cell-a {
+  cursor: pointer;
+  &:hover {
+    @if (global-variable-exists(c-m)) {
+      color: $c-m;
+    } @else {
+      color: #409eff;
+    }
+  }
+}
+</style>
