@@ -1,0 +1,16 @@
+{
+  "msg": "success",
+  "code": 200,
+  "data": [
+    {
+      "title": "Portlet列表",
+      "customAttr": "自定义属性",
+      "expand": true,
+      "key": "root",
+      "children": [
+        { "title": "内容管理portlet", "key": "cmsPortlet" },
+        { "title": "日程管理portlet", "key": "calporltet" }
+      ]
+    }
+  ]
+}

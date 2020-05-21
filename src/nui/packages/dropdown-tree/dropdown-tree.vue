@@ -28,6 +28,7 @@
           v-bind="$attrs"
           v-on="$listeners"
           :leaf-only="leafOnly"
+          :url="url"
           :data="selfData"
           :props="selfProps"
           :node-key="nodeKey"
@@ -127,16 +128,11 @@ import { randomChar } from '../../utils.js'
  */
 export default {
   name: 'nui-dropdown-tree',
-  data() {
-    return {
-      selecteds: [], // 选中数据
-      options_show: false, // 是否显示下拉选项
-      checked_keys: [], // 默认选中
-      filterText: '',
-      popoverWrapClass: '',
-    }
-  },
+
   props: {
+    url: {
+      type: String,
+    },
     popHeight: {
       type: String,
       default: '260px',
@@ -220,13 +216,21 @@ export default {
     // 自定义筛选函数
     filterNodeMethod: Function,
   },
+  data() {
+    return {
+      innerData: this.data,
+      selecteds: [], // 选中数据
+      options_show: false, // 是否显示下拉选项
+      checked_keys: [], // 默认选中
+      filterText: '',
+      popoverWrapClass: '',
+    }
+  },
   model: {
     prop: 'value', //这里使我们定义的v-model属性
     event: 'change',
   },
-  created() {
-    this.popoverWrapClass = `popover-wrap-${randomChar(12)}`
-  },
+
   watch: {
     value(val) {
       this.chaeckDefaultValue()
@@ -238,7 +242,7 @@ export default {
   },
   computed: {
     selfData() {
-      return this.data
+      return this.innerData
     },
     selfProps() {
       return {
@@ -275,6 +279,18 @@ export default {
     collapseTagsItem() {
       return this.selecteds[0] || {}
     },
+  },
+  created() {
+    if (this.url) {
+      this.$http
+        .get(this.url)
+        .then((res) => {
+          this.innerData = res.data
+        })
+        .catch((err) => {})
+    }
+
+    this.popoverWrapClass = `popover-wrap-${randomChar(12)}`
   },
   mounted() {
     let that = this
@@ -399,6 +415,7 @@ export default {
 
 <style lang="scss">
 .nui-tree-select {
+  margin-top: 5px;
   position: relative;
   display: inline-block;
   width: 240px;

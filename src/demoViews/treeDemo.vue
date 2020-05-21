@@ -52,6 +52,21 @@
           <p>当前选中值：{{ tree3.selectedNodes }}</p>
         </div>
 
+        <h3>通过url获取树形结构数据</h3>
+        <h5>
+          通过url获取后台数据。通过elementUI原有的props属性传入接口数据对应的label属性名，isLeaf属性名。通过node-key属性传入接口数据对应的id或key等唯一的值。
+        </h5>
+        <div class="demo-block">
+          <nui-tree
+            url="api/getTree.json"
+            :props="treeApi.props"
+            node-key="key"
+            v-model="treeApi.selectedNodes"
+          ></nui-tree>
+
+          <p>当前选中值：{{ treeApi.selectedNodes }}</p>
+        </div>
+
         <h3>自定义文字前的图标</h3>
         <h5>
           通过设置custom-icon-config属性，来设置相对于条件下的class类名，该class类名将会应用于文字前的一个
@@ -84,6 +99,15 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>url</td>
+                <td>
+                  通过接口地址获取接口数据。注意因为接口数据的属性名可能不一致，可以通过elementUI原有的props属性传入接口数据对应的label属性名，isLeaf属性名。通过node-key属性传入接口数据对应的id（或key）等唯一的值。
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
               <tr>
                 <td>v-model</td>
                 <td>当前选中的数据(可在此处设置默认选中的值)</td>
@@ -417,6 +441,14 @@ export default {
             label: '越秀区',
           },
         ],
+      },
+
+      treeApi: {
+        props: {
+          label: 'title',
+          isLeaf: 'expand',
+        },
+        selectedNodes: [],
       },
     }
   },

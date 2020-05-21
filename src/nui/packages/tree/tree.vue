@@ -41,6 +41,9 @@ export default {
   name: 'nui-tree',
 
   props: {
+    url: {
+      type: String,
+    },
     // 数据
     customIconConfig: {
       type: Array,
@@ -113,6 +116,7 @@ export default {
   },
   data() {
     return {
+      innerData: this.data,
       selecteds: [], // 选中数据
       options_show: false, // 是否显示下拉选项
       checked_keys: [], // 默认选中
@@ -136,7 +140,7 @@ export default {
   },
   computed: {
     selfData() {
-      return this.data
+      return this.innerData
     },
     selfProps() {
       return {
@@ -150,6 +154,15 @@ export default {
     },
   },
   created() {
+    if (this.url) {
+      this.$http
+        .get(this.url)
+        .then((res) => {
+          this.innerData = res.data
+        })
+        .catch((err) => {})
+    }
+
     this.chaeckDefaultValue()
   },
   mounted() {},
