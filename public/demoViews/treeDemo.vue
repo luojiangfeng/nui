@@ -219,7 +219,7 @@
       <el-tab-pane label="查看代码" name="code">
         <show-code
           v-if="activeTab == 'code'"
-          url="demoViews/DropdownTreeDemo.vue"
+          url="demoViews/treeDemo.vue"
         ></show-code>
       </el-tab-pane>
     </el-tabs>
