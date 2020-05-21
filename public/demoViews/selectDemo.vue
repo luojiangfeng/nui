@@ -224,7 +224,7 @@ export default {
         },
       ],
       value: '',
-      value2: '',
+      value2: 10,
       valueGroup: '',
     }
   },

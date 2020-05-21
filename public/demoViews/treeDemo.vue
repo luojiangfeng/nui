@@ -52,6 +52,40 @@
           <p>当前选中值：{{ tree3.selectedNodes }}</p>
         </div>
 
+        <h3>通过url获取树形结构数据</h3>
+        <h5>
+          通过url获取后台数据。通过elementUI原有的props属性传入接口数据对应的label属性名，isLeaf属性名。通过node-key属性传入接口数据对应的id或key等唯一的值。
+        </h5>
+        <div class="demo-block">
+          <nui-tree
+            url="api/getTree.json"
+            :props="treeApi.props"
+            node-key="key"
+            v-model="treeApi.selectedNodes"
+          ></nui-tree>
+
+          <p>当前选中值：{{ treeApi.selectedNodes }}</p>
+        </div>
+
+        <h3>自定义文字前的图标</h3>
+        <h5>
+          通过设置custom-icon-config属性，来设置相对于条件下的class类名，该class类名将会应用于文字前的一个
+          i 标签中。
+        </h5>
+        <div class="demo-block">
+          <nui-tree
+            leaf-only
+            :data="tree4.treeData"
+            :custom-icon-config="tree4.treeCustomIconConfig"
+            v-model="tree4.selectedNodes"
+          ></nui-tree>
+
+          <p>
+            当不需要判断分类，全部用相同的图标时，只需传数组的第一项，且只传class属性。
+          </p>
+          <p>例如treeCustomIconConfig: [ { class: 'icon-company'} ]</p>
+        </div>
+
         <article class="intro-list">
           <h3>Tree Attributes</h3>
           <table>
@@ -65,6 +99,15 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>url</td>
+                <td>
+                  通过接口地址获取接口数据。注意因为接口数据的属性名可能不一致，可以通过elementUI原有的props属性传入接口数据对应的label属性名，isLeaf属性名。通过node-key属性传入接口数据对应的id（或key）等唯一的值。
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
               <tr>
                 <td>v-model</td>
                 <td>当前选中的数据(可在此处设置默认选中的值)</td>
@@ -116,8 +159,58 @@
                 <td>—</td>
                 <td>—</td>
               </tr>
+
+              <tr>
+                <td>custom-icon-config</td>
+                <td>
+                  是否在文字前使用自定义的图标。数组的每一项为一个对象，对象属性见下表。
+                </td>
+                <td>Array</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
             </tbody>
           </table>
+
+          <h3>Custom-icon-config Attributes</h3>
+          <h5>
+            当不需要判断分类，全部用相同的图标时，只需传数组的第一项，且只传class属性即可。
+          </h5>
+          <table>
+            <thead>
+              <tr>
+                <th>参数</th>
+                <th>说明</th>
+                <th>类型</th>
+                <th>可选值</th>
+                <th>默认值</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>key</td>
+                <td>对应node.data中的属性名</td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>value</td>
+                <td>对应key的值。当key的值等于value时，应用class类名</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>class</td>
+                <td>相应图标的类名（实际会将此类名应用到一个i标签上）</td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+
           <h6>
             注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
           </h6>
@@ -137,42 +230,43 @@
 export default {
   data() {
     return {
-      activeTab: "doc",
+      activeTab: 'doc',
+
       tree1: {
         treeData: [
           {
             id: 1,
-            label: "中餐",
+            label: '中餐',
             children: [
               {
                 id: 4,
-                label: "湘菜",
+                label: '湘菜',
                 children: [
                   {
                     id: 9,
-                    label: "剁椒鱼头",
+                    label: '剁椒鱼头',
                   },
                   {
                     id: 10,
-                    label: "啤酒鸭",
+                    label: '啤酒鸭',
                   },
                 ],
               },
               {
                 id: 11,
-                label: "川菜",
+                label: '川菜',
                 children: [
                   {
                     id: 12,
-                    label: "麻婆豆腐",
+                    label: '麻婆豆腐',
                   },
                   {
                     id: 13,
-                    label: "麻辣火锅",
+                    label: '麻辣火锅',
                   },
                   {
                     id: 14,
-                    label: "宫保鸡丁",
+                    label: '宫保鸡丁',
                   },
                 ],
               },
@@ -180,15 +274,15 @@ export default {
           },
           {
             id: 2,
-            label: "西餐",
+            label: '西餐',
             children: [
               {
                 id: 5,
-                label: "汉堡包",
+                label: '汉堡包',
               },
               {
                 id: 6,
-                label: "意大利面",
+                label: '意大利面',
               },
             ],
           },
@@ -199,19 +293,19 @@ export default {
         treeData: [
           {
             id: 1,
-            label: "广东",
+            label: '广东',
             children: [
               {
                 id: 4,
-                label: "广州",
+                label: '广州',
                 children: [
                   {
                     id: 9,
-                    label: "天河区",
+                    label: '天河区',
                   },
                   {
                     id: 10,
-                    label: "越秀区",
+                    label: '越秀区',
                   },
                 ],
               },
@@ -219,15 +313,15 @@ export default {
           },
           {
             id: 2,
-            label: "上海",
+            label: '上海',
             children: [
               {
                 id: 5,
-                label: "静安区",
+                label: '静安区',
               },
               {
                 id: 6,
-                label: "浦东区",
+                label: '浦东区',
               },
             ],
           },
@@ -239,19 +333,19 @@ export default {
         treeData: [
           {
             id: 1,
-            label: "广东",
+            label: '广东',
             children: [
               {
                 id: 4,
-                label: "广州",
+                label: '广州',
                 children: [
                   {
                     id: 9,
-                    label: "天河区",
+                    label: '天河区',
                   },
                   {
                     id: 10,
-                    label: "越秀区",
+                    label: '越秀区',
                   },
                 ],
               },
@@ -259,15 +353,15 @@ export default {
           },
           {
             id: 2,
-            label: "上海",
+            label: '上海',
             children: [
               {
                 id: 5,
-                label: "静安区",
+                label: '静安区',
               },
               {
                 id: 6,
-                label: "浦东区",
+                label: '浦东区',
               },
             ],
           },
@@ -275,9 +369,86 @@ export default {
         selectedNodes: [
           {
             id: 10,
-            label: "越秀区",
+            label: '越秀区',
           },
         ],
+      },
+
+      tree4: {
+        treeData: [
+          {
+            id: 1,
+            label: '广东',
+            type: 1,
+            children: [
+              {
+                id: 4,
+                label: '广州',
+                type: 1,
+                children: [
+                  {
+                    id: 9,
+                    label: '天河区',
+                    type: 0,
+                  },
+                  {
+                    id: 10,
+                    label: '越秀区',
+                    type: 0,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 2,
+            label: '上海',
+            type: 1,
+            children: [
+              {
+                id: 5,
+                label: '静安区',
+                type: 0,
+              },
+              {
+                id: 6,
+                label: '浦东区',
+                type: 0,
+              },
+            ],
+          },
+          {
+            id: 33,
+            label: '钓鱼岛宾馆',
+            type: 0,
+          },
+        ],
+        treeCustomIconConfig: [
+          {
+            key: 'type',
+            value: 1,
+            class: 'icon-company',
+          },
+          {
+            key: 'type',
+            value: 0,
+            class: 'icon-department',
+          },
+        ],
+        selectedNodes: [
+          {
+            id: 10,
+            label: '越秀区',
+          },
+        ],
+      },
+
+      treeApi: {
+        props: {
+          label: 'title',
+          isLeaf: 'expand',
+        },
+        selectedNodes: [],
       },
     }
   },
@@ -300,5 +471,17 @@ export default {
 <style scoped lang="scss">
 /deep/ .test-col {
   color: green;
+}
+
+/deep/.icon-company {
+  width: 20px;
+  height: 20px;
+  @include bg('icons/icon-company.png');
+}
+
+/deep/.icon-department {
+  width: 20px;
+  height: 20px;
+  @include bg('icons/icon-department.png');
 }
 </style>

@@ -219,9 +219,6 @@ export default {
                 url: '/api/getLocationList.json', //接口获取参数，radio、checkbox用法相同
                 valueName: 'orgId', //接口获取参数，radio、checkbox用法相同
                 labelName: 'orgName', //接口获取参数，radio、checkbox用法相同
-                $attrs: {
-                  clearable: true,
-                },
               },
               {
                 ref: 'sex',

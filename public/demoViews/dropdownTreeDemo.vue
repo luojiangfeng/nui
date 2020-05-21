@@ -60,6 +60,22 @@
           ></nui-dropdown-tree>
         </div>
 
+        <h3>通过接口url传入树数据</h3>
+        <h5>
+          通过url获取后台数据。通过elementUI原有的props属性传入接口数据对应的label属性名，isLeaf属性名。通过node-key属性传入接口数据对应的id或key等唯一的值。
+        </h5>
+        <div class="demo-block">
+          <nui-dropdown-tree
+            leaf-only
+            url="api/getTree.json"
+            :props="treeApi.props"
+            node-key="key"
+            filterable
+            @change="hindleChanged"
+            v-model="treeApi.selectedNodes"
+          ></nui-dropdown-tree>
+        </div>
+
         <article class="intro-list">
           <h3>DropdownTree Attributes</h3>
           <table>
@@ -73,6 +89,15 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>url</td>
+                <td>
+                  通过接口地址获取接口数据。注意因为接口数据的属性名可能不一致，可以通过elementUI原有的props属性传入接口数据对应的label属性名，isLeaf属性名。通过node-key属性传入接口数据对应的id（或key）等唯一的值。
+                </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
               <tr>
                 <td>v-model</td>
                 <td>当前选中的数据(可在此处设置默认选中的值)</td>
@@ -241,6 +266,13 @@ export default {
           ],
         },
       ],
+      treeApi: {
+        props: {
+          label: 'title',
+          isLeaf: 'expand',
+        },
+        selectedNodes: [],
+      },
       selectedCheckbox: [
         {
           id: 11,
