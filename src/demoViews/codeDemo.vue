@@ -11,12 +11,7 @@
 
         <h3>传url，显示接口返回值</h3>
         <div class="demo-block">
-          <nui-code
-            height="600px"
-            width="100%"
-            type="vue"
-            url="demoViews/codeDemo.vue"
-          ></nui-code>
+          <nui-code url="api/getEntUserList.json"></nui-code>
         </div>
 
         <article class="intro-list">

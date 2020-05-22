@@ -41,19 +41,21 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      innerType: this.type,
+    }
   },
   computed: {},
   created() {
-    if (this.type == 'html') {
-      this.type = 'vue'
+    if (this.innerType == 'html') {
+      this.innerType = 'vue'
     }
   },
   mounted() {
     let that = this
     let editor = CodeMirror.fromTextArea(this.$refs.code, {
       theme: this.theme == 'light' ? 'neo' : 'ambiance',
-      mode: this.type, // 选择对应代码编辑器的语言
+      mode: this.innerType, // 选择对应代码编辑器的语言
       indentWithTabs: true,
       smartIndent: true,
       lineNumbers: true,
@@ -79,7 +81,13 @@ export default {
         method: 'GET',
       })
         .then((res) => {
-          editor.setValue(res)
+          if (typeof res === 'object') {
+            let jsonData = JSON.stringify(res)
+            let result = JSON.stringify(JSON.parse(jsonData), null, 4)
+            editor.setValue(result)
+          } else {
+            editor.setValue(res)
+          }
         })
         .catch(() => {})
     } else {
