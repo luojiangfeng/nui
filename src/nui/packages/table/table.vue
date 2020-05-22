@@ -381,7 +381,7 @@
             :circle="item.circle"
             :loading="!item.loading ? false : true"
             size="small"
-            v-show="!item.hidden"
+            v-show="operatorBtnShow(item.hidden, scope.row)"
             >{{ item.text }}</el-button
           >
         </template>
@@ -439,6 +439,17 @@ export default {
     }
   },
   computed: {
+    operatorBtnShow() {
+      return function(hidden, row) {
+        if (typeof hidden === 'boolean' || hidden === undefined) {
+          return !hidden
+        }
+
+        if (typeof hidden === 'function') {
+          return !hidden(row)
+        }
+      }
+    },
     computedColTpl() {
       return function(data, tpl) {
         let res

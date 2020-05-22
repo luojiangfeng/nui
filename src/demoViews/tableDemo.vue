@@ -408,6 +408,7 @@ export default {
               text: '详情',
               type: 'default',
               fun: this.tableRowDetail,
+              hidden: false, //hidden可以是boolean类型，或者function类型
             },
             {
               icon: 'el-icon-delete',
@@ -415,6 +416,14 @@ export default {
               circle: true,
               type: 'danger',
               fun: this.cancelSelect, //测试调用el-table的methods
+              //hidden为function类型，row为当前行数据
+              hidden: function(row) {
+                if (row.entName == '华为技术有限公司') {
+                  return true
+                } else {
+                  return false
+                }
+              },
             },
           ],
         },

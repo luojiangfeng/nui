@@ -35,25 +35,25 @@
 </template>
 
 <script>
-import { randomChar } from "../../utils.js"
+import { randomChar } from '../../utils.js'
 
 export default {
-  name: "nui-select",
+  name: 'nui-select',
   props: {
     width: {
       type: String,
-      default: "100%",
+      default: '100%',
     },
     url: {
-      type: String
+      type: String,
     },
     valueName: {
       type: String,
-      default: "value",
+      default: 'value',
     },
     labelName: {
       type: String,
-      default: "label",
+      default: 'label',
     },
     options: {
       type: Array,
@@ -70,40 +70,43 @@ export default {
   },
   data() {
     return {
-      id: "",
-      innerOptions:this.options
+      id: '',
+      innerOptions: this.options,
     }
   },
   computed: {},
   created() {
-    this.id = "select" + randomChar(20)
+    this.id = 'select' + randomChar(20)
 
-    if(this.url){
-      this.$http.get(this.url).then((res) => {
-        let resArr=res.data
+    if (this.url) {
+      this.$http
+        .get(this.url)
+        .then((res) => {
+          let resArr = res.data
 
-       let resOptions= resArr.map((item)=>{
-         let obj={}
-          obj.label=item[this.labelName]
-          obj.value=item[this.valueName]
+          let resOptions = resArr.map((item) => {
+            let obj = {}
+            obj.label = item[this.labelName]
+            obj.value = item[this.valueName]
             return obj
-        })  
+          })
 
-        this.innerOptions=resOptions
-      }).catch((err) => {
-        
-      })
+          this.innerOptions = resOptions
+
+          console.log(this.innerOptions)
+        })
+        .catch((err) => {})
     }
   },
   mounted() {},
   methods: {
     selectChange(val) {
       if (this.changeWidth) {
-        let label = ""
+        let label = ''
 
-        if (val != "" || val != undefined) {
-          for (let i = 0; i < this.options.length; i++) {
-            const item = this.options[i]
+        if (val != '' || val != undefined) {
+          for (let i = 0; i < this.innerOptions.length; i++) {
+            const item = this.innerOptions[i]
             if (item.value === val) {
               label = item.label
             }
@@ -119,12 +122,12 @@ export default {
     autoInputWidth(dom, baseW, val) {
       let _val = val
       let _baseW = baseW || 6
-      let inputDom = dom.querySelectorAll("input")[0]
+      let inputDom = dom.querySelectorAll('input')[0]
       let inputDomParent = inputDom.parentNode
-      let selectDom = dom.querySelectorAll(".el-select")[0]
+      let selectDom = dom.querySelectorAll('.el-select')[0]
 
       let createSpanDom = inputDomParent.querySelectorAll(
-        ".span-input-hidden"
+        '.span-input-hidden'
       )[0]
 
       if (createSpanDom !== undefined) {
@@ -134,18 +137,18 @@ export default {
       let spanHTML =
         '<span class="span-input-hidden" style="position: absolute;z-index: -10000;left:-8000px">' +
         _val +
-        "</span>"
+        '</span>'
 
-      inputDomParent.insertAdjacentHTML("beforeEnd", spanHTML)
+      inputDomParent.insertAdjacentHTML('beforeEnd', spanHTML)
 
-      createSpanDom = inputDomParent.querySelectorAll(".span-input-hidden")[0]
+      createSpanDom = inputDomParent.querySelectorAll('.span-input-hidden')[0]
 
       let resultW = createSpanDom.offsetWidth + _baseW
 
-      if (_val == "") {
-        selectDom.style.width = this.width ? this.width : "100%"
+      if (_val == '') {
+        selectDom.style.width = this.width ? this.width : '100%'
       } else {
-        selectDom.style.width = resultW + "px"
+        selectDom.style.width = resultW + 'px'
       }
     },
   },
