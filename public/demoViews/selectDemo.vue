@@ -49,11 +49,33 @@
                 filterable
                 multiple
                 :group-options="groupOptions"
-                :change-width="true"
                 v-model="valueGroup"
                 placeholder="请选择"
                 clearable
                 @change="testChange"
+              >
+              </nui-select>
+            </nui-form-item>
+          </nui-form>
+        </div>
+
+        <h3>
+          通过url接口地址获取数据
+        </h3>
+        <h5>
+          <p>要用分组传group-options属性，格式与elementUI相同。</p>
+        </h5>
+        <div class="demo-block">
+          <nui-form ref="form" label-width="80px">
+            <nui-form-item label="城市">
+              <nui-select
+                :change-width="true"
+                v-model="valueApi"
+                placeholder="请选择"
+                url="api/getLocationList.json"
+                value-name="orgId"
+                label-name="orgName"
+                clearable
               >
               </nui-select>
             </nui-form-item>
@@ -97,7 +119,7 @@
                 <td>—</td>
               </tr>
               <tr>
-                <td>key-name</td>
+                <td>label-name</td>
                 <td>
                   接口返回的，对应option的label的属性名（一般为name等实际展示的名称）
                 </td>
@@ -138,7 +160,7 @@
 
 <script>
 export default {
-  name: 'DemoRadio',
+  name: 'DemoSelect',
   data() {
     return {
       activeTab: 'doc',
@@ -226,6 +248,7 @@ export default {
       value: '',
       value2: 10,
       valueGroup: '',
+      valueApi: '',
     }
   },
   created() {},

@@ -176,6 +176,11 @@ const routes = [
     component: () => import('@/demoViews/dividerDemo.vue'),
   },
   {
+    path: '/code',
+    name: 'nui-code',
+    component: () => import('@/demoViews/codeDemo.vue'),
+  },
+  {
     path: '/examplePersonMsgForm',
     name: 'nui-examplePersonMsgForm',
     component: () => import('@/demoViews/examplePersonMsgForm.vue'),

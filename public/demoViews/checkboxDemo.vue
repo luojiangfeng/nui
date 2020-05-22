@@ -96,7 +96,7 @@
                 <td>—</td>
               </tr>
               <tr>
-                <td>key-name</td>
+                <td>label-name</td>
                 <td>
                   接口返回的，对应option的label的属性名（一般为name等实际展示的名称）
                 </td>

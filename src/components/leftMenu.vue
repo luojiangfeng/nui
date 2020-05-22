@@ -253,6 +253,12 @@
                     >Divider 分割线</router-link
                   >
                 </li>
+
+                <li class="nav-item">
+                  <router-link active-class="active" to="/code"
+                    >Code 代码编辑器</router-link
+                  >
+                </li>
               </ul>
             </div>
 
