@@ -341,7 +341,13 @@
       >
         <template slot-scope="scope">
           <el-button
-            @click="upSort(scope.row, config.operatorColumn.sortBaseUrl)"
+            @click="
+              upSort(
+                scope.row,
+                config.operatorColumn.sortBaseUrl,
+                config.operatorColumn.sortProp
+              )
+            "
             type="default"
             icon="el-icon-top"
             circle
@@ -349,7 +355,13 @@
           ></el-button>
 
           <el-button
-            @click="downSort(scope.row, config.operatorColumn.sortBaseUrl)"
+            @click="
+              downSort(
+                scope.row,
+                config.operatorColumn.sortBaseUrl,
+                config.operatorColumn.sortProp
+              )
+            "
             type="default"
             icon="el-icon-bottom"
             circle
@@ -583,6 +595,10 @@ export default {
           this.config.data = _rowData
           // this.config.currentPage = res.data.current;
 
+          if (_rowData.length === 0 && tableParam.page != 1) {
+            that.getTableData({ page: tableParam.page - 1 })
+          }
+
           typeof cb === 'function' && cb()
         })
         .catch(() => {})
@@ -613,10 +629,10 @@ export default {
       this.config.currentPage = 1
       this.getTableData({ size: val })
     },
-    upSort(row, baseUrl) {
+    upSort(row, baseUrl, propName = 'id') {
       this.$http
       this.$http({
-        url: `${baseUrl}${row.id}/up`,
+        url: `${baseUrl}${row[propName]}/up`,
         method: 'put',
         headers: {
           'Content-Type': 'application/json',
@@ -633,9 +649,9 @@ export default {
         })
         .catch((err) => {})
     },
-    downSort(row, baseUrl) {
+    downSort(row, baseUrl, propName = 'id') {
       this.$http({
-        url: `${baseUrl}${row.id}/down`,
+        url: `${baseUrl}${row[propName]}/down`,
         method: 'put',
         headers: {
           'Content-Type': 'application/json',

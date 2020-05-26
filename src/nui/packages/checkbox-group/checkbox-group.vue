@@ -1,5 +1,5 @@
 <template>
-  <el-checkbox-group v-bind="$attrs" v-on="$listeners">
+  <el-checkbox-group v-bind="$attrs" v-on="$listeners" :url="innerUrl">
     <slot></slot>
 
     <template v-for="item in innerOptions">
@@ -42,25 +42,46 @@ export default {
       innerOptions: this.options,
     }
   },
-  computed: {},
-  created() {
-    if (this.url) {
-      this.$http
-        .get(this.url)
-        .then((res) => {
-          let resArr = res.data
+  computed: {
+    innerUrl() {
+      if (this.url) {
+        this.$http
+          .get(this.url)
+          .then((res) => {
+            let resArr = res.data
 
-          let resOptions = resArr.map((item) => {
-            let obj = {}
-            obj.label = item[this.labelName]
-            obj.value = item[this.valueName]
-            return obj
+            let resOptions = resArr.map((item) => {
+              let obj = {}
+              obj.label = item[this.labelName]
+              obj.value = item[this.valueName]
+              return obj
+            })
+
+            this.innerOptions = resOptions
           })
-
-          this.innerOptions = resOptions
-        })
-        .catch((err) => {})
-    }
+          .catch((err) => {})
+      } else {
+        this.innerOptions = this.options
+      }
+      return this.url
+    },
+  },
+  created() {
+    // if (this.url) {
+    //   this.$http
+    //     .get(this.url)
+    //     .then((res) => {
+    //       let resArr = res.data
+    //       let resOptions = resArr.map((item) => {
+    //         let obj = {}
+    //         obj.label = item[this.labelName]
+    //         obj.value = item[this.valueName]
+    //         return obj
+    //       })
+    //       this.innerOptions = resOptions
+    //     })
+    //     .catch((err) => {})
+    // }
   },
   mounted() {},
   methods: {},

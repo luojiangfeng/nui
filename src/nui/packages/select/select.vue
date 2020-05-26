@@ -3,6 +3,7 @@
     <el-select
       v-bind="$attrs"
       v-on="$listeners"
+      :url="innerUrl"
       :style="{ width: width }"
       @change="selectChange"
     >
@@ -74,29 +75,32 @@ export default {
       innerOptions: this.options,
     }
   },
-  computed: {},
+  computed: {
+    innerUrl() {
+      if (this.url) {
+        this.$http
+          .get(this.url)
+          .then((res) => {
+            let resArr = res.data
+
+            let resOptions = resArr.map((item) => {
+              let obj = {}
+              obj.label = item[this.labelName]
+              obj.value = item[this.valueName]
+              return obj
+            })
+
+            this.innerOptions = resOptions
+          })
+          .catch((err) => {})
+      } else {
+        this.innerOptions = this.options
+      }
+      return this.url
+    },
+  },
   created() {
     this.id = 'select' + randomChar(20)
-
-    if (this.url) {
-      this.$http
-        .get(this.url)
-        .then((res) => {
-          let resArr = res.data
-
-          let resOptions = resArr.map((item) => {
-            let obj = {}
-            obj.label = item[this.labelName]
-            obj.value = item[this.valueName]
-            return obj
-          })
-
-          this.innerOptions = resOptions
-
-          console.log(this.innerOptions)
-        })
-        .catch((err) => {})
-    }
   },
   mounted() {},
   methods: {

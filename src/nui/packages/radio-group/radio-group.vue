@@ -1,5 +1,5 @@
 <template>
-  <el-radio-group v-bind="$attrs" v-on="$listeners">
+  <el-radio-group v-bind="$attrs" v-on="$listeners" :url="innerUrl">
     <slot></slot>
     <el-radio
       v-for="item in innerOptions"
@@ -35,27 +35,47 @@ export default {
       innerOptions: this.options,
     }
   },
-  computed: {},
-  created() {
-    if (this.url) {
-      this.$http
-        .get(this.url)
-        .then((res) => {
-          let resArr = res.data
+  computed: {
+    innerUrl() {
+      if (this.url) {
+        this.$http
+          .get(this.url)
+          .then((res) => {
+            let resArr = res.data
 
-          let resOptions = resArr.map((item) => {
-            let obj = {}
-            obj.label = item[this.labelName]
-            obj.value = item[this.valueName]
-            return obj
+            let resOptions = resArr.map((item) => {
+              let obj = {}
+              obj.label = item[this.labelName]
+              obj.value = item[this.valueName]
+              return obj
+            })
+
+            this.innerOptions = resOptions
           })
-
-          // resOptions.length = 3
-
-          this.innerOptions = resOptions
-        })
-        .catch((err) => {})
-    }
+          .catch((err) => {})
+      } else {
+        this.innerOptions = this.options
+      }
+      return this.url
+    },
+  },
+  created() {
+    // if (this.url) {
+    //   this.$http
+    //     .get(this.url)
+    //     .then((res) => {
+    //       let resArr = res.data
+    //       let resOptions = resArr.map((item) => {
+    //         let obj = {}
+    //         obj.label = item[this.labelName]
+    //         obj.value = item[this.valueName]
+    //         return obj
+    //       })
+    //       // resOptions.length = 3
+    //       this.innerOptions = resOptions
+    //     })
+    //     .catch((err) => {})
+    // }
   },
   mounted() {},
   methods: {},
