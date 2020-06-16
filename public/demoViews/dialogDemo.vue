@@ -1,12 +1,13 @@
 <template>
   <div class="page-main">
-    <el-tabs class="page-tab" v-model="activeTab">
+    <el-tabs v-model="activeTab" class="page-tab">
       <el-tab-pane label="文档" name="doc">
         <h2>Dialog 对话框</h2>
         <div class="demo-block">
-          <nui-button type="text" @click="dialogVisible = true"
-            >点击打开 Dialog</nui-button
-          >
+          <nui-button
+            type="text"
+            @click="dialogVisible = true"
+          >点击打开 Dialog</nui-button>
 
           <nui-dialog
             title="提示"
@@ -17,9 +18,10 @@
             <span>这是一段信息</span>
             <span slot="footer" class="dialog-footer">
               <nui-button @click="dialogVisible = false">取 消</nui-button>
-              <nui-button type="primary" @click="dialogVisible = false"
-                >确 定</nui-button
-              >
+              <nui-button
+                type="primary"
+                @click="dialogVisible = false"
+              >确 定</nui-button>
             </span>
           </nui-dialog>
         </div>
@@ -37,11 +39,11 @@
             </thead>
             <tbody>
               <tr>
-                <td></td>
-                <td></td>
-                <td>object</td>
+                <td>drag</td>
+                <td>是否可以拖拽</td>
+                <td>boolean</td>
                 <td>—</td>
-                <td>—</td>
+                <td>true</td>
               </tr>
             </tbody>
           </table>
@@ -55,7 +57,7 @@
         <show-code
           v-if="activeTab == 'code'"
           url="demoViews/dialogDemo.vue"
-        ></show-code>
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -65,8 +67,8 @@
 export default {
   data() {
     return {
-      activeTab: "doc",
-      dialogVisible: false,
+      activeTab: 'doc',
+      dialogVisible: false
     }
   },
   methods: {
@@ -77,8 +79,8 @@ export default {
       //     done()
       //   })
       //   .catch((_) => {})
-    },
-  },
+    }
+  }
 }
 </script>
 

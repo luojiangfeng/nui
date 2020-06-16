@@ -45,6 +45,18 @@
           </nui-row>
         </div>
 
+        <h3>点击波动效果</h3>
+        <div class="demo-block">
+          <nui-row>
+            <nui-button wave>默认按钮</nui-button>
+            <nui-button wave type="primary">主要按钮</nui-button>
+            <nui-button wave type="success">成功按钮</nui-button>
+            <nui-button wave type="info">信息按钮</nui-button>
+            <nui-button wave type="warning">警告按钮</nui-button>
+            <nui-button wave type="danger">危险按钮</nui-button>
+          </nui-row>
+        </div>
+
         <article class="intro-list">
           <h3>Table Attributes</h3>
           <table>

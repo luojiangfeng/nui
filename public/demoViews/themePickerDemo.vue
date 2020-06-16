@@ -94,7 +94,7 @@
       <el-tab-pane label="查看代码" name="code">
         <show-code
           v-if="activeTab == 'code'"
-          url="demoViews/themePicker.vue"
+          url="demoViews/themePickerDemo.vue"
         />
       </el-tab-pane>
     </el-tabs>

@@ -95,7 +95,7 @@
       <el-tab-pane label="查看代码" name="code">
         <show-code
           v-if="activeTab == 'code'"
-          url="demoViews/splitPane.vue"
+          url="demoViews/splitPaneDemo.vue"
         />
       </el-tab-pane>
     </el-tabs>
