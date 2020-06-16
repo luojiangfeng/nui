@@ -1,6 +1,6 @@
 <template>
   <div class="page-main">
-    <el-tabs class="page-tab" v-model="activeTab">
+    <el-tabs v-model="activeTab" class="page-tab">
       <el-tab-pane label="文档" name="doc">
         <h2>Button 按钮</h2>
         <div class="demo-block">
@@ -32,16 +32,28 @@
           </nui-row>
 
           <nui-row>
-            <nui-button icon="el-icon-search" circle></nui-button>
-            <nui-button type="primary" icon="el-icon-edit" circle></nui-button>
-            <nui-button type="success" icon="el-icon-check" circle></nui-button>
-            <nui-button type="info" icon="el-icon-message" circle></nui-button>
+            <nui-button icon="el-icon-search" circle />
+            <nui-button type="primary" icon="el-icon-edit" circle />
+            <nui-button type="success" icon="el-icon-check" circle />
+            <nui-button type="info" icon="el-icon-message" circle />
             <nui-button
               type="warning"
               icon="el-icon-star-off"
               circle
-            ></nui-button>
-            <nui-button type="danger" icon="el-icon-delete" circle></nui-button>
+            />
+            <nui-button type="danger" icon="el-icon-delete" circle />
+          </nui-row>
+        </div>
+
+        <h3>点击波动效果</h3>
+        <div class="demo-block">
+          <nui-row>
+            <nui-button wave>默认按钮</nui-button>
+            <nui-button wave type="primary">主要按钮</nui-button>
+            <nui-button wave type="success">成功按钮</nui-button>
+            <nui-button wave type="info">信息按钮</nui-button>
+            <nui-button wave type="warning">警告按钮</nui-button>
+            <nui-button wave type="danger">危险按钮</nui-button>
           </nui-row>
         </div>
 
@@ -59,11 +71,11 @@
             </thead>
             <tbody>
               <tr>
-                <td></td>
-                <td></td>
-                <td>object</td>
+                <td>wave</td>
+                <td>点击时，是否有波动效果。</td>
+                <td>boolean</td>
                 <td>—</td>
-                <td>—</td>
+                <td>false</td>
               </tr>
             </tbody>
           </table>
@@ -77,7 +89,7 @@
         <show-code
           v-if="activeTab == 'code'"
           url="demoViews/buttonDemo.vue"
-        ></show-code>
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -85,11 +97,11 @@
 
 <script>
 export default {
-  name: "DemoButton",
+  name: 'DemoButton',
   data() {
     return {
-      activeTab: "doc",
-      input: "",
+      activeTab: 'doc',
+      input: ''
     }
   },
   created() {},
@@ -97,8 +109,8 @@ export default {
   methods: {
     changeRadio(val) {
       console.log(val)
-    },
-  },
+    }
+  }
 }
 </script>
 

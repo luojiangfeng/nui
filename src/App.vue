@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <left-menu></left-menu>
+    <left-menu />
     <div class="page-wrap">
       <el-scrollbar class="" style="height:100%">
         <router-view />
@@ -12,8 +12,8 @@
 <script>
 import leftMenu from './components/leftMenu'
 export default {
-  name: 'app',
-  components: { leftMenu },
+  name: 'App',
+  components: { leftMenu }
 }
 </script>
 

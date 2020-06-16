@@ -3,12 +3,12 @@
     <!-- 选中框区 -->
     <el-popover
       ref="popover"
+      v-model="options_show"
       placement="bottom"
       :trigger="trigger"
       :disabled="disabled"
       :popper-class="popoverWrapClass"
       @show="popResize"
-      v-model="options_show"
     >
       <el-scrollbar
         :style="{ height: popHeight }"
@@ -21,12 +21,11 @@
           clearable
           :size="size"
           placeholder="输入关键词"
-        ></el-input>
+        />
 
         <nui-tree
           ref="tree"
           v-bind="$attrs"
-          v-on="$listeners"
           :leaf-only="leafOnly"
           :url="url"
           :data="selfData"
@@ -35,11 +34,12 @@
           :show-checkbox="showCheckbox"
           :expand-on-click-node="expandOnClickNode"
           :filter-node-method="filterNode"
+          v-model="checked_keys"
           :default-checked-keys="checked_keys"
+          v-on="$listeners"
           @change="handleChange"
           @node-click="treeItemClick"
-          v-model="checked_keys"
-        ></nui-tree>
+        />
 
         <!-- <el-tree
           ref="tree"
@@ -68,16 +68,15 @@
           <div v-show="selecteds.length > 0">
             <template v-if="!collapseTags">
               <el-tag
+                v-for="item in selecteds"
+                :key="item[nodeKey]"
                 closable
                 :disable-transitions="true"
                 :size="size"
                 class="nui-select-tag"
-                v-for="item in selecteds"
                 :title="item[selfProps.label]"
-                :key="item[nodeKey]"
                 @close="tabClose(item[nodeKey])"
-                >{{ item[selfProps.label] }}</el-tag
-              >
+              >{{ item[selfProps.label] }}</el-tag>
             </template>
             <template v-else>
               <el-tag
@@ -87,24 +86,22 @@
                 class="nui-select-tag"
                 :title="collapseTagsItem[selfProps.label]"
                 @close="tabClose(collapseTagsItem[nodeKey])"
-                >{{ collapseTagsItem[selfProps.label] }}</el-tag
-              >
+              >{{ collapseTagsItem[selfProps.label] }}</el-tag>
               <el-tag
                 v-if="this.selecteds.length > 1"
                 :size="size"
                 class="nui-select-tag"
-                >+{{ this.selecteds.length - 1 }}</el-tag
-              >
+              >+{{ this.selecteds.length - 1 }}</el-tag>
             </template>
           </div>
-          <p class="nui-placeholder-box" v-show="selecteds.length == 0">
+          <p v-show="selecteds.length === 0" class="nui-placeholder-box">
             {{ placeholder }}
           </p>
         </div>
         <div class="icon-box">
           <transition name="fade-rotate" mode="out-in">
-            <i class="el-icon-arrow-down" v-if="!options_show" key="top"></i>
-            <i class="el-icon-arrow-up" v-else key="btm"></i>
+            <i v-if="!options_show" key="top" class="el-icon-arrow-down" />
+            <i v-else key="btm" class="el-icon-arrow-up" />
           </transition>
         </div>
       </div>
@@ -127,94 +124,98 @@ import { randomChar } from '../../utils.js'
  * selected -> 选中数据
  */
 export default {
-  name: 'nui-dropdown-tree',
+  name: 'NuiDropdownTree',
+  model: {
+    prop: 'value', // 这里使我们定义的v-model属性
+    event: 'change'
+  },
 
   props: {
     url: {
-      type: String,
+      type: String
     },
     popHeight: {
       type: String,
-      default: '260px',
+      default: '260px'
     },
     // 数据
     data: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     // 树结构配置
     props: {
       type: Object,
       default: () => {
         return {}
-      },
+      }
     },
     // node-key
     nodeKey: {
       type: String,
-      default: 'id',
+      default: 'id'
     },
     // 选中数据
     value: [String, Number, Array, Object],
     // 是否可多选
     showCheckbox: {
       type: Boolean,
-      default: false,
+      default: false
     },
     expandOnClickNode: {
       type: Boolean,
-      default: true,
+      default: true
     },
     // 多选时是否将选中值按文字的形式展示
     collapseTags: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 是否只可选叶子节点
     leafOnly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 宽度
     width: {
       type: String,
-      default: '100%',
+      default: '100%'
     },
     // 触发方式 click/focus/hover/manual
     trigger: {
       type: String,
-      default: 'click',
+      default: 'click'
     },
     // 是否禁用
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 是否允许多行显示
     nowrap: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 多选时，清空选项关闭
     noCheckedClose: {
       type: Boolean,
-      default: false,
+      default: false
     },
     placeholder: {
       type: String,
-      default: '请选择',
+      default: '请选择'
     },
     size: {
       type: String,
-      default: 'default',
+      default: 'default'
     },
     // 是否使用搜索
     filterable: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 自定义筛选函数
-    filterNodeMethod: Function,
+    filterNodeMethod: Function
   },
   data() {
     return {
@@ -223,22 +224,8 @@ export default {
       options_show: false, // 是否显示下拉选项
       checked_keys: [], // 默认选中
       filterText: '',
-      popoverWrapClass: '',
+      popoverWrapClass: ''
     }
-  },
-  model: {
-    prop: 'value', //这里使我们定义的v-model属性
-    event: 'change',
-  },
-
-  watch: {
-    value(val) {
-      this.chaeckDefaultValue()
-    },
-    // 树节点搜索
-    filterText(val) {
-      this.$refs['tree'].filter(val)
-    },
   },
   computed: {
     selfData() {
@@ -251,7 +238,7 @@ export default {
         disabled: (data) => {
           return data.disabled
         },
-        ...this.props,
+        ...this.props
       }
     },
     sizeClass() {
@@ -278,7 +265,17 @@ export default {
     // 开启collapseTags时首个选中值
     collapseTagsItem() {
       return this.selecteds[0] || {}
+    }
+  },
+
+  watch: {
+    value(val) {
+      this.chaeckDefaultValue()
     },
+    // 树节点搜索
+    filterText(val) {
+      this.$refs['tree'].filter(val)
+    }
   },
   created() {
     if (this.url) {
@@ -293,7 +290,7 @@ export default {
     this.popoverWrapClass = `popover-wrap-${randomChar(12)}`
   },
   mounted() {
-    let that = this
+    const that = this
 
     this.$refs['tree'] = this.$refs['tree'].$refs['tree']
 
@@ -309,14 +306,14 @@ export default {
   methods: {
     popResize() {
       if (this.$refs['tree']) {
-        let dom = document.querySelector('.' + this.popoverWrapClass)
+        const dom = document.querySelector('.' + this.popoverWrapClass)
 
         dom.style.width = this.$refs.wrap.offsetWidth + 'px'
         dom.style.minWidth = '160px'
       }
     },
     handleChange(val) {
-      let that = this
+      const that = this
 
       setTimeout(() => {
         that.selecteds = val
@@ -324,7 +321,7 @@ export default {
 
       this.$nextTick(() => {
         setTimeout(() => {
-          let myEvent = new Event('resize') // resize是指resize事件
+          const myEvent = new Event('resize') // resize是指resize事件
           window.dispatchEvent(myEvent) // 触发window的resize事件
         }, 0)
       })
@@ -344,8 +341,7 @@ export default {
       if (this.showCheckbox) {
         this.$refs['tree'].setChecked(Id, false, true)
         this.selecteds = this.$refs['tree'].getCheckedNodes()
-        if (this.selecteds.length === 0 && this.noCheckedClose)
-          this.options_show = false
+        if (this.selecteds.length === 0 && this.noCheckedClose) { this.options_show = false }
       } else {
         this.selecteds = []
         this.$refs['tree'].setCurrentKey(null)
@@ -354,7 +350,7 @@ export default {
       this.$emit('change', this.selecteds)
 
       this.$nextTick(() => {
-        let myEvent = new Event('resize') // resize是指resize事件
+        const myEvent = new Event('resize') // resize是指resize事件
         window.dispatchEvent(myEvent) // 触发window的resize事件
       })
     },
@@ -364,7 +360,7 @@ export default {
     },
     // 处理默认选中数据
     chaeckDefaultValue() {
-      let val = this.value
+      const val = this.value
 
       if (!val || (Array.isArray(val) && val.length === 0)) {
         this.selecteds = []
@@ -386,7 +382,7 @@ export default {
       }
       // 单选处理
       if (typeof val === 'object') {
-        let _val = Array.isArray(val) ? val[0] : val
+        const _val = Array.isArray(val) ? val[0] : val
         this.selecteds = [_val]
         this.$nextTick(() => {
           this.$refs['tree'].setCurrentNode(_val)
@@ -394,7 +390,7 @@ export default {
       } else {
         this.$nextTick(() => {
           this.$refs['tree'].setCurrentKey(val)
-          let _node = this.$refs['tree'].getCurrentNode()
+          const _node = this.$refs['tree'].getCurrentNode()
           this.selecteds = _node ? [_node] : []
         })
       }
@@ -408,14 +404,14 @@ export default {
       if (this.filterNodeMethod) return this.filterNodeMethod(value, data, node)
       if (!value) return true
       return data[this.selfProps.label].indexOf(value) !== -1
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .nui-tree-select {
-  margin-top: 5px;
+  // margin-top: 5px;
   position: relative;
   display: inline-block;
   width: 240px;

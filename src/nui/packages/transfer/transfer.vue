@@ -34,6 +34,10 @@ export default {
     data: {
       type: Array,
     },
+    appendData: {
+      type: Array,
+      default: () => [],
+    },
     width: {
       type: String,
     },
@@ -71,12 +75,13 @@ export default {
               return obj
             })
 
-            this.innerData = resDataFormat
+            this.innerData = this.mergeUniqueArr(resDataFormat, this.appendData)
+
             typeof this.callback === 'function' && this.callback(this.innerData)
           })
           .catch((err) => {})
       } else {
-        this.innerData = this.data
+        this.innerData = this.mergeUniqueArr(this.data, this.appendData)
       }
       return this.url
     },
@@ -108,6 +113,17 @@ export default {
     }
   },
   methods: {
+    mergeUniqueArr(arr1, arr2) {
+      arr2.forEach((element) => {
+        let repeatIndex = arr1.findIndex((item) => {
+          return item.key === element.key
+        })
+
+        arr1.splice(repeatIndex, 1)
+      })
+
+      return [...arr1, ...arr2]
+    },
     changeFunc(val) {
       let valArr = this.innerData.filter((item) => {
         return val.includes(item.key)

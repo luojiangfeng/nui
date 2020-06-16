@@ -1,60 +1,64 @@
 <template>
   <code>
-    <textarea ref="code" class="codesql"></textarea>
+    <textarea ref="code" class="codesql" />
   </code>
 </template>
 
 <script>
-import './codemirror/theme/neo.css'
-import './codemirror/theme/ambiance.css'
-import './codemirror/lib/codemirror.css'
-import './codemirror/mode/vue/vue.js'
+import 'codemirror/theme/neo.css'
+import 'codemirror/theme/ambiance.css'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/vue/vue.js'
 
-let CodeMirror = require('./codemirror/lib/codemirror')
-require('./codemirror/addon/edit/matchbrackets')
-require('./codemirror/addon/selection/active-line')
+const CodeMirror = require('codemirror/lib/codemirror')
+require('codemirror/addon/edit/matchbrackets')
+require('codemirror/addon/selection/active-line')
 
 export default {
-  name: 'nui-code',
+  name: 'NuiCode',
   props: {
     width: {
       type: String,
-      default: '100%',
+      default: '100%'
     },
     type: {
       type: String,
-      default: 'javascript',
+      default: 'javascript'
     },
     theme: {
       type: String,
-      default: 'light',
+      default: 'light'
     },
     value: {
-      type: String,
+      type: String
     },
     height: {
       type: String,
-      default: '100%',
+      default: '100%'
     },
     url: {
-      type: String,
-    },
+      type: String
+    }
   },
   data() {
     return {
-      innerType: this.type,
+      innerType: this.type
     }
   },
   computed: {},
   created() {
-    if (this.innerType == 'html') {
+    if (this.innerType === 'html') {
       this.innerType = 'vue'
+    }
+
+    if (this.innerType === 'json') {
+      this.innerType = 'javascript'
     }
   },
   mounted() {
-    let that = this
-    let editor = CodeMirror.fromTextArea(this.$refs.code, {
-      theme: this.theme == 'light' ? 'neo' : 'ambiance',
+    const that = this
+    const editor = CodeMirror.fromTextArea(this.$refs.code, {
+      theme: this.theme === 'light' ? 'neo' : 'ambiance',
       mode: this.innerType, // 选择对应代码编辑器的语言
       indentWithTabs: true,
       smartIndent: true,
@@ -68,9 +72,9 @@ export default {
         // 自定义提示选项
         tables: {
           users: ['name', 'score', 'birthDate'],
-          countries: ['name', 'population', 'size'],
-        },
-      },
+          countries: ['name', 'population', 'size']
+        }
+      }
     })
 
     editor.setSize(this.width, this.height)
@@ -78,12 +82,12 @@ export default {
     if (this.url) {
       this.$http({
         url: that.url,
-        method: 'GET',
+        method: 'GET'
       })
-        .then((res) => {
+        .then(res => {
           if (typeof res === 'object') {
-            let jsonData = JSON.stringify(res)
-            let result = JSON.stringify(JSON.parse(jsonData), null, 4)
+            const jsonData = JSON.stringify(res)
+            const result = JSON.stringify(JSON.parse(jsonData), null, 4)
             editor.setValue(result)
           } else {
             editor.setValue(res)
@@ -94,7 +98,7 @@ export default {
       editor.setValue(this.value)
     }
   },
-  methods: {},
+  methods: {}
 }
 </script>
 <style scoped lang="scss">

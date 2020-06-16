@@ -4,8 +4,8 @@
     <slot name="titleBar">
       <template v-for="(eachBar, index) in config.titleBar">
         <div
-          :key="index"
           v-if="eachBar && config.titleBar.length > 0"
+          :key="index"
           :class="eachBar.class"
           :style="eachBar.style"
           class="title-bar"
@@ -15,18 +15,17 @@
             :class="eachBar.title.class"
             :style="eachBar.title.style"
             class="table-title"
-            >{{ eachBar.title.text }}</strong
-          >
+          >{{ eachBar.title.text }}</strong>
           <div class="handleBar">
             <!-- 表单元素 -->
             <el-form :inline="true" size="small ">
               <template v-for="(item, index) in eachBar.form">
                 <el-form-item
                   v-show="!item.hidden"
-                  v-if="item.type == 'input'"
+                  v-if="item.type === 'input'"
                   :ref="item.ref"
-                  :label="item.label"
                   :key="index"
+                  :label="item.label"
                   :style="{
                     width: item.width,
                     minWidth: item.minWidth,
@@ -39,88 +38,90 @@
                     :clearable="item.clearable || true"
                     v-bind="item.$attrs"
                     v-on="item.$listeners"
-                  ></el-input>
+                  />
                 </el-form-item>
 
                 <el-form-item
                   v-show="!item.hidden"
-                  v-if="item.type == 'select'"
+                  v-if="item.type === 'select'"
                   :ref="item.ref"
-                  :label="item.label"
                   :key="index"
+                  :label="item.label"
+                  :style="{
+                    width: item.width,
+                    minWidth: item.minWidth,
+                    maxWidth: item.maxWidth,
+                  }"
                 >
                   <nui-select
                     v-model="config.api.params[item.ref]"
                     :options="item.options"
                     :change-width="
-                      item.changeWidth == undefined ? true : item.changeWidth
+                      item.changeWidth === undefined ? true : item.changeWidth
                     "
                     :placeholder="
-                      item.placeholder == undefined
+                      item.placeholder === undefined
                         ? '请选择'
                         : item.placeholder
                     "
                     :clearable="
-                      item.clearable == undefined ? true : item.clearable
+                      item.clearable === undefined ? true : item.clearable
                     "
                     v-bind="item.$attrs"
-                    v-on="item.$listeners"
                     :width="item.width"
                     :url="item.url"
                     :value-name="item.valueName"
                     :label-name="item.labelName"
-                  >
-                  </nui-select>
+                    v-on="item.$listeners"
+                  />
                 </el-form-item>
 
                 <el-form-item
                   v-show="!item.hidden"
-                  v-if="item.type == 'radio'"
+                  v-if="item.type === 'radio'"
                   :ref="item.ref"
-                  :label="item.label"
                   :key="index"
+                  :label="item.label"
                 >
                   <nui-radio-group
+                    v-model="config.api.params[item.ref]"
                     :options="item.options"
                     :url="item.url"
                     :value-name="item.valueName"
                     :label-name="item.labelName"
                     v-bind="item.$attrs"
                     v-on="item.$listeners"
-                    v-model="config.api.params[item.ref]"
-                  >
-                  </nui-radio-group>
+                  />
                 </el-form-item>
 
                 <el-form-item
                   v-show="!item.hidden"
-                  v-if="item.type == 'checkbox'"
+                  v-if="item.type === 'checkbox'"
                   :ref="item.ref"
-                  :label="item.label"
                   :key="index"
+                  :label="item.label"
                 >
                   <nui-checkbox-group
+                    v-model="config.api.params[item.ref]"
                     :options="item.options"
                     :url="item.url"
                     :value-name="item.valueName"
                     :label-name="item.labelName"
-                    v-model="config.api.params[item.ref]"
                     v-bind="item.$attrs"
                     v-on="item.$listeners"
-                  >
-                  </nui-checkbox-group>
+                  />
                 </el-form-item>
 
                 <el-form-item
                   v-show="!item.hidden"
-                  v-if="item.type == 'dropdownTree'"
+                  v-if="item.type === 'dropdownTree'"
                   :ref="item.ref"
-                  :label="item.label"
                   :key="index"
+                  :label="item.label"
                 >
                   <nui-dropdown-tree
+                    v-model="config.api.params[item.ref]"
                     v-bind="item.$attrs"
-                    v-on="item.$listeners"
                     size="small"
                     :leaf-only="item.leafOnly"
                     :multi-check="item.multiCheck"
@@ -134,60 +135,61 @@
                     :expand-on-click-node="item.expandOnClickNode"
                     :data="item.data"
                     :placeholder="item.placeholder"
-                    v-model="config.api.params[item.ref]"
-                  >
-                  </nui-dropdown-tree>
+                    v-on="item.$listeners"
+                  />
                 </el-form-item>
 
                 <el-form-item
                   v-show="!item.hidden"
-                  v-if="item.type == 'date'"
+                  v-if="item.type === 'date'"
                   :key="index"
                   :label="item.label"
                 >
                   <el-date-picker
                     :ref="item.ref"
-                    :type="item.dateType"
                     v-model="config.api.params[item.ref]"
+                    :type="item.dateType"
                     range-separator="━"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
-                  >
-                  </el-date-picker>
+                    :value-format="item.valueFormat"
+                    v-bind="item.$attrs"
+                    v-on="item.$listeners"
+                  />
                 </el-form-item>
               </template>
             </el-form>
 
-            <template v-for="(item, index) in eachBar.form">
-              <!-- 按钮 -->
-              <el-button
-                v-show="!item.hidden"
-                v-if="item.type == 'button'"
-                :key="index"
-                @click="formFun(item)"
-                :icon="item.icon"
-                :type="item.buttonType || 'primary'"
-                :plain="item.plain"
-                :round="item.round"
-                :loading="item.loading"
-                :circle="item.circle"
-                size="small"
-                >{{ item.text }}</el-button
-              >
+            <template v-for="(item, indexBtn) in eachBar.form">
+              <template v-if="item.type === 'button'">
+                <!-- 按钮 -->
+                <nui-button
+                  v-if="operatorBtnShow(item.hidden)"
+                  :key="indexBtn"
+                  :icon="item.icon"
+                  :type="item.buttonType || 'primary'"
+                  :plain="item.plain"
+                  :round="item.round"
+                  :loading="item.loading"
+                  :circle="item.circle"
+                  size="small"
+                  @click="formFun(item)"
+                >{{ item.text }}</nui-button>
+              </template>
               <!-- 提交 -->
-              <el-button
+              <nui-button
                 v-show="!item.hidden"
-                v-if="item.type == 'submit'"
-                :key="index"
-                @click="submitTable()"
+                v-if="item.type === 'submit'"
+                :key="indexBtn"
+                wave
                 :icon="item.icon"
                 :type="item.buttonType || 'primary'"
                 :plain="item.plain"
                 :round="item.round"
                 :circle="item.circle"
                 size="small"
-                >{{ item.text }}</el-button
-              >
+                @click="submitTable(item.callback)"
+              >{{ item.text }}</nui-button>
             </template>
           </div>
         </div>
@@ -195,41 +197,44 @@
     </slot>
     <!-- :style="{'width': $store.getters.tableWidth,'transition': 'width .3s'}" -->
     <el-table
+      v-if="tableVisable"
       ref="table"
+      v-justify-height="justifyHeight"
+      :height="tableHeight"
       :data="config.data"
       v-bind="$attrs"
-      v-on="$listeners"
       border
+      v-on="$listeners"
       @row-click="rowClick"
     >
       <!-- 表格前面的列：原本只有firstColumn，后面实际开发可能会需要定义前面2、3列。-->
       <!-- 为了使之前项目代码改动最小，就不改成数组形式了 。而且第二、三列的情况很少 -->
       <template v-if="config.firstColumn && !config.firstColumn.hidden">
         <el-table-column
+          v-if="config.firstColumn.type === 'selection'"
           :type="config.firstColumn.type"
           width="50"
           :label="config.firstColumn.label"
           :reserve-selection="config.firstColumn.reserveSelection || false"
           align="center"
           v-bind="config.firstColumn.$attrs"
-          v-if="config.firstColumn.type === 'selection'"
-        ></el-table-column>
+        />
         <el-table-column
+          v-if="config.firstColumn.type === 'expand'"
           :type="config.firstColumn.type"
           width="50"
           :label="config.firstColumn.label"
           align="center"
           v-bind="config.firstColumn.$attrs"
-          v-if="config.firstColumn.type === 'expand'"
-        ></el-table-column>
+        />
         <el-table-column
+          v-if="config.firstColumn.type === 'index'"
           :type="config.firstColumn.type"
           width="50"
           :reserve-selection="config.firstColumn.isPaging || false"
           :label="config.firstColumn.label"
           align="center"
           v-bind="config.firstColumn.$attrs"
-          v-if="config.firstColumn.type === 'index'"
         >
           <template slot-scope="scope">
             <span>{{
@@ -244,31 +249,31 @@
       <!-- 第二列 -->
       <template v-if="config.secondColumn && !config.secondColumn.hidden">
         <el-table-column
+          v-if="config.secondColumn.type === 'selection'"
           :type="config.secondColumn.type"
           width="50"
           :label="config.secondColumn.label"
           :reserve-selection="config.secondColumn.reserveSelection || false"
           align="center"
           v-bind="config.secondColumn.$attrs"
-          v-if="config.secondColumn.type === 'selection'"
-        ></el-table-column>
+        />
 
         <el-table-column
+          v-if="config.secondColumn.type === 'expand'"
           :type="config.secondColumn.type"
           width="50"
           :label="config.secondColumn.label"
           align="center"
           v-bind="config.secondColumn.$attrs"
-          v-if="config.secondColumn.type === 'expand'"
-        ></el-table-column>
+        />
         <el-table-column
+          v-if="config.secondColumn.type === 'index'"
           :type="config.secondColumn.type"
           width="50"
           :reserve-selection="config.secondColumn.isPaging || false"
           :label="config.secondColumn.label"
           align="center"
           v-bind="config.secondColumn.$attrs"
-          v-if="config.secondColumn.type === 'index'"
         >
           <template slot-scope="scope">
             <span>{{
@@ -283,31 +288,31 @@
       <!-- 第三列 -->
       <template v-if="config.thirdColumn && !config.thirdColumn.hidden">
         <el-table-column
+          v-if="config.thirdColumn.type === 'selection'"
           :type="config.thirdColumn.type"
           width="50"
           :label="config.thirdColumn.label"
           :reserve-selection="config.thirdColumn.reserveSelection || false"
           align="center"
           v-bind="config.thirdColumn.$attrs"
-          v-if="config.thirdColumn.type === 'selection'"
-        ></el-table-column>
+        />
 
         <el-table-column
+          v-if="config.thirdColumn.type === 'expand'"
           :type="config.thirdColumn.type"
           width="50"
           :label="config.thirdColumn.label"
           align="center"
           v-bind="config.thirdColumn.$attrs"
-          v-if="config.thirdColumn.type === 'expand'"
-        ></el-table-column>
+        />
         <el-table-column
+          v-if="config.thirdColumn.type === 'index'"
           :type="config.thirdColumn.type"
           width="50"
           :reserve-selection="config.thirdColumn.isPaging || false"
           :label="config.thirdColumn.label"
           align="center"
           v-bind="config.thirdColumn.$attrs"
-          v-if="config.thirdColumn.type === 'index'"
         >
           <template slot-scope="scope">
             <span>{{
@@ -322,7 +327,7 @@
       <slot name="tbody">
         <template v-for="(item, index) in config.column">
           <!-- <el-table-column :key="index" :config="item"> -->
-          <nui-table-column :key="index" :config="item"> </nui-table-column>
+          <nui-table-column :key="index" :config="item" />
         </template>
       </slot>
 
@@ -340,7 +345,11 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-button
+          <nui-button
+            type="default"
+            icon="el-icon-top"
+            circle
+            size="small"
             @click="
               upSort(
                 scope.row,
@@ -348,13 +357,13 @@
                 config.operatorColumn.sortProp
               )
             "
+          />
+
+          <nui-button
             type="default"
-            icon="el-icon-top"
+            icon="el-icon-bottom"
             circle
             size="small"
-          ></el-button>
-
-          <el-button
             @click="
               downSort(
                 scope.row,
@@ -362,11 +371,7 @@
                 config.operatorColumn.sortProp
               )
             "
-            type="default"
-            icon="el-icon-bottom"
-            circle
-            size="small"
-          ></el-button>
+          />
         </template>
       </el-table-column>
 
@@ -382,59 +387,117 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-button
-            v-for="(item, index) in config.operatorColumn.buttonArr"
-            :key="index"
-            @click="item.fun(scope.row)"
-            :type="item.type || 'primary'"
-            :icon="item.icon"
-            :plain="item.plain"
-            :round="item.round"
-            :circle="item.circle"
-            :loading="!item.loading ? false : true"
-            size="small"
-            v-show="operatorBtnShow(item.hidden, scope.row)"
-            >{{ item.text }}</el-button
-          >
+          <template v-for="(item, index) in config.operatorColumn.buttonArr">
+            <nui-button
+              v-if="operatorBtnShow(item.hidden, scope.row)"
+              :key="index"
+              :type="item.type || 'primary'"
+              :icon="item.icon"
+              :plain="item.plain"
+              :round="item.round"
+              :circle="item.circle"
+              :loading="!item.loading ? false : true"
+              size="small"
+              @click="item.fun(scope.row)"
+            >{{ item.text }}</nui-button>
+          </template>
+
         </template>
       </el-table-column>
 
-      <slot name="end"></slot>
+      <slot name="end" />
     </el-table>
     <el-pagination
       v-if="config.pagination"
-      :class="config.pagination.align"
       v-show="config.data && config.data.length"
+      :class="config.pagination.align"
       :current-page="config.currentPage"
-      @current-change="handlesCurrentChange"
-      @size-change="handlesSizeChange"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="config.pageSize"
       :layout="computedPaginationlauout"
       :total="config.total"
       v-bind="config.pagination.$attrs"
-      v-on="config.pagination.$listeners"
       :background="
         config.pagination.background != undefined
           ? config.pagination.background
           : true
       "
-    ></el-pagination>
+      @current-change="handlesCurrentChange"
+      @size-change="handlesSizeChange"
+      v-on="config.pagination.$listeners"
+    />
   </div>
 </template>
 
 <script>
 import qs from 'qs'
+import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event'
+
+const doResize = async(el, binding, vnode) => {
+  const { componentInstance: $table } = await vnode
+
+  const { value } = binding
+
+  if (!$table.height) {
+    throw new Error(`el-$table must set the height. Such as height='100px'`)
+  }
+  const bottomOffset = (value && value.bottom) || 90
+
+  if (!$table) return
+
+  const height = window.innerHeight - el.getBoundingClientRect().top - bottomOffset
+
+  $table.layout.setHeight(height)
+  $table.doLayout()
+}
 
 export default {
-  name: 'nui-table',
+  name: 'NuiTable',
+  directives: {
+    justifyHeight: {
+      bind(el, binding, vnode) {
+        if (binding.value === false) {
+          return
+        }
+
+        el.resizeListener = () => {
+          doResize(el, binding, vnode)
+        }
+        // parameter 1 is must be "Element" type
+        addResizeListener(window.document.body, el.resizeListener)
+      },
+      inserted(el, binding, vnode) {
+        if (binding.value === false) {
+          return
+        }
+        doResize(el, binding, vnode)
+
+        el.resizeListener = () => {
+          doResize(el, binding, vnode)
+        }
+        addResizeListener(window.document.body, el.resizeListener)
+      },
+      unbind(el) {
+        if (el.resizeListener) {
+          removeResizeListener(window.document.body, el.resizeListener)
+        }
+      }
+    }
+  },
   props: {
     inset: {
       type: Boolean,
-      default: false,
+      default: false
     },
     url: {
-      type: String,
+      type: String
+    },
+    justifyHeight: {
+      type: [Object, Boolean],
+      default: false
+    },
+    height: {
+      type: String
     },
     // table配置数据
     config: {
@@ -442,17 +505,27 @@ export default {
       default: () => {
         return {}
       },
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       rowData: '',
+      tableVisable: 'true'
     }
   },
   computed: {
+    innerUrl() {
+      return this.config.api.url
+    },
+    tableHeight() {
+      let res
+      this.justifyHeight ? res = '100px' : res = this.height
+
+      return res
+    },
     operatorBtnShow() {
-      return function(hidden, row) {
+      return function(hidden, row = {}) {
         if (typeof hidden === 'boolean' || hidden === undefined) {
           return !hidden
         }
@@ -480,11 +553,11 @@ export default {
       }
     },
     computedPaginationlauout() {
-      let _showSize =
+      const _showSize =
         this.config.pagination.showSize === undefined
           ? true
           : this.config.pagination.showSize
-      let _align = this.config.pagination.align
+      const _align = this.config.pagination.align
 
       if (_align === 'right') {
         return _showSize
@@ -495,31 +568,62 @@ export default {
           ? ' prev, pager, next, jumper ,sizes,total '
           : 'prev, pager, next, jumper,total'
       }
-    },
+    }
+  },
+  watch: {
+    innerUrl: function(newVal) {
+      if (this.config.api.autoRefresh) {
+        this.initTableData()
+      }
+    }
   },
   created() {
     // 设置默认参数
-    let resPropsNameDefault = {
-      //返回的json主要字段名称&获取方式
-      code: 'code', //解析接口状态
-      msg: 'msg', //解析提示文本
-      rows: 'data.result', //解析数据列表数组
-      total: 'data.totalCount', //解析数据列表长度
+    const resPropsNameDefault = {
+      // 返回的json主要字段名称&获取方式
+      code: 'code', // 解析接口状态
+      msg: 'msg', // 解析提示文本
+      rows: 'data.result', // 解析数据列表数组
+      total: 'data.totalCount' // 解析数据列表长度
     }
     this.config.api.resPropsName = Object.assign(
       {},
       resPropsNameDefault,
       this.config.api.resPropsName
     )
+
+    if (this.config.api.autoRefresh === undefined) {
+      this.config.api.autoRefresh = true
+    }
   },
   mounted() {
-    //获取数据
-    this.getTableData()
+    this.initTableData()
+  },
+  activated() {
+    if (this.justifyHeight !== false) {
+      this.tableVisable = true
+    }
+  },
+  deactivated() {
+    if (this.justifyHeight !== false) {
+      this.tableVisable = false
+    }
   },
   methods: {
-    //获取数据
+    initTableData() {
+      // 获取数据
+      if (
+        this.config.api.callback &&
+        typeof this.config.api.callback === 'function'
+      ) {
+        this.getTableData({}, this.config.api.callback)
+      } else {
+        this.getTableData()
+      }
+    },
+    // 获取数据
     getTableData(_params, cb) {
-      let that = this
+      const that = this
 
       this.config.api.params = this.config.api.params
         ? this.config.api.params
@@ -531,80 +635,82 @@ export default {
 
       const tableParam = Object.assign({}, originTableParam, _params)
 
-      for (let key in tableParam) {
-        let val = tableParam[key]
+      for (const key in tableParam) {
+        const val = tableParam[key]
         if (val === undefined || val === '') {
           delete tableParam[key]
         }
       }
 
-      let postConfig = {
+      const postConfig = {
         url: that.config.api.url,
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
         data: qs.stringify(tableParam),
         transformResponse(data) {
-          let dataObj = JSON.parse(data)
+          const dataObj = JSON.parse(data)
 
-          let _codeStr = that.config.api.resPropsName.code
-          let _msgStr = that.config.api.resPropsName.msg
+          const _codeStr = that.config.api.resPropsName.code
+          const _msgStr = that.config.api.resPropsName.msg
           // that
 
           dataObj.code = dataObj[_codeStr]
           dataObj.msg = dataObj[_msgStr]
 
           return dataObj
-        },
+        }
       }
 
-      let getConfig = {
+      const getConfig = {
         url: that.config.api.url,
         method: 'GET',
         params: tableParam,
         transformResponse(data) {
-          let dataObj = JSON.parse(data)
+          const dataObj = JSON.parse(data)
 
-          let _codeStr = that.config.api.resPropsName.code
-          let _msgStr = that.config.api.resPropsName.msg
+          const _codeStr = that.config.api.resPropsName.code
+          const _msgStr = that.config.api.resPropsName.msg
           // that
 
           dataObj.code = dataObj[_codeStr]
           dataObj.msg = dataObj[_msgStr]
 
           return dataObj
-        },
+        }
       }
 
-      let thisConfig =
-        that.config.api.url.substring(that.config.api.url.length - 5) ===
-        '.json'
-          ? getConfig
-          : postConfig
+      if (that.config.api.url) {
+        const thisConfig =
+          that.config.api.url.substring(that.config.api.url.length - 5) ===
+          '.json'
+            ? getConfig
+            : postConfig
 
-      this.$http(thisConfig)
-        .then((res) => {
-          let _rowsStr = this.config.api.resPropsName.rows
-          let _totalStr = this.config.api.resPropsName.total
+        this.$http(thisConfig)
+          .then((res) => {
+            const _rowsStr = this.config.api.resPropsName.rows
+            const _totalStr = this.config.api.resPropsName.total
 
-          let _rowData = this.formatResDataStr(res, _rowsStr)
-          let _total = this.formatResDataStr(res, _totalStr)
+            const _rowData = this.formatResDataStr(res, _rowsStr)
+            const _total = this.formatResDataStr(res, _totalStr)
 
-          this.config.total = _total
-          this.config.data = _rowData
-          // this.config.currentPage = res.data.current;
+            this.config.total = _total
+            this.config.data = _rowData
+            // this.config.currentPage = res.data.current;
 
-          if (_rowData.length === 0 && tableParam.page != 1) {
-            that.getTableData({ page: tableParam.page - 1 })
-          }
+            if (_rowData.length === 0 && tableParam.page != 1) {
+              that.getTableData({ page: tableParam.page - 1 })
+            }
 
-          typeof cb === 'function' && cb()
-        })
-        .catch(() => {})
+            typeof cb === 'function' && cb(res)
+          })
+          .catch(() => {})
+      }
     },
     formatResDataStr(res, str) {
-      let _strArr = str.split('.')
+      const _strArr = str.split('.')
       let _resData = res
 
       for (let i = 0; i < _strArr.length; i++) {
@@ -615,8 +721,12 @@ export default {
       return _resData
     },
     // 提交表单
-    submitTable() {
-      this.getTableData()
+    submitTable(cb) {
+      if (typeof cb === 'function') {
+        this.getTableData({}, cb)
+      } else {
+        this.getTableData()
+      }
     },
     // 当前页码
     handlesCurrentChange(val) {
@@ -635,15 +745,15 @@ export default {
         url: `${baseUrl}${row[propName]}/up`,
         method: 'put',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       })
         .then((res) => {
           this.getTableData({}, () => {
             this.$message({
               type: 'success',
               message: '上移成功',
-              duration: 1500,
+              duration: 1500
             })
           })
         })
@@ -654,15 +764,15 @@ export default {
         url: `${baseUrl}${row[propName]}/down`,
         method: 'put',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       })
         .then((res) => {
           this.getTableData({}, () => {
             this.$message({
               type: 'success',
               message: '下移成功',
-              duration: 1500,
+              duration: 1500
             })
           })
         })
@@ -681,8 +791,8 @@ export default {
     // 表格头部表单
     formFun(item) {
       item.fun(this.rowData)
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -698,18 +808,36 @@ export default {
       border-left: none;
       border-right: none;
     }
+    .title-bar {
+      padding: 10px 12px;
+    }
+
+    .title-bar:nth-child(1) {
+      background: #f7f7f7;
+    }
+
+    .title-bar + .title-bar {
+      border-top: 1px solid #eee;
+    }
+
+    .table-title {
+      padding-left: 12px;
+    }
+
+    .el-form {
+      padding-left: 12px;
+    }
   }
 
   .title-bar {
     display: flex;
-    padding: 10px 12px;
+    padding: 8px 10px;
     width: 100%;
     white-space: nowrap;
     .table-title {
       font-size: 18px;
       color: #505050;
       line-height: 32px;
-      padding-left: 12px;
       font-weight: bold;
     }
 
@@ -723,16 +851,7 @@ export default {
     }
   }
 
-  .title-bar:nth-child(1) {
-    background: #f7f7f7;
-  }
-
-  .title-bar + .title-bar {
-    border-top: 1px solid #eee;
-  }
-
   .el-form {
-    padding-left: 12px;
     flex-grow: 1;
     display: flex;
     // justify-content: flex-end;
@@ -876,7 +995,7 @@ export default {
 /deep/::-webkit-scrollbar-thumb,
 /deep/::-webkit-scrollbar-thumb:vertical {
   border-radius: 10px;
-  background: rgba(144, 147, 153, 0.2);
+  background: rgba(144, 147, 153, 0.4);
 }
 /deep/::-webkit-scrollbar-thumb:hover,
 /deep/::-webkit-scrollbar-thumb:vertical:hover {

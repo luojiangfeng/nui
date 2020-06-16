@@ -4,19 +4,19 @@
     :type="config.type"
     :label="config.label"
     :prop="config.prop"
-    :style="{ minWidth: config.minWidth, maxWidth: config.maxWidth }"
     :width="config.width"
+    :min-width="config.minWidth"
     :sortable="config.sortable"
     :align="config.align || 'center'"
     :show-overflow-tooltip="
-      config.ellipsis == undefined ? false : config.ellipsis
+      config.ellipsis === undefined ? false : config.ellipsis
     "
     v-bind="config.$attrs"
     v-on="config.$listeners"
   >
     <template slot="header" slot-scope="scope">
       <template v-if="config.templateHead">
-        <div v-html="computedColTpl(config.label, config.templateHead)"></div>
+        <div v-html="computedColTpl(config.label, config.templateHead)" />
       </template>
       <template v-else>
         {{ config.label }}
@@ -31,7 +31,7 @@
       <template v-if="config.template">
         <div
           v-html="computedColTpl(scope.row[config.prop], config.template)"
-        ></div>
+        />
       </template>
       <template v-else>
         <!-- 是否可点击 -->
@@ -42,30 +42,28 @@
             }}</a>
           </div>
           <div v-if="config.filters">
-            <span v-if="config.filters.param"
-              ><a class="table-cell-a">{{
-                scope.row[config.prop] | constantKey2Value(config.filters.param)
-              }}</a></span
-            >
+            <span
+              v-if="config.filters.param"
+            ><a class="table-cell-a">{{
+              scope.row[config.prop] | constantKey2Value(config.filters.param)
+            }}</a></span>
             <span
               v-else-if="
                 !config.filters.param && config.filters.method === '￥'
               "
-              ><a class="table-cell-a">{{
-                scope.row[config.prop] | num3(2, '￥')
-              }}</a></span
-            >
+            ><a class="table-cell-a">{{
+              scope.row[config.prop] | num3(2, '￥')
+            }}</a></span>
             <span
               v-else-if="!config.filters.param && config.filters.method === '%'"
-              ><a class="table-cell-a">{{
-                scope.row[config.prop] | percentFilter
-              }}</a></span
-            >
-            <span v-else-if="!config.filters.param && config.filters.method"
-              ><a class="table-cell-a">{{
-                computedColFilter(scope.row[config.prop], config.filters.method)
-              }}</a></span
-            >
+            ><a class="table-cell-a">{{
+              scope.row[config.prop] | percentFilter
+            }}</a></span>
+            <span
+              v-else-if="!config.filters.param && config.filters.method"
+            ><a class="table-cell-a">{{
+              computedColFilter(scope.row[config.prop], config.filters.method)
+            }}</a></span>
           </div>
         </template>
 
@@ -81,12 +79,10 @@
               v-else-if="
                 !config.filters.param && config.filters.method === '￥'
               "
-              >{{ scope.row[config.prop] | num3(2, '￥') }}</span
-            >
+            >{{ scope.row[config.prop] | num3(2, '￥') }}</span>
             <span
               v-else-if="!config.filters.param && config.filters.method === '%'"
-              >{{ scope.row[config.prop] | percentFilter }}</span
-            >
+            >{{ scope.row[config.prop] | percentFilter }}</span>
             <span v-else-if="!config.filters.param && config.filters.method">{{
               computedColFilter(scope.row[config.prop], config.filters.method)
             }}</span>
@@ -100,24 +96,24 @@
 
 <script>
 export default {
-  name: 'nui-table-column',
+  name: 'NuiTableColumn',
   props: {
     config: {
       type: Object,
       default: () => {
         return {}
-      },
+      }
     },
     data: {
       type: Array,
       default: () => {
         return []
-      },
+      }
     },
     custom: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {}
@@ -152,11 +148,11 @@ export default {
       return function(value, filterMethod) {
         return this.$options.filters[filterMethod](value)
       }
-    },
+    }
   },
   created() {},
   mounted() {},
-  methods: {},
+  methods: {}
 }
 </script>
 <style scoped lang="scss">

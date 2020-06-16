@@ -1,22 +1,21 @@
 <!-- 比elementUI多的属性：width， -->
 <template>
   <div class="page-main">
-    <el-tabs class="page-tab" v-model="activeTab">
+    <el-tabs v-model="activeTab" class="page-tab">
       <el-tab-pane label="文档" name="doc">
         <h2>Code 代码编辑器</h2>
+
+        <h3 />
+        <h5>该组件基于“codemirror”，请先确保安装。（若不需要此组件，也不想安装多余的npm插件。可以删除nui\packages\code文件夹）</h5>
+
         <h3>传字符串</h3>
         <div class="demo-block">
-          <nui-code theme="dark" width="100%" :value="testValue"></nui-code>
+          <nui-code theme="dark" width="100%" :value="testValue" />
         </div>
 
         <h3>传url，显示接口返回值</h3>
         <div class="demo-block">
-          <nui-code
-            height="600px"
-            width="100%"
-            type="vue"
-            url="demoViews/codeDemo.vue"
-          ></nui-code>
+          <nui-code type="json" url="api/getEntUserList.json" />
         </div>
 
         <article class="intro-list">
@@ -86,7 +85,7 @@
         <show-code
           v-if="activeTab == 'code'"
           url="demoViews/inputNumberDemo.vue"
-        ></show-code>
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -115,12 +114,12 @@ export default {
     }
   ]
 }
-`,
+`
     }
   },
   created() {},
   mounted() {},
-  methods: {},
+  methods: {}
 }
 </script>
 

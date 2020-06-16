@@ -248,8 +248,10 @@ export default {
       if (this.showCheckbox || (this.leafOnly && !node.isLeaf)) {
         return
       }
+
       this.selecteds = [item]
       this.options_show = false
+
       this.$emit('change', this.selecteds)
     },
     // 清空数据

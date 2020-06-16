@@ -84,13 +84,21 @@ export default {
             let resArr = res.data
 
             let resOptions = resArr.map((item) => {
-              let obj = {}
+              let obj = item
               obj.label = item[this.labelName]
               obj.value = item[this.valueName]
               return obj
             })
 
             this.innerOptions = resOptions
+
+            // let dom = document.getElementById(this.id)
+            // let inputDom = dom.querySelectorAll('input')[0]
+
+            // console.log(resOptions)
+
+            // inputDom.value = '78879'
+            // inputDom.setAttribute('aaaaa', 'button')
           })
           .catch((err) => {})
       } else {
@@ -121,8 +129,13 @@ export default {
 
         this.autoInputWidth(dom, 50, label)
       }
-    },
 
+      let valData = this.innerOptions.filter((item) => {
+        return item[this.valueName] === val
+      })
+
+      this.$emit('nui-change', valData[0])
+    },
     autoInputWidth(dom, baseW, val) {
       let _val = val
       let _baseW = baseW || 6

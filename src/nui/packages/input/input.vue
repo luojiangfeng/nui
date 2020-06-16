@@ -1,19 +1,19 @@
 <template>
   <el-input
-    ref="input"
     v-if="type === 'number'"
+    ref="input"
+    v-enter-number
     class="nui-number-input"
     :class="hideArrow ? 'hide-arrow' : ''"
     :clearable="clearable"
     v-bind="$attrs"
-    v-on="$listeners"
-    @clear="clearFun"
     :type="type"
-    v-enter-number
     onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'')"
     :style="{ width: width }"
+    v-on="$listeners"
+    @clear="clearFun"
   >
-    <slot></slot>
+    <slot />
   </el-input>
 
   <el-input
@@ -21,53 +21,33 @@
     ref="input"
     :clearable="clearable"
     v-bind="$attrs"
-    v-on="$listeners"
-    @clear="clearFun"
     :type="type"
     :style="{ width: width }"
+    v-on="$listeners"
+    @clear="clearFun"
   >
-    <slot></slot>
+    <slot />
   </el-input>
 </template>
 
 <script>
 export default {
-  name: 'nui-input',
-  props: {
-    width: {
-      type: String,
-    },
-    type: {
-      type: String,
-    },
-    hideArrow: {
-      type: Boolean,
-      default: true,
-    },
-    clearable: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  data() {
-    return {}
-  },
-  computed: {},
+  name: 'NuiInput',
   directives: {
     enterNumber: {
       inserted: function(el, binding, vnode) {
-        let that=vnode.componentInstance
+        const that = vnode.componentInstance
 
         el.addEventListener('keypress', function(e) {
           e = e || window.event
 
-          let charcode = typeof e.charCode === 'number' ? e.charCode : e.keyCode
-          let re = /\d/
+          const charcode = typeof e.charCode === 'number' ? e.charCode : e.keyCode
+          const re = /\d/
 
-          //解决输入e时，Vue绑定值丢失的浏览器BUG
+          // 解决输入e时，Vue绑定值丢失的浏览器BUG
           setTimeout(() => {
-            that.$emit('input',this.querySelector('input').value);
-          }, 0);
+            that.$emit('input', this.querySelector('input').value)
+          }, 0)
 
           if (
             !re.test(String.fromCharCode(charcode)) &&
@@ -76,23 +56,41 @@ export default {
           ) {
             if (e.preventDefault) {
               e.preventDefault()
-
             } else {
               e.returnValue = false
-
             }
           }
         })
-      },
-    },
+      }
+    }
   },
+  props: {
+    width: {
+      type: String
+    },
+    type: {
+      type: String
+    },
+    hideArrow: {
+      type: Boolean,
+      default: true
+    },
+    clearable: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data() {
+    return {}
+  },
+  computed: {},
   created() {},
   mounted() {},
   methods: {
-    clearFun(){
+    clearFun() {
       this.$refs['input'].focus()
     }
-  },
+  }
 }
 </script>
 <style scoped lang="scss">
