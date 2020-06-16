@@ -257,7 +257,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                width="130px"
+                width="150px"
                 label="参数"
                 prop="name"
               />
@@ -326,6 +326,7 @@ export default {
                 ref: 'dateRange', // 与api里面的params对应
                 type: 'date', // 日期选择器
                 label: '入职日期:',
+                // width: '200px',
                 dateType: 'daterange'
               },
               {
@@ -333,7 +334,6 @@ export default {
                 type: 'input', // 普通文本输入框
                 label: '用户姓名:',
                 placeholder: '请输入用户名',
-
                 clearable: true, // 默认true
                 // 其他elementUI的属性
                 $attrs: {
@@ -350,6 +350,7 @@ export default {
                 ref: 'company',
                 type: 'select', // 下拉选择器
                 label: '所属企业:',
+                minWidth: '120px',
                 options: [
                   {
                     value: '0',
@@ -933,44 +934,189 @@ export default {
         type: 'string',
         default: '——'
       }, {
-        name: '文本框属性',
+        name: 'width',
+        intro: '组件本身宽度',
+        type: 'string',
+        default: '——'
+      }, {
+        name: 'minWidth',
+        intro: '组件本身最小宽度',
+        type: 'string',
+        default: '——'
+      }, {
+        name: 'maxWidth',
+        intro: '组件本身最大宽度',
+        type: 'string',
+        default: '——'
+      }, {
+        name: 'itemWidth',
+        intro: 'form-item(包括label元素)的宽度',
+        type: 'string',
+        default: '——'
+      }, {
+        name: 'itemMinWidth',
+        intro: 'form-item(包括label元素)的最小宽度',
+        type: 'string',
+        default: '——'
+      }, {
+        name: 'itemMaxWidth',
+        intro: 'form-item(包括label元素)的最大宽度',
+        type: 'string',
+        default: '——'
+      }, {
+        name: '$attrs',
+        intro: '其他未列出的elementUI原生属性，放入此对象内设置',
+        type: 'object',
+        default: '——'
+      },
+      {
+        name: '$listeners',
+        intro: '其他未列出的elementUI原生事件，放入此对象内设置',
+        type: 'object',
+        default: '——'
+      }, {
+        name: '‘input’专有属性',
         intro: 'type=input时支持的属性',
         type: '——',
         default: '——',
         children: [
           {
-            name: 'showSize',
-            intro: '是否可选择每页数量',
+            name: 'clearable',
+            intro: '是否显示清空按钮',
+            type: 'boolean',
+            default: 'true'
+          }
+        ]
+      }, {
+        name: '‘select’专有属性',
+        intro: 'type=select时支持的属性',
+        type: '——',
+        default: '——',
+        children: [
+          {
+            name: 'change-width',
+            intro: '是否根据当前的内容宽度，自动改变组件宽度',
             type: 'boolean',
             default: 'true'
           },
           {
-            name: 'align',
-            intro: '对齐方式',
-            type: 'left/center/right',
-            default: 'right'
-          },
-          {
-            name: 'background',
-            intro: '是否显示背景色',
+            name: 'clearable',
+            intro: '是否显示清空按钮',
             type: 'boolean',
             default: 'true'
           },
-
           {
-            name: '$attrs',
-            intro: '其他未列出的原生el-table-column属性，放入此对象内设置',
-            type: 'object',
+            name: 'options',
+            intro: '下拉选项数组。（当通过url接口获取时，可以不设置此属性）',
+            type: 'array',
             default: '——'
           },
           {
-            name: '$listeners',
-            intro: '其他未列出的原生el-table-column事件，放入此对象内设置',
-            type: 'object',
+            name: 'url',
+            intro: '通过接口url获取下拉数据',
+            type: 'string',
+            default: '——'
+          },
+          {
+            name: 'value-name',
+            intro: '接口返回的，对应option的value的属性名（一般为ID等唯一值）',
+            type: 'string',
+            default: '——'
+          },
+          {
+            name: 'label-name',
+            intro: '接口返回的，对应option的label的属性名（一般为name等实际展示的名称）',
+            type: 'string',
+            default: '——'
+          }
+        ]
+      }, {
+        name: '‘radio’专有属性',
+        intro: 'type=radio时支持的属性',
+        type: '——',
+        default: '——',
+        children: [
+          {
+            name: 'options',
+            intro: '下拉选项数组。（当通过url接口获取时，可以不设置此属性）',
+            type: 'array',
+            default: '——'
+          },
+          {
+            name: 'url',
+            intro: '通过接口url获取下拉数据',
+            type: 'string',
+            default: '——'
+          },
+          {
+            name: 'value-name',
+            intro: '接口返回的，对应option的value的属性名（一般为ID等唯一值）',
+            type: 'string',
+            default: '——'
+          },
+          {
+            name: 'label-name',
+            intro: '接口返回的，对应option的label的属性名（一般为name等实际展示的名称）',
+            type: 'string',
+            default: '——'
+          }
+        ]
+      }, {
+        name: '‘checkbox’专有属性',
+        intro: 'type=checkbox时支持的属性',
+        type: '——',
+        default: '——',
+        children: [
+          {
+            name: 'options',
+            intro: '下拉选项数组。（当通过url接口获取时，可以不设置此属性）',
+            type: 'array',
+            default: '——'
+          },
+          {
+            name: 'url',
+            intro: '通过接口url获取下拉数据',
+            type: 'string',
+            default: '——'
+          },
+          {
+            name: 'value-name',
+            intro: '接口返回的，对应option的value的属性名（一般为ID等唯一值）',
+            type: 'string',
+            default: '——'
+          },
+          {
+            name: 'label-name',
+            intro: '接口返回的，对应option的label的属性名（一般为name等实际展示的名称）',
+            type: 'string',
+            default: '——'
+          }
+        ]
+      }, {
+        name: '‘date’专有属性',
+        intro: 'type=date时支持的属性',
+        type: '——',
+        default: '——',
+        children: [
+          {
+            name: 'dateType',
+            intro: 'date组件的显示类型',
+            type: 'year/month/date/dates/ week/datetime/datetimerange/ daterange/monthrange',
+            default: 'date'
+          },
+          {
+            name: 'value-format',
+            intro: '可选，绑定值的格式。不指定则绑定值为 Date 对象。（可选格式见elementUI的DatePicker官方文档）',
+            type: 'string',
             default: '——'
           }
 
         ]
+      }, {
+        name: '‘dropdownTree’专有属性',
+        intro: 'type=dropdownTree时支持的属性。此组件用的比较少，nui-dropdown-tree的属性基本都可以直接使用。',
+        type: '——',
+        default: '——'
       }]
     }
   },

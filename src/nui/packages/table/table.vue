@@ -27,15 +27,20 @@
                   :key="index"
                   :label="item.label"
                   :style="{
-                    width: item.width,
-                    minWidth: item.minWidth,
-                    maxWidth: item.maxWidth,
+                    width: item.itemWidth,
+                    minWidth: item.itemMinWidth,
+                    maxWidth: item.itemMaxWidth,
                   }"
                 >
                   <el-input
                     v-model="config.api.params[item.ref]"
                     :placeholder="item.placeholder"
                     :clearable="item.clearable || true"
+                    :style="{
+                      width: item.width,
+                      minWidth: item.minWidth,
+                      maxWidth: item.maxWidth,
+                    }"
                     v-bind="item.$attrs"
                     v-on="item.$listeners"
                   />
@@ -48,9 +53,9 @@
                   :key="index"
                   :label="item.label"
                   :style="{
-                    width: item.width,
-                    minWidth: item.minWidth,
-                    maxWidth: item.maxWidth,
+                    width: item.itemWidth,
+                    minWidth: item.itemMinWidth,
+                    maxWidth: item.itemMaxWidth,
                   }"
                 >
                   <nui-select
@@ -67,6 +72,11 @@
                     :clearable="
                       item.clearable === undefined ? true : item.clearable
                     "
+                    :style="{
+                      width: item.width,
+                      minWidth: item.minWidth,
+                      maxWidth: item.maxWidth,
+                    }"
                     v-bind="item.$attrs"
                     :width="item.width"
                     :url="item.url"
@@ -82,9 +92,19 @@
                   :ref="item.ref"
                   :key="index"
                   :label="item.label"
+                  :style="{
+                    width: item.itemWidth,
+                    minWidth: item.itemMinWidth,
+                    maxWidth: item.itemMaxWidth,
+                  }"
                 >
                   <nui-radio-group
                     v-model="config.api.params[item.ref]"
+                    :style="{
+                      width: item.width,
+                      minWidth: item.minWidth,
+                      maxWidth: item.maxWidth,
+                    }"
                     :options="item.options"
                     :url="item.url"
                     :value-name="item.valueName"
@@ -100,9 +120,19 @@
                   :ref="item.ref"
                   :key="index"
                   :label="item.label"
+                  :style="{
+                    width: item.itemWidth,
+                    minWidth: item.itemMinWidth,
+                    maxWidth: item.itemMaxWidth,
+                  }"
                 >
                   <nui-checkbox-group
                     v-model="config.api.params[item.ref]"
+                    :style="{
+                      width: item.width,
+                      minWidth: item.minWidth,
+                      maxWidth: item.maxWidth,
+                    }"
                     :options="item.options"
                     :url="item.url"
                     :value-name="item.valueName"
@@ -118,6 +148,11 @@
                   :ref="item.ref"
                   :key="index"
                   :label="item.label"
+                  :style="{
+                    width: item.itemWidth,
+                    minWidth: item.itemMinWidth,
+                    maxWidth: item.itemMaxWidth,
+                  }"
                 >
                   <nui-dropdown-tree
                     v-model="config.api.params[item.ref]"
@@ -127,6 +162,8 @@
                     :multi-check="item.multiCheck"
                     :trigger="item.trigger"
                     :width="item.width"
+                    :min-width="item.minWidth"
+                    :max-width="item.maxWidth"
                     :disabled="item.disabled"
                     :pop-height="item.popHeight"
                     :collapse-tags="item.collapseTags"
@@ -144,11 +181,21 @@
                   v-if="item.type === 'date'"
                   :key="index"
                   :label="item.label"
+                  :style="{
+                    width: item.itemWidth,
+                    minWidth: item.itemMinWidth,
+                    maxWidth: item.itemMaxWidth,
+                  }"
                 >
                   <el-date-picker
                     :ref="item.ref"
                     v-model="config.api.params[item.ref]"
                     :type="item.dateType"
+                    :style="{
+                      width: item.width?item.width:'230px',
+                      minWidth: item.minWidth,
+                      maxWidth: item.maxWidth,
+                    }"
                     range-separator="━"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
@@ -870,10 +917,10 @@ export default {
       // max-width: 180px;
     }
 
-    /deep/ .el-date-editor--daterange {
-      min-width: 230px;
-      max-width: 230px;
-    }
+    // /deep/ .el-date-editor--daterange {
+    //   min-width: 230px;
+    //   max-width: 230px;
+    // }
 
     /deep/ .el-range-separator {
       color: #999;

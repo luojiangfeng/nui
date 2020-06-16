@@ -1,5 +1,13 @@
 <template>
-  <div ref="wrap" class="nui-tree-select" :style="{ width: width }">
+  <div
+    ref="wrap"
+    class="nui-tree-select"
+    :style="{
+      width: width,
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+    }"
+  >
     <!-- 选中框区 -->
     <el-popover
       ref="popover"
@@ -25,6 +33,7 @@
 
         <nui-tree
           ref="tree"
+          v-model="checked_keys"
           v-bind="$attrs"
           :leaf-only="leafOnly"
           :url="url"
@@ -34,7 +43,6 @@
           :show-checkbox="showCheckbox"
           :expand-on-click-node="expandOnClickNode"
           :filter-node-method="filterNode"
-          v-model="checked_keys"
           :default-checked-keys="checked_keys"
           v-on="$listeners"
           @change="handleChange"
@@ -180,6 +188,13 @@ export default {
     width: {
       type: String,
       default: '100%'
+    },
+    // 宽度
+    maxWidth: {
+      type: String
+    },
+    minWidth: {
+      type: String
     },
     // 触发方式 click/focus/hover/manual
     trigger: {
