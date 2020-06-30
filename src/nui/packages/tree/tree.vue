@@ -6,13 +6,12 @@
       class="filter-input"
       :size="size"
       placeholder="请输入关键词"
-    ></el-input>
+    />
     <el-tree
       ref="tree"
       class="nui-options-tree"
       :highlight-current="highlightCurrent"
       v-bind="$attrs"
-      v-on="$listeners"
       :data="selfData"
       :props="selfProps"
       :node-key="nodeKey"
@@ -20,13 +19,14 @@
       :expand-on-click-node="expandOnClickNode"
       :filter-node-method="filterNode"
       :default-checked-keys="checked_keys"
+      v-on="$listeners"
       @check="handleCheckChange"
       @node-click="treeItemClick"
     >
       <template slot-scope="{ node, data }">
         <!-- <slot v-if="customIconConfig" :node="node" :data="data"></slot> -->
         <span v-if="customIconConfig" class="custom-tree-node">
-          <i class="icon" :class="setCustomClass(data)"></i>
+          <i class="icon" :class="setCustomClass(data)" />
           <span class="el-tree-node__label">{{ node.label }}</span>
         </span>
 
@@ -38,81 +38,85 @@
 
 <script>
 export default {
-  name: 'nui-tree',
+  name: 'NuiTree',
+  model: {
+    prop: 'value', // 这里使我们定义的v-model属性
+    event: 'change'
+  },
 
   props: {
     url: {
-      type: String,
+      type: String
     },
     // 数据
     customIconConfig: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     // 数据
     data: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     // 树结构配置
     props: {
       type: Object,
       default: () => {
         return {}
-      },
+      }
     },
     multiCheck: {
       type: Boolean,
-      default: true,
+      default: true
     },
     highlightCurrent: {
       type: Boolean,
-      default: true,
+      default: true
     },
     // node-key
     nodeKey: {
       type: String,
-      default: 'id',
+      default: 'id'
     },
     // 选中数据
     value: [String, Number, Array, Object],
     // 是否可多选
     showCheckbox: {
       type: Boolean,
-      default: false,
+      default: false
     },
     expandOnClickNode: {
       type: Boolean,
-      default: true,
+      default: true
     },
     // 是否只可选叶子节点
     leafOnly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 宽度
     width: {
       type: String,
-      default: '100%',
+      default: '100%'
     },
 
     // 多选时，清空选项关闭
     noCheckedClose: {
       type: Boolean,
-      default: false,
+      default: false
     },
 
     size: {
       type: String,
-      default: 'default',
+      default: 'default'
     },
     // 是否使用搜索
     filterable: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 自定义筛选函数
-    filterNodeMethod: Function,
+    filterNodeMethod: Function
   },
   data() {
     return {
@@ -121,22 +125,8 @@ export default {
       options_show: false, // 是否显示下拉选项
       checked_keys: [], // 默认选中
       filterText: '',
-      popoverWrapClass: '',
+      popoverWrapClass: ''
     }
-  },
-  model: {
-    prop: 'value', //这里使我们定义的v-model属性
-    event: 'change',
-  },
-
-  watch: {
-    value(val) {
-      this.chaeckDefaultValue()
-    },
-    // 树节点搜索
-    filterText(val) {
-      this.$refs['tree'].filter(val)
-    },
   },
   computed: {
     selfData() {
@@ -149,9 +139,19 @@ export default {
         disabled: (data) => {
           return data.disabled
         },
-        ...this.props,
+        ...this.props
       }
+    }
+  },
+
+  watch: {
+    value(val) {
+      this.chaeckDefaultValue()
     },
+    // 树节点搜索
+    filterText(val) {
+      this.$refs['tree'].filter(val)
+    }
   },
   created() {
     if (this.url) {
@@ -160,7 +160,7 @@ export default {
         .then((res) => {
           this.innerData = res.data
         })
-        .catch((err) => {})
+        .catch(() => {})
     }
 
     this.chaeckDefaultValue()
@@ -168,15 +168,14 @@ export default {
   mounted() {},
   methods: {
     setCustomClass(data) {
-      let config = this.customIconConfig
+      const config = this.customIconConfig
       let res = ''
 
       if (config.length === 1 && config[0].key === undefined) {
         res = config[0].class
       } else {
         for (let i = 0; i < config.length; i++) {
-          const element = config[i]
-          let thisClass =
+          const thisClass =
             data[config[i].key] === config[i].value ? config[i].class : ''
           res += thisClass + ' '
         }
@@ -200,7 +199,7 @@ export default {
       }
       */
 
-      //单选且leafOnly，点击非leaf无效
+      // 单选且leafOnly，点击非leaf无效
       if (
         this.showCheckbox &&
         !this.multiCheck &&
@@ -219,7 +218,7 @@ export default {
         return 0
       }
 
-      //单选
+      // 单选
       if (this.showCheckbox && !this.multiCheck) {
         if (checkedKeys.length > 0) {
           this.$refs['tree'].setCheckedKeys([val.id], this.leafOnly)
@@ -229,7 +228,7 @@ export default {
       }
 
       let nodes = this.$refs['tree'].getCheckedNodes(this.leafOnly)
-      //单选且可选非leaf
+      // 单选且可选非leaf
       if (this.showCheckbox && !this.multiCheck && !this.leafOnly) {
         this.selecteds = nodes.length > 0 ? [nodes[0]] : []
         nodes = this.selecteds
@@ -260,7 +259,7 @@ export default {
     },
     // 处理默认选中数据
     chaeckDefaultValue() {
-      let val = this.value
+      const val = this.value
 
       if (!val || (Array.isArray(val) && val.length === 0)) {
         this.selecteds = []
@@ -282,7 +281,7 @@ export default {
       }
       // 单选处理
       if (typeof val === 'object') {
-        let _val = Array.isArray(val) ? val[0] : val
+        const _val = Array.isArray(val) ? val[0] : val
         this.selecteds = [_val]
         this.$nextTick(() => {
           this.$refs['tree'].setCurrentNode(_val)
@@ -290,7 +289,7 @@ export default {
       } else {
         this.$nextTick(() => {
           this.$refs['tree'].setCurrentKey(val)
-          let _node = this.$refs['tree'].getCurrentNode()
+          const _node = this.$refs['tree'].getCurrentNode()
           this.selecteds = _node ? [_node] : []
         })
       }
@@ -301,8 +300,8 @@ export default {
       if (this.filterNodeMethod) return this.filterNodeMethod(value, data, node)
       if (!value) return true
       return data[this.selfProps.label].indexOf(value) !== -1
-    },
-  },
+    }
+  }
 }
 </script>
 

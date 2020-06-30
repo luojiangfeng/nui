@@ -1,7 +1,4 @@
-{
-  "msg": "success",
-  "code": 200,
-  "data": {
+{"msg": "success","code": 200,"data": {
     "rows": [
       {
         "id": 518,

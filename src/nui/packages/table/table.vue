@@ -209,7 +209,7 @@
 
             <template v-for="(item, indexBtn) in eachBar.form">
               <template v-if="item.type === 'button'">
-                <!-- 按钮 -->
+                <!-- 按钮  -->
                 <nui-button
                   v-if="operatorBtnShow(item.hidden)"
                   :key="indexBtn"
@@ -243,6 +243,7 @@
       </template>
     </slot>
     <!-- :style="{'width': $store.getters.tableWidth,'transition': 'width .3s'}" -->
+
     <el-table
       v-if="tableVisable"
       ref="table"
@@ -379,8 +380,7 @@
       </slot>
 
       <el-table-column
-        v-if="config.operatorColumn && config.operatorColumn.type === 'sort'"
-        v-show="!config.operatorColumn.hidden"
+        v-if="config.operatorColumn && !config.operatorColumn.hidden&&config.operatorColumn.type === 'sort'"
         :fixed="
           config.operatorColumn.fixed ? config.operatorColumn.fixed : 'right'
         "
@@ -401,7 +401,8 @@
               upSort(
                 scope.row,
                 config.operatorColumn.sortBaseUrl,
-                config.operatorColumn.sortProp
+                config.operatorColumn.sortProp,
+                config.operatorColumn.callback
               )
             "
           />
@@ -415,7 +416,8 @@
               downSort(
                 scope.row,
                 config.operatorColumn.sortBaseUrl,
-                config.operatorColumn.sortProp
+                config.operatorColumn.sortProp,
+                config.operatorColumn.callback
               )
             "
           />
@@ -423,8 +425,7 @@
       </el-table-column>
 
       <el-table-column
-        v-if="config.operatorColumn && config.operatorColumn.type !== 'sort'"
-        v-show="!config.operatorColumn.hidden"
+        v-if="config.operatorColumn && !config.operatorColumn.hidden&& config.operatorColumn.type !== 'sort'"
         :fixed="config.operatorColumn && config.operatorColumn.fixed"
         :label="
           (config.operatorColumn && config.operatorColumn.label) || '操作'
@@ -452,27 +453,30 @@
         </template>
       </el-table-column>
 
-      <slot name="end" />
     </el-table>
-    <el-pagination
-      v-if="config.pagination"
-      v-show="config.data && config.data.length"
-      :class="config.pagination.align"
-      :current-page="config.currentPage"
-      :page-sizes="[10, 20, 50, 100]"
-      :page-size="config.pageSize"
-      :layout="computedPaginationlauout"
-      :total="config.total"
-      v-bind="config.pagination.$attrs"
-      :background="
-        config.pagination.background != undefined
-          ? config.pagination.background
-          : true
-      "
-      @current-change="handlesCurrentChange"
-      @size-change="handlesSizeChange"
-      v-on="config.pagination.$listeners"
-    />
+
+    <slot name="end">
+      <el-pagination
+        v-if="config.pagination"
+        v-show="config.data && config.data.length"
+        :class="config.pagination.align"
+        :current-page="config.currentPage"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="config.pageSize"
+        :layout="computedPaginationlauout"
+        :total="config.total"
+        v-bind="config.pagination.$attrs"
+        :background="
+          config.pagination.background != undefined
+            ? config.pagination.background
+            : true
+        "
+        @current-change="handlesCurrentChange"
+        @size-change="handlesSizeChange"
+        v-on="config.pagination.$listeners"
+      />
+
+    </slot>
   </div>
 </template>
 
@@ -659,14 +663,16 @@ export default {
   methods: {
     initTableData() {
       // 获取数据
-      if (
-        this.config.api.callback &&
-        typeof this.config.api.callback === 'function'
-      ) {
-        this.getTableData({}, this.config.api.callback)
-      } else {
-        this.getTableData()
-      }
+      this.getTableData()
+
+      // if (
+      //   this.config.api.callback &&
+      //   typeof this.config.api.callback === 'function'
+      // ) {
+      //   this.getTableData({}, this.config.api.callback)
+      // } else {
+      //   this.getTableData()
+      // }
     },
     // 获取数据
     getTableData(_params, cb) {
@@ -747,8 +753,15 @@ export default {
             this.config.data = _rowData
             // this.config.currentPage = res.data.current;
 
-            if (_rowData.length === 0 && tableParam.page != 1) {
+            if (_rowData.length === 0 && tableParam.page !== 1) {
               that.getTableData({ page: tableParam.page - 1 })
+            }
+
+            if (
+              this.config.api.callback &&
+              typeof this.config.api.callback === 'function'
+            ) {
+              this.config.api.callback(res)
             }
 
             typeof cb === 'function' && cb(res)
@@ -786,8 +799,7 @@ export default {
       this.config.currentPage = 1
       this.getTableData({ size: val })
     },
-    upSort(row, baseUrl, propName = 'id') {
-      this.$http
+    upSort(row, baseUrl, propName = 'id', cb) {
       this.$http({
         url: `${baseUrl}${row[propName]}/up`,
         method: 'put',
@@ -803,10 +815,12 @@ export default {
               duration: 1500
             })
           })
+
+          typeof cb === 'function' && cb(row)
         })
-        .catch((err) => {})
+        .catch(() => {})
     },
-    downSort(row, baseUrl, propName = 'id') {
+    downSort(row, baseUrl, propName = 'id', cb) {
       this.$http({
         url: `${baseUrl}${row[propName]}/down`,
         method: 'put',
@@ -822,8 +836,10 @@ export default {
               duration: 1500
             })
           })
+
+          typeof cb === 'function' && cb(row)
         })
-        .catch((err) => {})
+        .catch(() => {})
     },
 
     rowClick(row) {

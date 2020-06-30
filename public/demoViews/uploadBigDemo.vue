@@ -3,23 +3,18 @@
   <div class="page-main">
     <el-tabs v-model="activeTab" class="page-tab">
       <el-tab-pane label="文档" name="doc">
-        <h2>Code 代码编辑器</h2>
+        <h2>UploadBig 大附件上传</h2>
 
         <h3 />
-        <h5>该组件基于“codemirror”，请先确保安装。（若不需要此组件，也不想安装多余的npm插件。可以删除nui\packages\code文件夹）</h5>
+        <h5>该组件基于"vue-simple-uploader"和"spark-md5"，请先确保安装。（若不需要此组件，也不想安装多余的npm插件。可以删除nui\packages\upload-big文件夹）</h5>
+        <h3 />
+        <h5>因为没有服务器，所以演示不了。实际使用时，看配置属性来设置</h5>
 
-        <h3>传字符串</h3>
         <div class="demo-block">
-          <nui-code v-if="aaa" theme="dark" width="100%" :value="testValue" />
+          <nui-upload-big max-size="1024" accept=".rar,.psd,.zip" />
         </div>
-
-        <h3>传url，显示接口返回值</h3>
-        <div class="demo-block">
-          <nui-code type="javascript" url="api/getEntUserList.json" />
-        </div>
-
         <article class="intro-list">
-          <h3>Code Attributes</h3>
+          <h3>UploadBig Attributes</h3>
           <table>
             <thead>
               <tr>
@@ -32,46 +27,53 @@
             </thead>
             <tbody>
               <tr>
-                <td>height</td>
-                <td>高度</td>
-                <td>string</td>
+                <td>v-model</td>
+                <td>双向绑定的,当前已上传附件的id列表</td>
+                <td>array</td>
                 <td>—</td>
-                <td>100%</td>
-              </tr>
-              <tr>
-                <td>width</td>
-                <td>宽度</td>
-                <td>string</td>
-                <td>—</td>
-                <td>100%</td>
+                <td>[]</td>
               </tr>
               <tr>
                 <td>url</td>
-                <td>接口获取地址，直接显示返回的所有内容</td>
+                <td>接口请求的“上传地址”</td>
                 <td>string</td>
                 <td>—</td>
                 <td>—</td>
               </tr>
               <tr>
-                <td>value</td>
-                <td>显示的代码内容</td>
+                <td>merge-url</td>
+                <td>接口请求的“合并分块地址”</td>
                 <td>string</td>
                 <td>—</td>
                 <td>—</td>
               </tr>
               <tr>
-                <td>type</td>
-                <td>代码类型，支持javascript、vue、html、css、sass、xml等</td>
+                <td>headers</td>
+                <td>接口请求的headers</td>
                 <td>string</td>
                 <td>—</td>
-                <td>javascript</td>
+                <td>—</td>
               </tr>
               <tr>
-                <td>theme</td>
-                <td>主题色，支持深色dark、亮色light</td>
+                <td>max-size</td>
+                <td>文件的最大尺寸，单位是MB</td>
+                <td>string,number</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>accept</td>
+                <td>接受上传的文件类型。例如accept="image/jpeg,image/png"或者以逗号分隔的文件扩展名accept=".jpg,.png"</td>
                 <td>string</td>
                 <td>—</td>
-                <td>light</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>options</td>
+                <td>simple-uploader的options配置项。详情见<a target="_blank" href="https://github.com/simple-uploader/Uploader/blob/develop/README_zh-CN.md">simple-uploader</a>     </td>
+                <td>string</td>
+                <td>—</td>
+                <td>—</td>
               </tr>
             </tbody>
           </table>
@@ -84,7 +86,7 @@
       <el-tab-pane label="查看代码" name="code">
         <show-code
           v-if="activeTab == 'code'"
-          url="demoViews/inputNumberDemo.vue"
+          url="demoViews/uploadBigDemo.vue"
         />
       </el-tab-pane>
     </el-tabs>
@@ -92,37 +94,22 @@
 </template>
 
 <script>
+
 export default {
-  name: 'DemoInputNumber',
+  name: 'UploadBigDemo',
   data() {
     return {
       activeTab: 'doc',
-      num: 1,
-      aaa: true,
-      testValue: `{
-          "msg": "success",
-  "code": 200,
-  "data": [
-    {
-      "title": "Portlet列表",
-      "customAttr": "自定义属性",
-      "expand": true,
-      "key": "root",
-      "children": [
-        { "title": "内容管理portlet", "key": "cmsPortlet" },
-        { "title": "日程管理portlet", "key": "calporltet" }
-      ]
-    }
-  ]
-}
-`
+      num: 1
     }
   },
   created() {},
-  mounted() {
-
-  },
-  methods: {}
+  mounted() {},
+  methods: {
+    handleChange(value) {
+      console.log(value)
+    }
+  }
 }
 </script>
 

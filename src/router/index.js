@@ -113,6 +113,11 @@ const routes = [
     component: () => import('@/demoViews/uploadDemo.vue')
   },
   {
+    path: '/uploadBig',
+    name: 'nui-upload-big',
+    component: () => import('@/demoViews/uploadBigDemo.vue')
+  },
+  {
     path: '/rate',
     name: 'nui-rate',
     component: () => import('@/demoViews/rateDemo.vue')
@@ -192,6 +197,13 @@ const routes = [
     name: 'nui-code',
     component: () => import('@/demoViews/codeDemo.vue')
   },
+
+  {
+    path: '/imgView',
+    name: 'nui-img-view',
+    component: () => import('@/demoViews/imgViewDemo.vue')
+  },
+
   {
     path: '/examplePersonMsgForm',
     name: 'nui-examplePersonMsgForm',

@@ -1,16 +1,16 @@
 <!-- 比elementUI多的属性：width， -->
 <template>
   <div class="page-main">
-    <el-tabs class="page-tab" v-model="activeTab">
+    <el-tabs v-model="activeTab" class="page-tab">
       <el-tab-pane label="文档" name="doc">
         <h2>Transfer 穿梭框</h2>
         <div class="demo-block">
           <nui-transfer
+            v-model="value"
             center
             panel-width="200px"
-            v-model="value"
             :data="data"
-          ></nui-transfer>
+          />
         </div>
 
         <article class="intro-list">
@@ -115,7 +115,7 @@
         <show-code
           v-if="activeTab == 'code'"
           url="demoViews/transferDemo.vue"
-        ></show-code>
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -130,7 +130,7 @@ export default {
         data.push({
           key: i,
           label: `备选备选项项 ${i}`,
-          disabled: i % 4 === 0,
+          disabled: i % 4 === 0
         })
       }
       return data
@@ -138,7 +138,7 @@ export default {
     return {
       activeTab: 'doc',
       data: generateData(),
-      value: [1, 4],
+      value: [1, 4]
     }
   },
   created() {},
@@ -146,8 +146,8 @@ export default {
   methods: {
     handleChange(value) {
       console.log(value)
-    },
-  },
+    }
+  }
 }
 </script>
 

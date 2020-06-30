@@ -139,6 +139,29 @@
               </tr>
             </tbody>
           </table>
+
+          <h3>Events</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>事件名称</th>
+                <th>说明</th>
+                <th>回调参数</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>nui-change</td>
+                <td>
+                  触发逻辑和elementUI的change事件一致，返回值不同。
+                </td>
+                <td>
+                  如果是读取接口获取的数据，则返回完整的当前value对应的接口数据对象。
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
           <h6>
             注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
           </h6>

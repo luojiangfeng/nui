@@ -2,9 +2,9 @@
   <div :id="id" class="select-wrap">
     <el-select
       v-bind="$attrs"
-      v-on="$listeners"
       :url="innerUrl"
       :style="{ width: width }"
+      v-on="$listeners"
       @change="selectChange"
     >
       <template v-if="groupOptions.length > 0">
@@ -18,19 +18,17 @@
             :key="item.value"
             :label="item.label"
             :value="item.value"
-          >
-          </el-option>
+          />
         </el-option-group>
       </template>
 
       <el-option
-        v-else
         v-for="item in innerOptions"
+        v-else
         :key="item.value"
         :label="item.label"
         :value="item.value"
-      >
-      </el-option>
+      />
     </el-select>
   </div>
 </template>
@@ -39,40 +37,40 @@
 import { randomChar } from '../../utils.js'
 
 export default {
-  name: 'nui-select',
+  name: 'NuiSelect',
   props: {
     width: {
       type: String,
-      default: '100%',
+      default: '100%'
     },
     url: {
-      type: String,
+      type: String
     },
     valueName: {
       type: String,
-      default: 'value',
+      default: 'value'
     },
     labelName: {
       type: String,
-      default: 'label',
+      default: 'label'
     },
     options: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     groupOptions: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     changeWidth: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       id: '',
-      innerOptions: this.options,
+      innerOptions: this.options
     }
   },
   computed: {
@@ -81,10 +79,10 @@ export default {
         this.$http
           .get(this.url)
           .then((res) => {
-            let resArr = res.data
+            const resArr = res.data
 
-            let resOptions = resArr.map((item) => {
-              let obj = item
+            const resOptions = resArr.map((item) => {
+              const obj = item
               obj.label = item[this.labelName]
               obj.value = item[this.valueName]
               return obj
@@ -105,7 +103,7 @@ export default {
         this.innerOptions = this.options
       }
       return this.url
-    },
+    }
   },
   created() {
     this.id = 'select' + randomChar(20)
@@ -125,23 +123,23 @@ export default {
           }
         }
 
-        let dom = document.getElementById(this.id)
+        const dom = document.getElementById(this.id)
 
         this.autoInputWidth(dom, 50, label)
       }
 
-      let valData = this.innerOptions.filter((item) => {
+      const valData = this.innerOptions.filter((item) => {
         return item[this.valueName] === val
       })
 
       this.$emit('nui-change', valData[0])
     },
     autoInputWidth(dom, baseW, val) {
-      let _val = val
-      let _baseW = baseW || 6
-      let inputDom = dom.querySelectorAll('input')[0]
-      let inputDomParent = inputDom.parentNode
-      let selectDom = dom.querySelectorAll('.el-select')[0]
+      const _val = val
+      const _baseW = baseW || 6
+      const inputDom = dom.querySelectorAll('input')[0]
+      const inputDomParent = inputDom.parentNode
+      const selectDom = dom.querySelectorAll('.el-select')[0]
 
       let createSpanDom = inputDomParent.querySelectorAll(
         '.span-input-hidden'
@@ -151,7 +149,7 @@ export default {
         createSpanDom.parentNode.removeChild(createSpanDom)
       }
 
-      let spanHTML =
+      const spanHTML =
         '<span class="span-input-hidden" style="position: absolute;z-index: -10000;left:-8000px">' +
         _val +
         '</span>'
@@ -160,15 +158,15 @@ export default {
 
       createSpanDom = inputDomParent.querySelectorAll('.span-input-hidden')[0]
 
-      let resultW = createSpanDom.offsetWidth + _baseW
+      const resultW = createSpanDom.offsetWidth + _baseW
 
       if (_val == '') {
         selectDom.style.width = this.width ? this.width : '100%'
       } else {
         selectDom.style.width = resultW + 'px'
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped lang="scss"></style>

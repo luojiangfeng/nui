@@ -157,6 +157,13 @@
                 </li>
                 <li class="nav-item">
                   <router-link
+                    to="/uploadBig"
+                    active-class="active"
+                  >UploadBig 大附件上传</router-link>
+                </li>
+
+                <li class="nav-item">
+                  <router-link
                     to="/rate"
                     active-class="active"
                   >Rate 评分</router-link>
@@ -306,10 +313,17 @@
                     to="/code"
                   >Code 代码编辑器</router-link>
                 </li>
+
+                <li class="nav-item">
+                  <router-link
+                    active-class="active"
+                    to="/imgView"
+                  >ImgView 图片浏览器</router-link>
+                </li>
               </ul>
             </div>
 
-            <div class="nav-group">
+            <!-- <div class="nav-group">
               <div class="nav-group__title">Example</div>
               <ul class="pure-menu-list" style="height: auto;">
                 <li class="nav-item">
@@ -325,7 +339,7 @@
                   >人员信息表格</router-link>
                 </li>
               </ul>
-            </div>
+            </div> -->
           </li>
         </ul>
       </div>

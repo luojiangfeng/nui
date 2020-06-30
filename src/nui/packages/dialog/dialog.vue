@@ -1,12 +1,14 @@
 <template>
-  <div class="wrap">
-    <el-dialog v-drag="drag" v-bind="$attrs" v-on="$listeners">
+  <div :id="id" class="wrap">
+    <el-dialog v-drag="drag" :style="{height:height}" v-bind="$attrs" v-on="$listeners">
       <slot />
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { randomChar } from '../../utils.js'
+
 export default {
   name: 'NuiDialog',
   directives: {
@@ -96,14 +98,30 @@ export default {
     drag: {
       type: Boolean,
       default: true
+    },
+    height: {
+      type: String
     }
   },
   data() {
-    return {}
+    return {
+      id: ''
+    }
   },
   computed: {},
-  created() {},
-  mounted() {},
+  created() {
+    this.id = 'select' + randomChar(20)
+  },
+  mounted() {
+    // console.log(this.visible)
+    const dom = document.getElementById(this.id)
+    // console.log(dom)
+
+    this.$nextTick(() => {
+      const dialogBody = dom.querySelectorAll('.el-dialog__body')[0]
+      // console.log(dialogBody)
+    })
+  },
   methods: {}
 }
 </script>

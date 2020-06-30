@@ -10,12 +10,12 @@
 
         <h3>传字符串</h3>
         <div class="demo-block">
-          <nui-code theme="dark" width="100%" :value="testValue" />
+          <nui-code v-if="aaa" theme="dark" width="100%" :value="testValue" />
         </div>
 
         <h3>传url，显示接口返回值</h3>
         <div class="demo-block">
-          <nui-code type="json" url="api/getEntUserList.json" />
+          <nui-code type="javascript" url="api/getEntUserList.json" />
         </div>
 
         <article class="intro-list">
@@ -98,8 +98,9 @@ export default {
     return {
       activeTab: 'doc',
       num: 1,
+      aaa: true,
       testValue: `{
-  "msg": "success",
+          "msg": "success",
   "code": 200,
   "data": [
     {
@@ -118,7 +119,9 @@ export default {
     }
   },
   created() {},
-  mounted() {},
+  mounted() {
+
+  },
   methods: {}
 }
 </script>

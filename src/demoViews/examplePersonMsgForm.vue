@@ -1,23 +1,22 @@
 <template>
   <div class="page-main">
-    <el-tabs class="page-tab" v-model="activeTab">
+    <el-tabs v-model="activeTab" class="page-tab">
       <el-tab-pane label="文档" name="doc">
         <h2>人员信息录入表单</h2>
         <div class="demo-block">
           <nui-form ref="form" :rules="rules" :model="form" label-width="110px">
             <nui-row>
               <nui-form-item :span="8" label="姓名" prop="name">
-                <nui-input v-model="form.name"></nui-input>
+                <nui-input v-model="form.name" />
               </nui-form-item>
 
               <nui-form-item :span="8" label="政治面貌" prop="political">
                 <nui-select
-                  clearable
                   v-model="form.political"
+                  clearable
                   :options="politicalOptions"
                   placeholder="请选择"
-                >
-                </nui-select>
+                />
               </nui-form-item>
 
               <nui-form-item :span="8" label="性别:" prop="sex">
@@ -31,50 +30,48 @@
             <nui-row>
               <nui-form-item :span="8" label="出生日期" prop="birthday">
                 <nui-date-picker
+                  v-model="form.birthday"
                   type="date"
                   placeholder="选择日期"
-                  v-model="form.birthday"
-                ></nui-date-picker>
+                />
               </nui-form-item>
 
               <nui-form-item :span="8" label="籍贯" prop="nativePlace">
                 <nui-dropdown-tree
+                  v-model="form.nativePlace"
                   leaf-only
                   :data="treeCityData"
-                  v-model="form.nativePlace"
-                >
-                </nui-dropdown-tree>
+                />
               </nui-form-item>
 
               <nui-form-item :span="8" label="常住地" prop="usualAddress">
                 <nui-dropdown-tree
+                  v-model="form.usualAddress"
                   leaf-only
                   show-checkbox
                   :data="treeCityData"
-                  v-model="form.usualAddress"
-                >
-                </nui-dropdown-tree>
+                />
               </nui-form-item>
             </nui-row>
 
             <nui-row>
               <nui-form-item :span="12" label="手机号" prop="phone">
-                <nui-input v-model="form.phone"></nui-input>
+                <nui-input v-model="form.phone" />
               </nui-form-item>
               <nui-form-item :span="12" label="邮箱" prop="email">
-                <nui-input v-model="form.email"></nui-input>
+                <nui-input v-model="form.email" />
               </nui-form-item>
             </nui-row>
 
             <nui-row>
               <nui-form-item :span="24" label="兴趣爱好" prop="hobby">
                 <nui-checkbox-group v-model="form.hobby">
-                  <nui-checkbox label="体育运动"></nui-checkbox>
-                  <nui-checkbox label="电子游戏"></nui-checkbox>
-                  <nui-checkbox label="乐器"></nui-checkbox>
-                  <nui-checkbox label="音乐"></nui-checkbox>
-                  <nui-checkbox label="电影"></nui-checkbox>
-                  <nui-checkbox label="小说"></nui-checkbox>
+                  <nui-checkbox label="体育运动" />
+                  <nui-checkbox label="电子游戏" />
+                  <nui-checkbox label="乐器" />
+                  <nui-checkbox label="音乐" />
+                  <nui-checkbox label="电影" />
+                  <nui-checkbox label="小说" />
                 </nui-checkbox-group>
               </nui-form-item>
             </nui-row>
@@ -82,21 +79,20 @@
             <nui-row>
               <nui-form-item :span="12" label="入职时间" prop="entryTime">
                 <nui-date-picker
+                  v-model="form.entryTime"
                   type="datetime"
                   placeholder="选择日期时间"
-                  v-model="form.entryTime"
-                ></nui-date-picker>
+                />
               </nui-form-item>
               <nui-form-item :span="12" label="上班时间" prop="workTime">
                 <nui-time-picker
-                  is-range
                   v-model="form.workTime"
+                  is-range
                   range-separator="至"
                   start-placeholder="开始时间"
                   end-placeholder="结束时间"
                   placeholder="选择时间范围"
-                >
-                </nui-time-picker>
+                />
 
                 <!-- <nui-time-select
                   width="45%"
@@ -129,38 +125,36 @@
             <nui-form-item label="所属部门" prop="department">
               <!-- <nui-input v-model="form.department"></nui-input> -->
               <nui-cascader
-                clearable
                 v-model="form.department"
+                clearable
                 :options="departmentOptions"
-              ></nui-cascader>
+              />
             </nui-form-item>
 
             <nui-form-item label="当前参与项目" prop="curProject">
               <nui-select
+                v-model="form.curProject"
                 filterable
                 :options="projectArr"
-                v-model="form.curProject"
                 placeholder="请选择(可输入关键词搜索)"
                 clearable
-              >
-              </nui-select>
+              />
             </nui-form-item>
 
             <nui-form-item label="所有参与项目" prop="allProject">
               <nui-select
+                v-model="form.allProject"
                 filterable
                 multiple
-                :groupOptions="projectGroupArr"
-                v-model="form.allProject"
+                :group-options="projectGroupArr"
                 placeholder="请选择(可输入关键词搜索)"
                 clearable
-              >
-              </nui-select>
+              />
             </nui-form-item>
 
-            <nui-form-item label="证件资料" prop="certificateFile">
+            <nui-form-item label="证件资料1" prop="certificateFile">
               <el-upload
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action="/attach/ uploadAttach/db"
                 list-type="picture-card"
                 :on-preview="handlePictureCardPreview"
                 :on-remove="handleRemove"
@@ -168,13 +162,13 @@
                 :limit="3"
                 :before-upload="beforeImgUpload"
               >
-                <i class="el-icon-plus"></i>
+                <i class="el-icon-plus" />
                 <div slot="tip" class="el-upload__tip">
                   只能上传jpg/png文件，最多上传3张图片，且每个文件不超过500kb
                 </div>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt="" />
+                <img width="100%" :src="dialogImageUrl" alt="">
               </el-dialog>
             </nui-form-item>
 
@@ -202,9 +196,10 @@
             <!-- <nui-form-item label="影像资料" prop="vedioFile"> </nui-form-item> -->
 
             <nui-form-item>
-              <nui-button type="primary" @click.prevent="submitForm('form')"
-                >立即录入</nui-button
-              >
+              <nui-button
+                type="primary"
+                @click.prevent="submitForm('form')"
+              >立即录入</nui-button>
               <nui-button>取消</nui-button>
             </nui-form-item>
           </nui-form>
@@ -214,7 +209,7 @@
         <show-code
           v-if="activeTab == 'code'"
           url="demoViews/examplePersonMsgForm.vue"
-        ></show-code>
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -241,23 +236,23 @@ export default {
               children: [
                 {
                   id: 9,
-                  label: '天河区',
+                  label: '天河区'
                 },
                 {
                   id: 10,
-                  label: '越秀区',
+                  label: '越秀区'
                 },
                 {
                   id: 11,
-                  label: '萝岗区',
+                  label: '萝岗区'
                 },
                 {
                   id: 12,
-                  label: '黄浦区',
-                },
-              ],
-            },
-          ],
+                  label: '黄浦区'
+                }
+              ]
+            }
+          ]
         },
         {
           id: 2,
@@ -265,14 +260,14 @@ export default {
           children: [
             {
               id: 5,
-              label: '静安区',
+              label: '静安区'
             },
             {
               id: 6,
-              label: '浦东区',
-            },
-          ],
-        },
+              label: '浦东区'
+            }
+          ]
+        }
       ],
       departmentOptions: [
         {
@@ -285,17 +280,17 @@ export default {
               children: [
                 {
                   value: '3',
-                  label: '公共组件产品线',
+                  label: '公共组件产品线'
                 },
                 {
                   value: '4',
-                  label: '道路监控产品线',
+                  label: '道路监控产品线'
                 },
                 {
                   value: '5',
-                  label: '数据应用产品线',
-                },
-              ],
+                  label: '数据应用产品线'
+                }
+              ]
             },
             {
               value: '6',
@@ -303,15 +298,15 @@ export default {
               children: [
                 {
                   value: '7',
-                  label: 'etc设计',
+                  label: 'etc设计'
                 },
                 {
                   value: '8',
-                  label: '基础设备研发',
-                },
-              ],
-            },
-          ],
+                  label: '基础设备研发'
+                }
+              ]
+            }
+          ]
         },
         {
           value: '10',
@@ -323,46 +318,46 @@ export default {
               children: [
                 {
                   value: '12',
-                  label: '微信小程序',
+                  label: '微信小程序'
                 },
                 {
                   value: '13',
-                  label: 'IOS',
+                  label: 'IOS'
                 },
                 {
                   value: '14',
-                  label: 'Andriod',
-                },
-              ],
-            },
-          ],
-        },
+                  label: 'Andriod'
+                }
+              ]
+            }
+          ]
+        }
       ],
       projectArr: [
         {
           value: 1,
-          label: '基于微服务的新一代软件开发平台研发',
+          label: '基于微服务的新一代软件开发平台研发'
         },
         {
           value: 2,
-          label: '路段数字化运行监测平台研究项目',
+          label: '路段数字化运行监测平台研究项目'
         },
         {
           value: 3,
-          label: '广西交投数据管理中心项目',
+          label: '广西交投数据管理中心项目'
         },
         {
           value: 4,
-          label: '数据应用产品线技术支持工作',
+          label: '数据应用产品线技术支持工作'
         },
         {
           value: 5,
-          label: '新一代全国联网收费系统',
+          label: '新一代全国联网收费系统'
         },
         {
           value: 6,
-          label: '基于新收费模式下的路段稽核系统研发',
-        },
+          label: '基于新收费模式下的路段稽核系统研发'
+        }
       ],
       projectGroupArr: [
         {
@@ -370,65 +365,65 @@ export default {
           options: [
             {
               value: 1,
-              label: '基于微服务的新一代软件开发平台研发',
+              label: '基于微服务的新一代软件开发平台研发'
             },
             {
               value: 2,
-              label: '路段数字化运行监测平台研究项目',
+              label: '路段数字化运行监测平台研究项目'
             },
             {
               value: 3,
-              label: '广西交投数据管理中心项目',
+              label: '广西交投数据管理中心项目'
             },
             {
               value: 4,
-              label: '数据应用产品线技术支持工作',
+              label: '数据应用产品线技术支持工作'
             },
             {
               value: 5,
-              label: '新一代全国联网收费系统',
+              label: '新一代全国联网收费系统'
             },
             {
               value: 6,
-              label: '基于新收费模式下的路段稽核系统研发',
-            },
-          ],
+              label: '基于新收费模式下的路段稽核系统研发'
+            }
+          ]
         },
         {
           label: '移动开发部',
           options: [
             {
               value: 12,
-              label: '微信小程序',
+              label: '微信小程序'
             },
             {
               value: 13,
-              label: 'IOS开发',
+              label: 'IOS开发'
             },
             {
               value: 14,
-              label: 'Andriod开发',
-            },
-          ],
-        },
+              label: 'Andriod开发'
+            }
+          ]
+        }
       ],
       politicalOptions: [
         {
           value: 1,
-          label: '正式党员',
+          label: '正式党员'
         },
         {
           value: 2,
-          label: '预备党员',
+          label: '预备党员'
         },
         {
           value: 3,
-          label: '共青团员',
+          label: '共青团员'
         },
         {
           value: 4,
-          label: '群众',
-        },
+          label: '群众'
+        }
       ],
 
       form: {
@@ -449,33 +444,33 @@ export default {
         allProject: [],
         certificateFile: [],
         otherFile: [],
-        vedioFile: [],
+        vedioFile: []
       },
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         sex: [{ required: true }],
         political: [
-          { required: true, message: '请选择政治面貌', trigger: 'change' },
+          { required: true, message: '请选择政治面貌', trigger: 'change' }
         ],
         birthday: [
-          { required: true, message: '请选择出生日期', trigger: 'blur' },
+          { required: true, message: '请选择出生日期', trigger: 'blur' }
         ],
         nativePlace: [
-          { required: true, message: '请选择籍贯', trigger: 'change' },
+          { required: true, message: '请选择籍贯', trigger: 'change' }
         ],
         usualAddress: [
-          { required: true, message: '请选择常住地', trigger: 'change' },
+          { required: true, message: '请选择常住地', trigger: 'change' }
         ],
         phone: [{ required: true, validator: validatePhone, trigger: 'blur' }],
         email: [{ required: true, validator: validateEmail, trigger: 'blur' }],
         hobby: [
-          { required: true, message: '请选择兴趣爱好', trigger: 'change' },
+          { required: true, message: '请选择兴趣爱好', trigger: 'change' }
         ],
         entryTime: [
-          { required: true, message: '请选择入职时间', trigger: 'blur' },
+          { required: true, message: '请选择入职时间', trigger: 'blur' }
         ],
         workTime: [
-          { required: true, message: '请选择上班时间', trigger: 'change' },
+          { required: true, message: '请选择上班时间', trigger: 'change' }
         ],
         // workTimeStart: [
         //   { required: true, message: '请选择上班开始时间', trigger: 'blur' },
@@ -484,22 +479,22 @@ export default {
         //   { required: true, message: '请选择上班结束时间', trigger: 'blur' },
         // ],
         department: [
-          { required: true, message: '请选择所属部门', trigger: 'change' },
+          { required: true, message: '请选择所属部门', trigger: 'change' }
         ],
         curProject: [
-          { required: true, message: '请选择当前参与项目', trigger: 'change' },
+          { required: true, message: '请选择当前参与项目', trigger: 'change' }
         ],
         allProject: [
-          { required: true, message: '请选择所有参与项目', trigger: 'change' },
-        ],
-      },
+          { required: true, message: '请选择所有参与项目', trigger: 'change' }
+        ]
+      }
     }
   },
   created() {},
   mounted() {},
   methods: {
     testInput(val) {},
-    //上传有关
+    // 上传有关
     beforeImgUpload(file) {
       const isImg = file.type === 'image/jpeg' || file.type === 'image/png'
       const isLtSize = file.size / 1024 / 1024 < 0.5
@@ -532,7 +527,7 @@ export default {
       this.$message({
         type: 'warning',
         message: `最多上传3个文件`,
-        offset: 60,
+        offset: 60
       })
     },
     handlePictureCardPreview(file) {
@@ -548,7 +543,7 @@ export default {
     otherFileChange(file, fileList) {
       this.form.otherFile = fileList
     },
-    //提交表单
+    // 提交表单
     submitForm(formName) {
       console.log(this.form)
       this.$refs[formName].validate((valid) => {
@@ -559,8 +554,8 @@ export default {
           return false
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

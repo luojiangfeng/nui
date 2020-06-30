@@ -2,21 +2,21 @@ const port = 8090
 
 module.exports = {
   chainWebpack: (config) => {
-    const oneOfsMap = config.module.rule("scss").oneOfs.store
+    const oneOfsMap = config.module.rule('scss').oneOfs.store
     oneOfsMap.forEach((item) => {
       item
-        .use("sass-resources-loader")
-        .loader("sass-resources-loader")
+        .use('sass-resources-loader')
+        .loader('sass-resources-loader')
         .options({
           // Provide path to the file with resources
           // resources: "./src/assets/styles/common.scss"
 
           // Or array of paths
           resources: [
-            "./src/assets/styles/_var.scss",
-            "./src/assets/styles/_mixin.scss",
-            "./src/assets/styles/_animation.scss",
-          ],
+            './src/assets/styles/_var.scss',
+            './src/assets/styles/_mixin.scss',
+            './src/assets/styles/_animation.scss'
+          ]
         })
         .end()
     })
@@ -33,16 +33,14 @@ module.exports = {
   devServer: {
     port: port, // 设置端口号
     open: true, // 启动项目自动打开浏览器
-    // proxy: {
-    //   // 解决跨域问题
-    //   "/api": {
-    //     target: `http://localhost:${port}/`, // 本地json数据
-    //     changeOrigin: true,
-    //     ws: false,
-    //     pathRewrite: {
-    //       "/api": "/mock" // 本地
-    //     }
-    //   }
-    // }
-  },
+    proxy: {
+      '/api': {
+        target: 'http://172.17.1.93:6789', // 设置你调用的接口域名和端口号
+        changeOrigin: true, // 这里设置是否跨域
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  }
 }

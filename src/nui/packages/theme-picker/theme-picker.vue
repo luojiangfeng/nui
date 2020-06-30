@@ -88,13 +88,13 @@ export default {
       const themeCluster = this.getThemeCluster(val.replace('#', ''))
       const originalCluster = this.getThemeCluster(oldVal.replace('#', ''))
 
-      const $message = this.$message({
-        message: '  Compiling the theme',
-        customClass: 'theme-message',
-        type: 'success',
-        duration: 0,
-        iconClass: 'el-icon-loading'
-      })
+      // const $message = this.$message({
+      //   message: '  Compiling the theme',
+      //   customClass: 'theme-message',
+      //   type: 'success',
+      //   duration: 0,
+      //   iconClass: 'el-icon-loading'
+      // })
 
       const getHandler = (variable, id) => {
         return () => {
@@ -137,7 +137,7 @@ export default {
       window.localStorage.setItem('theme-color', val)
       this.$emit('change', val)
 
-      $message.close()
+      // $message.close()
 
       if (oldVal === this.theme && !this.onlyElement && oldVal !== ORIGINAL_THEME) {
         location.reload()

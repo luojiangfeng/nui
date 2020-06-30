@@ -13,6 +13,7 @@
           @selection-change="handlesSelectionChange"
         >
           <!-- <template v-slot:titleBar>自定义头部</template> -->
+          <!-- <template v-slot:end>自定义尾部</template> -->
         </nui-table>
 
         <div class="page-main">
@@ -36,6 +37,7 @@
               @cell-click="rowClick"
               @selection-change="handlesSelectionChange"
             >
+
               <template v-slot:tbody>
                 <template v-for="(item, index) in tableConfig.column">
                   <el-table-column
@@ -277,6 +279,69 @@
                 prop="default"
               />
             </el-table>
+
+            <h3>Table Methods</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>方法名</th>
+                  <th>说明</th>
+                  <th>参数</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>getTableData</td>
+                  <td>获取表格数据。第一个参数为查询条件，第二个参数是获取成功后的回调函数</td>
+                  <td>params, callback</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>Refs 内部元素</h3>
+            <h5>调用内部组件的方法：因为nui是基于elementUI二次封装的，一般情况没做处理的话，调用elmentUI组件的方法，需要再加一层。</h5>
+            <table>
+              <thead>
+                <tr>
+                  <th>ref名称</th>
+                  <th>说明</th>
+                  <th>获取方式(假设nui-table的ref=table)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>table</td>
+                  <td>原生el-table组件</td>
+                  <td>this.$refs.table.$refs.table</td>
+                </tr>
+                <tr>
+                  <td>titleBar.form里的表单元素</td>
+                  <td>对应的ref就等于设置时对应的ref属性值</td>
+                  <td>例如设置‘用户名’输入框的ref=userName。则this.$refs.table.$refs.userName</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>Slot 插槽</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>name</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>titleBar</td>
+                  <td>表格头部（在el-table的外部）的标题栏、操作栏等</td>
+                </tr>
+
+                <tr>
+                  <td>end</td>
+                  <td>接着el-table的元素。默认为el-pagination</td>
+                </tr>
+              </tbody>
+            </table>
           </article>
 
         </div>
@@ -614,7 +679,7 @@ export default {
           {
             name: 'params',
             intro: '查询表单时，需要传递给后端的参数。"当前页page","每页数量size"默认传递，可以不在此写',
-            type: 'string',
+            type: 'object',
             default: '——'
           },
           {
@@ -915,8 +980,8 @@ export default {
       //
       formItemTableData: [{
         name: 'type',
-        intro: '表单组件的类型，现在共支持5种：文本框input、下拉选择select、单选框radio、多选框checkbox、日期选择date、下拉树dropdownTree',
-        type: 'input/select/radio/checkbox/date/dropdownTree',
+        intro: '表单组件的类型，现在共支持7种：文本框input、下拉选择select、单选框radio、多选框checkbox、日期选择date、下拉树dropdownTree',
+        type: 'input/select/radio/checkbox/date/dropdownTree；以及普通按钮button、提交按钮submit',
         default: '——'
       }, {
         name: 'ref',
@@ -973,6 +1038,66 @@ export default {
         name: '$listeners',
         intro: '其他未列出的elementUI原生事件，放入此对象内设置',
         type: 'object',
+        default: '——'
+      }, {
+        name: '‘button’专有属性',
+        intro: 'type=input时支持的属性，大部分属性和elmentUI一样',
+        type: '——',
+        default: '——',
+        children: [
+          {
+            name: 'type',
+            intro: '类型',
+            type: 'primary / success / warning / danger / info / text',
+            default: '—'
+          },
+          {
+            name: 'fun',
+            intro: '点击事件',
+            type: 'function',
+            default: '—'
+          },
+          {
+            name: 'icon',
+            intro: '图标类名',
+            type: 'string',
+            default: '—'
+          },
+          {
+            name: 'plain',
+            intro: '是否朴素按钮',
+            type: 'boolean',
+            default: '—'
+          },
+          {
+            name: 'round',
+            intro: '是否圆角按钮',
+            type: 'boolean',
+            default: '—'
+          },
+          {
+            name: 'circle',
+            intro: '是否圆形按钮',
+            type: 'boolean',
+            default: '—'
+          },
+          {
+            name: 'loading',
+            intro: '是否加载中状态',
+            type: 'boolean',
+            default: '—'
+          },
+          {
+            name: 'wave',
+            intro: '是否点击波浪效果',
+            type: 'boolean',
+            default: 'false'
+          }
+        ]
+      }, {
+        name: '‘submit’专有属性',
+        intro: 'type=submit（用于提交查询的唯一按钮）时支持的属性。暂时和button一样,只是默认wave=true',
+        type: '——',
         default: '——'
       }, {
         name: '‘input’专有属性',
