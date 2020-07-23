@@ -200,6 +200,33 @@
               </tr>
             </tbody>
           </table>
+
+          <h3>Refs 内部元素</h3>
+          <h5>
+            调用内部组件的方法：因为nui是基于elementUI二次封装的，一般情况没做处理的话，调用elmentUI组件的方法，需要再加一层。
+          </h5>
+          <table>
+            <thead>
+              <tr>
+                <th>ref名称</th>
+                <th>说明</th>
+                <th>获取方式(假设nui-dropdown-tree的ref=dropdownTree)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>popover</td>
+                <td>原生el-popover组件</td>
+                <td>this.$refs.dropdownTree.$refs.popover</td>
+              </tr>
+              <tr>
+                <td>tree</td>
+                <td>原生el-tree组件</td>
+                <td>this.$refs.dropdownTree.$refs.tree</td>
+              </tr>
+            </tbody>
+          </table>
+
           <h6>
             注：一般情况下只列出与elementUI不同的属性。其他elementUI的原生属性都可以正常使用，不再专门列出。
           </h6>

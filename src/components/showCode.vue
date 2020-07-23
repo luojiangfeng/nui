@@ -5,16 +5,16 @@
 </template>
 
 <script>
-import "codemirror/theme/neo.css"
-import "codemirror/lib/codemirror.css"
-import "codemirror/mode/vue/vue.js"
+import 'codemirror/theme/neo.css'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/vue/vue.js'
 
-let CodeMirror = require("codemirror/lib/codemirror")
-require("codemirror/addon/edit/matchbrackets")
-require("codemirror/addon/selection/active-line")
+let CodeMirror = require('codemirror/lib/codemirror')
+require('codemirror/addon/edit/matchbrackets')
+require('codemirror/addon/selection/active-line')
 
 export default {
-  name: "show-code",
+  name: 'show-code',
   props: {
     url: {
       type: String,
@@ -28,8 +28,8 @@ export default {
   mounted() {
     let that = this
     let editor = CodeMirror.fromTextArea(this.$refs.mycode, {
-      theme: "neo",
-      mode: "vue", // 选择对应代码编辑器的语言，我这边选的是数据库，根据个人情况自行设置即可
+      theme: 'neo',
+      mode: 'vue', // 选择对应代码编辑器的语言，我这边选的是数据库，根据个人情况自行设置即可
       indentWithTabs: true,
       smartIndent: true,
       lineNumbers: true,
@@ -41,20 +41,29 @@ export default {
       hintOptions: {
         // 自定义提示选项
         tables: {
-          users: ["name", "score", "birthDate"],
-          countries: ["name", "population", "size"],
+          users: ['name', 'score', 'birthDate'],
+          countries: ['name', 'population', 'size'],
         },
       },
     })
 
-    editor.setSize("auto", "calc(100vh - 40px)")
+    editor.setSize('auto', 'calc(100vh - 40px)')
 
     this.$http({
       url: that.url,
-      method: "GET",
+      method: 'GET',
     })
       .then((res) => {
-        editor.setValue(res)
+        3
+        let introStart = res.indexOf('<article')
+        let introEnd = res.indexOf('</article>') + 10
+        console.log(res.indexOf('<article'))
+        console.log(res.indexOf('</article>'))
+
+        let strStart = res.substring(0, introStart)
+        let strEnd = res.substring(introEnd)
+
+        editor.setValue(strStart + strEnd)
       })
       .catch(() => {})
   },

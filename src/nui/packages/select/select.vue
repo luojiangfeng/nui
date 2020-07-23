@@ -1,6 +1,7 @@
 <template>
   <div :id="id" class="select-wrap">
     <el-select
+      ref="select"
       v-bind="$attrs"
       :url="innerUrl"
       :style="{ width: width }"
@@ -41,36 +42,36 @@ export default {
   props: {
     width: {
       type: String,
-      default: '100%'
+      default: '100%',
     },
     url: {
-      type: String
+      type: String,
     },
     valueName: {
       type: String,
-      default: 'value'
+      default: 'value',
     },
     labelName: {
       type: String,
-      default: 'label'
+      default: 'label',
     },
     options: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     groupOptions: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     changeWidth: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       id: '',
-      innerOptions: this.options
+      innerOptions: this.options,
     }
   },
   computed: {
@@ -103,7 +104,7 @@ export default {
         this.innerOptions = this.options
       }
       return this.url
-    }
+    },
   },
   created() {
     this.id = 'select' + randomChar(20)
@@ -165,8 +166,8 @@ export default {
       } else {
         selectDom.style.width = resultW + 'px'
       }
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped lang="scss"></style>

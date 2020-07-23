@@ -234,6 +234,28 @@
             </tbody>
           </table>
 
+          <h3>Refs 内部元素</h3>
+          <h5>
+            调用内部组件的方法：因为nui是基于elementUI二次封装的，一般情况没做处理的话，调用elmentUI组件的方法，需要再加一层。
+            （注：原生el-form组件的validate、clearValidate、validateField、resetFields方法已做处理。不需要再加一层）
+          </h5>
+          <table>
+            <thead>
+              <tr>
+                <th>ref名称</th>
+                <th>说明</th>
+                <th>获取方式(假设nui-form的ref=form)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>form</td>
+                <td>原生el-form组件</td>
+                <td>this.$refs.form.$refs.form</td>
+              </tr>
+            </tbody>
+          </table>
+
           <h3>Nui-form-item Attributes</h3>
           <table>
             <thead>
@@ -275,94 +297,94 @@
 
 <script>
 export default {
-  name: "DemoRadio",
+  name: 'DemoRadio',
   data() {
     return {
-      activeTab: "doc",
+      activeTab: 'doc',
       form: {
-        name: "",
-        region: "",
+        name: '',
+        region: '',
         regionOptions: [
           {
             value: 0,
-            label: "上海静安区",
+            label: '上海静安区',
           },
           {
             value: 1,
-            label: "广州天河区",
+            label: '广州天河区',
           },
         ],
-        date1: "",
-        date2: "",
+        date1: '',
+        date2: '',
         delivery: false,
         type: [],
-        resource: "",
-        desc: "",
+        resource: '',
+        desc: '',
       },
       form2: {
         active: true,
-        superiorCompany: "广东省交通集团",
-        name: "",
-        shortName: "",
-        shortNameEn: "",
-        levelCode: "",
-        postCode: "",
-        region: "",
+        superiorCompany: '广东省交通集团',
+        name: '',
+        shortName: '',
+        shortNameEn: '',
+        levelCode: '',
+        postCode: '',
+        region: '',
         regionOptions: [
           {
             value: 0,
-            label: "上海",
+            label: '上海',
           },
           {
             value: 1,
-            label: "广州",
+            label: '广州',
           },
         ],
-        date1: "",
-        date2: "",
-        address: "",
-        desc: "",
+        date1: '',
+        date2: '',
+        address: '',
+        desc: '',
       },
       formInline: {
-        region: "",
-        user: "",
+        region: '',
+        user: '',
         regionOptions: [
           {
             value: 0,
-            label: "南京",
+            label: '南京',
           },
           {
             value: 1,
-            label: "广州",
+            label: '广州',
           },
         ],
       },
       rules2: {
         superiorCompany: [
-          { required: true, message: "上级公司不能为空", trigger: "change" },
+          { required: true, message: '上级公司不能为空', trigger: 'change' },
         ],
-        name: [{ required: true, message: "请输入公司名称", trigger: "blur" }],
+        name: [{ required: true, message: '请输入公司名称', trigger: 'blur' }],
         shortName: [
-          { required: true, message: "请输入公司简称", trigger: "blur" },
-          { max: 5, message: "长度在5字符以内", trigger: "blur" },
+          { required: true, message: '请输入公司简称', trigger: 'blur' },
+          { max: 5, message: '长度在5字符以内', trigger: 'blur' },
         ],
         levelCode: [
-          { required: true, message: "请输入层级编码", trigger: "blur" },
-          { type: "number", message: "请输入数字", trigger: "blur" },
+          { required: true, message: '请输入层级编码', trigger: 'blur' },
+          { type: 'number', message: '请输入数字', trigger: 'blur' },
         ],
       },
     }
   },
   methods: {
     onSubmit() {
-      console.log("submit!")
+      console.log('submit!')
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!")
+          alert('submit!')
         } else {
-          console.log("error submit!!")
+          console.log('error submit!!')
           return false
         }
       })
