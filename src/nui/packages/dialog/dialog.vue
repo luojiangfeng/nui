@@ -1,6 +1,11 @@
 <template>
   <div :id="id" class="wrap">
-    <el-dialog v-drag="drag" :style="{height:height}" v-bind="$attrs" v-on="$listeners">
+    <el-dialog
+      v-drag="drag"
+      v-bind="$attrs"
+      :class="height!==undefined ? 'custom-height':''"
+      v-on="$listeners"
+    >
       <slot />
     </el-dialog>
   </div>
@@ -32,7 +37,7 @@ export default {
           }
         })()
 
-        dialogHeaderEl.onmousedown = (e) => {
+        dialogHeaderEl.onmousedown = e => {
           // 鼠标按下，计算当前元素距离可视区的距离
           const disX = e.clientX - dialogHeaderEl.offsetLeft
           const disY = e.clientY - dialogHeaderEl.offsetTop
@@ -44,18 +49,22 @@ export default {
           const screenHeight = document.body.clientHeight
 
           const minDragDomLeft = dragDom.offsetLeft
-          const maxDragDomLeft = screenWidth - dragDom.offsetLeft - dragDomWidth
+          const maxDragDomLeft =
+            screenWidth - dragDom.offsetLeft - dragDomWidth
 
           const minDragDomTop = dragDom.offsetTop
-          const maxDragDomTop = screenHeight - dragDom.offsetTop - dragDomHeight
+          const maxDragDomTop =
+            screenHeight - dragDom.offsetTop - dragDomHeight
 
           // 获取到的值带px 正则匹配替换
           let styL = getStyle(dragDom, 'left')
           let styT = getStyle(dragDom, 'top')
 
           if (styL.includes('%')) {
-            styL = +document.body.clientWidth * (+styL.replace(/\%/g, '') / 100)
-            styT = +document.body.clientHeight * (+styT.replace(/\%/g, '') / 100)
+            styL =
+              +document.body.clientWidth * (+styL.replace(/\%/g, '') / 100)
+            styT =
+              +document.body.clientHeight * (+styT.replace(/\%/g, '') / 100)
           } else {
             styL = +styL.replace(/\px/g, '')
             styT = +styT.replace(/\px/g, '')
@@ -67,20 +76,21 @@ export default {
             let top = e.clientY - disY
 
             // 边界处理
-            if (-(left) > minDragDomLeft) {
+            if (-left > minDragDomLeft) {
               left = -minDragDomLeft
             } else if (left > maxDragDomLeft) {
               left = maxDragDomLeft
             }
 
-            if (-(top) > minDragDomTop) {
+            if (-top > minDragDomTop) {
               top = -minDragDomTop
             } else if (top > maxDragDomTop) {
               top = maxDragDomTop
             }
 
             // 移动当前元素
-            dragDom.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`
+            dragDom.style.cssText += `;left:${left + styL}px;top:${top +
+              styT}px;`
 
             // emit onDrag event
             vnode.child.$emit('dragDialog')
@@ -102,27 +112,49 @@ export default {
     height: {
       type: String
     }
+
   },
   data() {
     return {
       id: ''
     }
   },
-  computed: {},
+  computed: {
+
+  },
+  watch: {
+
+  },
   created() {
     this.id = 'select' + randomChar(20)
   },
   mounted() {
     // console.log(this.visible)
     const dom = document.getElementById(this.id)
-    // console.log(dom)
 
     this.$nextTick(() => {
-      const dialogBody = dom.querySelectorAll('.el-dialog__body')[0]
+      const dialogBody = dom.querySelectorAll('.el-dialog')[0]
+
+      // dialogBody.style.height = this.height
       // console.log(dialogBody)
     })
   },
   methods: {}
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+// .custom-height{
+
+//   /deep/.el-dialog{
+//     overflow: auto;
+
+//   }
+
+//    /deep/.el-dialog__body{
+//    height: 300px;
+//     overflow: auto;
+
+//   }
+
+// }
+</style>

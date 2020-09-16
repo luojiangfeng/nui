@@ -26,7 +26,7 @@ module.exports = {
   //   config.entry.app = ['babel-polyfill', './src/main.js']
   // },
   // outputDir: process.env.outputDir || 'dist', // 输出文件名称
-  // publicPath: '/',//部署应用包时的基本 URL
+  publicPath: './',//部署应用包时的基本 URL
   // productionSourceMap: isProduction ? false : true, // 解决vue项目打包后浏览器F12查看到项目源代码false不能看到
   // productionSourceMap: true, // 测试调试打断点
   lintOnSave: false, // 去掉eslint校验

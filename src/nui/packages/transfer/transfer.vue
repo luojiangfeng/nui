@@ -50,7 +50,7 @@ export default {
     },
     titles: {
       type: Array,
-      default: () => ['源列表', '目标列表'],
+      default: () => ['待选列表', '已选列表'],
     },
   },
   data() {
@@ -134,4 +134,15 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+// .el-checkbox.el-transfer-panel__item {
+//   height: auto!important;
+//   color: red!important;
+//     .el-checkbox__label {
+//       height: auto!important;
+//       label {
+//         white-space: break-spaces!important;
+//       }
+//     }
+// }
+</style>

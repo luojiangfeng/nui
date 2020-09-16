@@ -29,7 +29,7 @@
                   :style="{
                     width: item.itemWidth,
                     minWidth: item.itemMinWidth,
-                    maxWidth: item.itemMaxWidth,
+                    maxWidth: item.itemMaxWidth
                   }"
                 >
                   <el-input
@@ -39,7 +39,7 @@
                     :style="{
                       width: item.width,
                       minWidth: item.minWidth,
-                      maxWidth: item.maxWidth,
+                      maxWidth: item.maxWidth
                     }"
                     v-bind="item.$attrs"
                     v-on="item.$listeners"
@@ -55,7 +55,7 @@
                   :style="{
                     width: item.itemWidth,
                     minWidth: item.itemMinWidth,
-                    maxWidth: item.itemMaxWidth,
+                    maxWidth: item.itemMaxWidth
                   }"
                 >
                   <nui-select
@@ -75,7 +75,7 @@
                     :style="{
                       width: item.width,
                       minWidth: item.minWidth,
-                      maxWidth: item.maxWidth,
+                      maxWidth: item.maxWidth
                     }"
                     v-bind="item.$attrs"
                     :width="item.width"
@@ -95,7 +95,7 @@
                   :style="{
                     width: item.itemWidth,
                     minWidth: item.itemMinWidth,
-                    maxWidth: item.itemMaxWidth,
+                    maxWidth: item.itemMaxWidth
                   }"
                 >
                   <nui-radio-group
@@ -103,7 +103,7 @@
                     :style="{
                       width: item.width,
                       minWidth: item.minWidth,
-                      maxWidth: item.maxWidth,
+                      maxWidth: item.maxWidth
                     }"
                     :options="item.options"
                     :url="item.url"
@@ -123,7 +123,7 @@
                   :style="{
                     width: item.itemWidth,
                     minWidth: item.itemMinWidth,
-                    maxWidth: item.itemMaxWidth,
+                    maxWidth: item.itemMaxWidth
                   }"
                 >
                   <nui-checkbox-group
@@ -131,7 +131,7 @@
                     :style="{
                       width: item.width,
                       minWidth: item.minWidth,
-                      maxWidth: item.maxWidth,
+                      maxWidth: item.maxWidth
                     }"
                     :options="item.options"
                     :url="item.url"
@@ -151,7 +151,7 @@
                   :style="{
                     width: item.itemWidth,
                     minWidth: item.itemMinWidth,
-                    maxWidth: item.itemMaxWidth,
+                    maxWidth: item.itemMaxWidth
                   }"
                 >
                   <nui-dropdown-tree
@@ -184,7 +184,7 @@
                   :style="{
                     width: item.itemWidth,
                     minWidth: item.itemMinWidth,
-                    maxWidth: item.itemMaxWidth,
+                    maxWidth: item.itemMaxWidth
                   }"
                 >
                   <el-date-picker
@@ -192,9 +192,9 @@
                     v-model="config.api.params[item.ref]"
                     :type="item.dateType"
                     :style="{
-                      width: item.width?item.width:'230px',
+                      width: item.width ? item.width : '230px',
                       minWidth: item.minWidth,
-                      maxWidth: item.maxWidth,
+                      maxWidth: item.maxWidth
                     }"
                     range-separator="━"
                     start-placeholder="开始日期"
@@ -245,7 +245,6 @@
     <!-- :style="{'width': $store.getters.tableWidth,'transition': 'width .3s'}" -->
 
     <el-table
-      v-if="tableVisable"
       ref="table"
       v-justify-height="justifyHeight"
       :height="tableHeight"
@@ -380,7 +379,11 @@
       </slot>
 
       <el-table-column
-        v-if="config.operatorColumn && !config.operatorColumn.hidden&&config.operatorColumn.type === 'sort'"
+        v-if="
+          config.operatorColumn &&
+            !config.operatorColumn.hidden &&
+            config.operatorColumn.type === 'sort'
+        "
         :fixed="
           config.operatorColumn.fixed ? config.operatorColumn.fixed : 'right'
         "
@@ -425,7 +428,11 @@
       </el-table-column>
 
       <el-table-column
-        v-if="config.operatorColumn && !config.operatorColumn.hidden&& config.operatorColumn.type !== 'sort'"
+        v-if="
+          config.operatorColumn &&
+            !config.operatorColumn.hidden &&
+            config.operatorColumn.type !== 'sort'
+        "
         :fixed="config.operatorColumn && config.operatorColumn.fixed"
         :label="
           (config.operatorColumn && config.operatorColumn.label) || '操作'
@@ -449,10 +456,8 @@
               @click="item.fun(scope.row)"
             >{{ item.text }}</nui-button>
           </template>
-
         </template>
       </el-table-column>
-
     </el-table>
 
     <slot name="end">
@@ -475,14 +480,16 @@
         @size-change="handlesSizeChange"
         v-on="config.pagination.$listeners"
       />
-
     </slot>
   </div>
 </template>
 
 <script>
 import qs from 'qs'
-import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event'
+import {
+  addResizeListener,
+  removeResizeListener
+} from 'element-ui/src/utils/resize-event'
 
 const doResize = async(el, binding, vnode) => {
   const { componentInstance: $table } = await vnode
@@ -496,7 +503,8 @@ const doResize = async(el, binding, vnode) => {
 
   if (!$table) return
 
-  const height = window.innerHeight - el.getBoundingClientRect().top - bottomOffset
+  const height =
+    window.innerHeight - el.getBoundingClientRect().top - bottomOffset
 
   $table.layout.setHeight(height)
   $table.doLayout()
@@ -571,7 +579,7 @@ export default {
     },
     tableHeight() {
       let res
-      this.justifyHeight ? res = '100px' : res = this.height
+      this.justifyHeight ? (res = '100px') : (res = this.height)
 
       return res
     },
@@ -652,12 +660,16 @@ export default {
   },
   activated() {
     if (this.justifyHeight !== false) {
-      this.tableVisable = true
+      this.$nextTick(() => {
+        this.$refs.table.doLayout()
+      })
     }
   },
   deactivated() {
     if (this.justifyHeight !== false) {
-      this.tableVisable = false
+      this.$nextTick(() => {
+        this.$refs.table.doLayout()
+      })
     }
   },
   methods: {
@@ -742,7 +754,7 @@ export default {
             : postConfig
 
         this.$http(thisConfig)
-          .then((res) => {
+          .then(res => {
             const _rowsStr = this.config.api.resPropsName.rows
             const _totalStr = this.config.api.resPropsName.total
 
@@ -807,7 +819,7 @@ export default {
           'Content-Type': 'application/json'
         }
       })
-        .then((res) => {
+        .then(res => {
           this.getTableData({}, () => {
             this.$message({
               type: 'success',
@@ -828,7 +840,7 @@ export default {
           'Content-Type': 'application/json'
         }
       })
-        .then((res) => {
+        .then(res => {
           this.getTableData({}, () => {
             this.$message({
               type: 'success',
