@@ -7,7 +7,9 @@
 
         <h3>说明</h3>
         <h5>此换肤功能成功后，会自动在localStorage里面保存当前的主题色值theme-color做持久化处理。下次访问网页创建本组件时，会自动读取localStorage的色值并应用。</h5>
-        <h5>通过only-element属性可以设置是否只应用于elementUI的组件。默认为false，即应用于全部内容，只要css的属性含有“#409EFF”就会被同步换肤</h5>
+        <h5>通过only-element属性可以设置是否只应用于elementUI的组件。默认为false，即应用于全部"style"标签里的内容（对于link引入的css文件无效），只要"style"标签里css的属性含有“#409EFF”就会被同步换肤。</h5>
+        <h5>对于link引入的css文件，虽然技术上可以实现内部属性跟随主题色变化，但是性能开销太大，所以没有采用替换link文件内容的方式。
+          而是提供了预设的3个常用css类：“nui-theme-color”（字体色），“nui-theme-bgColor”（背景色），“nui-theme-borderColor”（边框色）。对于复杂的css，提供了“custom-css”属性，可以将自定义部分的css代码手动传入（注意，通常需要加!important）</h5>
         <div class="demo-block">
           <nui-theme-picker :only-element="onlyElement" class="theme-picker" :base-color="baseTheme" @change="themeChange" />
 
@@ -61,6 +63,14 @@
                 <td>string</td>
                 <td>——</td>
                 <td>——</td>
+              </tr>
+
+               <tr>
+                <td>custom-css</td>
+                <td>自定义跟随主题色变化的css代码。需要变化的基础色值为'#409EFF'。（对于简单的元素css不需要用这个属性，而是提供了预设的3个常用css类：“nui-theme-color”（字体色），“nui-theme-bgColor”（背景色），“nui-theme-borderColor”（边框色））</td>
+                <td>string</td>
+                <td>——</td>
+                <td>示例： ".tags-view-container .tags-view-wrapper .tags-view-item.active{background-color: #409EFF!important;color: #fff;border-color: #409EFF!important;}"</td>
               </tr>
               <tr>
                 <td>base-color</td>

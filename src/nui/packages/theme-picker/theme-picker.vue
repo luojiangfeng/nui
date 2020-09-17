@@ -23,6 +23,10 @@ export default {
       type: String,
       default: '26px'
     },
+    customCss: {
+      type: String,
+      default: ''
+    },
     baseColor: {
       type: String,
       default: '409EFF'
@@ -54,6 +58,10 @@ export default {
 
       res.push(this.baseColor)
       return res
+    },
+    appendCss() {
+      const appendDefaultCss = `.nui-theme-color{color:${ORIGINAL_THEME}!important}.nui-theme-bgColor{background-color:${ORIGINAL_THEME}!important}.nui-theme-borderColor{border-color:${ORIGINAL_THEME}!important}`
+      return appendDefaultCss + this.customCss
     },
     defaultTheme() {
       const localStorageColor = window.localStorage.getItem('theme-color')
@@ -156,7 +164,7 @@ export default {
         const xhr = new XMLHttpRequest()
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4 && xhr.status === 200) {
-            this[variable] = xhr.responseText.replace(/@font-face{[^}]+}/, '')
+            this[variable] = xhr.responseText.replace(/@font-face{[^}]+}/, '') + this.appendCss
             resolve()
           }
         }
