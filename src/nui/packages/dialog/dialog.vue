@@ -3,6 +3,7 @@
     <el-dialog
       v-drag="drag"
       v-bind="$attrs"
+      :modal-append-to-body="modalAppendToBody"
       :class="height!==undefined ? 'custom-height':''"
       v-on="$listeners"
     >
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+import { isIE } from '../../utils.js'
 import { randomChar } from '../../utils.js'
 
 export default {
@@ -111,8 +113,11 @@ export default {
     },
     height: {
       type: String
+    },
+    modalAppendToBody: {
+      type: Boolean,
+      default: true
     }
-
   },
   data() {
     return {
@@ -127,6 +132,10 @@ export default {
   },
   created() {
     this.id = 'select' + randomChar(20)
+
+    if (isIE()) {
+      this.modalAppendToBody = false
+    }
   },
   mounted() {
     // console.log(this.visible)
