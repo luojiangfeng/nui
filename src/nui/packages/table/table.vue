@@ -171,6 +171,7 @@
                     :filter-node-method="item.filterNodeMethod"
                     :expand-on-click-node="item.expandOnClickNode"
                     :data="item.data"
+                    :url="item.url"
                     :placeholder="item.placeholder"
                     v-on="item.$listeners"
                   />
@@ -1072,7 +1073,7 @@ export default {
   padding-right: 8px;
   padding-left: 8px;
   & > div {
-    overflow: hidden;
+    // overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }

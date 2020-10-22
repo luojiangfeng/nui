@@ -36,12 +36,12 @@
       <template v-else>
         <!-- 是否可点击 -->
         <template v-if="config.clickFun !== undefined">
-          <div v-if="!config.filters">
+          <template v-if="!config.filters">
             <a class="table-cell-a" @click="config.clickFun(scope.row)">{{
               scope.row[config.prop]
             }}</a>
-          </div>
-          <div v-if="config.filters">
+          </template>
+          <template v-if="config.filters">
             <span
               v-if="config.filters.param"
             ><a class="table-cell-a">{{
@@ -64,14 +64,14 @@
             ><a class="table-cell-a">{{
               computedColFilter(scope.row[config.prop], config.filters.method)
             }}</a></span>
-          </div>
+          </template>
         </template>
 
         <template v-else>
-          <div v-if="!config.filters">
+          <template v-if="!config.filters">
             {{ scope.row[config.prop] }}
-          </div>
-          <div v-if="config.filters">
+          </template>
+          <template v-if="config.filters">
             <span v-if="config.filters.param">{{
               scope.row[config.prop] | constantKey2Value(config.filters.param)
             }}</span>
@@ -86,7 +86,7 @@
             <span v-else-if="!config.filters.param && config.filters.method">{{
               computedColFilter(scope.row[config.prop], config.filters.method)
             }}</span>
-          </div>
+          </template>
         </template>
       </template>
     </template>
